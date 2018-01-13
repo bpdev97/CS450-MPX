@@ -28,12 +28,12 @@ void kmain(void)
    // char *boot_loader_name = (char*)((long*)mbd)[16];
 
   
-   // 0) Initialize Serial I/O and call mpx_init
-
-
-
- 
    klogv("Starting MPX boot sequence...");
+   // 0) Initialize Serial I/O and call mpx_init
+   init_serial(COM1);    // init COM1
+   set_serial_out(COM1); // set COM1 as output
+   mpx_init(MODULE_R1);  // init module R1 
+ 
    klogv("Initialized serial I/O on COM1 device...");
 
    // 1) Initialize the support software by identifying the current
@@ -47,11 +47,15 @@ void kmain(void)
    
    // 3) Descriptor Tables
    klogv("Initializing descriptor tables...");
-
+   init_gdt(); // init Global Descriptor Table
+   init_idt(); // init Interupt Descriptor Table
 
    // 4) Virtual Memory
    klogv("Initializing virtual memory...");
-
+   init_pic();    // init programmable interrupt controllers
+   init_irq();    // install initial interupt handlers for first 32 irq lines 
+   sti();         // turn on interrupts
+   init_paging(); // init paging
 
    // 5) Call YOUR command handler -  interface method
    klogv("Transferring control to commhand...");
