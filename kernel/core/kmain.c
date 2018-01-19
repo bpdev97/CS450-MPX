@@ -9,6 +9,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <system.h>
+#include <core/polling.h>
 
 #include <core/io.h>
 #include <core/serial.h>
@@ -17,7 +18,9 @@
 #include <mem/heap.h>
 #include <mem/paging.h>
 
+
 #include "modules/mpx_supt.h"
+
 
 
 void kmain(void)
@@ -57,6 +60,15 @@ void kmain(void)
    init_irq();    // install initial interupt handlers for first 32 irq lines 
    sti();         // turn on interrupts
    init_paging(); // init paging
+
+/* Test code for Addison
+   int newMagic = 10;
+   int* test = &newMagic;
+   void* buf = sys_alloc_mem(100);
+   char* buffer = (char*) buf;
+   poll(buffer, test);
+*/
+   
 
    // 5) Call YOUR command handler -  interface method
    klogv("Transferring control to commhand...");
