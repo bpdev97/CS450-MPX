@@ -9,7 +9,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <system.h>
-#include <core/polling.h>
+//#include <core/polling.h>
 
 #include <core/io.h>
 #include <core/serial.h>
