@@ -2,6 +2,6 @@
 #ifndef MPX_SPRING2018_ABOVE_C_LEVEL_PROCESSCOMMAND_H
 #define MPX_SPRING2018_ABOVE_C_LEVEL_PROCESSCOMMAND_H
 
-void processcommand (int numword, char* args[]);
+void help (int numword, char* args[]);
 
 #endif //MPX_SPRING2018_ABOVE_C_LEVEL_PROCESSCOMMAND_H
