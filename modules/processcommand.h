@@ -8,5 +8,6 @@ void settime (int argc, char* argv[]);
 void setdate (int argc, char* argv[]);
 void getdate (int argc, char* argv[]);
 void gettime (int argc, char* argv[]);
+int tobcd (int binary);
 
 #endif //MPX_SPRING2018_ABOVE_C_LEVEL_PROCESSCOMMAND_H
