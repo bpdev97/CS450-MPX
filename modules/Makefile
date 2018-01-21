@@ -3,7 +3,7 @@
 
 AS      = nasm
 CC      = i386-elf-gcc
-CFLAGS  = -Wall -Wextra -Werror -nostartfiles -nostdlib -nodefaultlibs -ffreestanding -g -c
+CFLAGS  = -Wall -Wextra -nostartfiles -nostdlib -nodefaultlibs -ffreestanding -g -c
 LD      = i386-elf-ld
 LDFLAGS = 
 ASFLAGS = -f elf -g
