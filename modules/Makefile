@@ -13,7 +13,8 @@ ASFLAGS = -f elf -g
 OBJFILES =\
 mpx_supt.o \
 comhand.o \
-processcommand.o
+processcommand.o\
+polling.o
 
 .c.s:
 	$(CC) $(CFLAGS) -S -o $@ $<
