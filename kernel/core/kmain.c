@@ -9,7 +9,6 @@
 #include <stdint.h>
 #include <string.h>
 #include <system.h>
-//#include <core/polling.h>
 
 #include <core/io.h>
 #include <core/serial.h>
@@ -21,7 +20,7 @@
 
 #include "modules/mpx_supt.h"
 #include "modules/comhand.h"
-
+#include "modules/polling.h"
 
 void kmain(void)
 {
@@ -61,14 +60,16 @@ void kmain(void)
    sti();         // turn on interrupts
    init_paging(); // init paging
 
-/* Test code for Addison
-   int newMagic = 10;
+/* polling testing, hit enter to end polling
+
+   int newMagic = 100;
    int* test = &newMagic;
-   void* buf = sys_alloc_mem(100);
+   void* buf = sys_alloc_mem(1000);
    char* buffer = (char*) buf;
    poll(buffer, test);
-*/
-   
+   klogv(buffer);
+
+ */
 
    // 5) Call YOUR command handler -  interface method
    klogv("Transferring control to commhand...");
