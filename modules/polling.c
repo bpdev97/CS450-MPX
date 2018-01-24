@@ -19,6 +19,7 @@ int poll(char * buffer, int* count)
    int exit =0;
    int enter = 1;
    char emptyChar = ' ';
+   char backspace[] = {'\b',' ','\b','\0'};
 /*
    count = &counter;
    char emptyChar = ' ';
@@ -68,7 +69,9 @@ int poll(char * buffer, int* count)
 			newBuffer[counter] = emptyChar;
 			counter--;
 			newBuffer[counter] = emptyChar;
-                        break;
+			int backCount = 4;
+ 	    	        sys_req(WRITE, COM1, &backspace, &backCount);
+			break;
 
 			case 8: // delete,does not work, prints '3'
 			 klogv("delete");
