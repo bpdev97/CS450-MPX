@@ -1,6 +1,8 @@
 #include <system.h>
 #include <core/serial.h>
 #include <core/io.h>
+#include "polling.h"
+#include "mpx_supt.h"
 
 /*
   Procedure..: poll
@@ -10,138 +12,94 @@
 
 int poll(char * buffer, int* count)
 {
-   int maxBufferSize = *count;
+   char newBuffer[100]; //size will be alocated later
+   char letter[2];
    int counter = 0;
+   int maxBufferSize = *count;
+   int exit =0;
    int enter = 1;
+   char emptyChar = ' ';
+/*
    count = &counter;
    char emptyChar = ' ';
    char newLine = '\n';
    int leftCount = 0; 
-   int rightCount = 0;
-   int i;
- 
+   int rightCount = 0; */
 
-    while (enter) // Run continuously
+/*  WHAT NEEDS TO BE DONE
+   -Character Values for delete, newline, and arrow keys needed for case statement
+   -delete, newline, and arrow keys implemetation, i have a good idea for how that is done but have't done it yet
+   -how to manipulate console line when backspace, delete, and arrow keys are pressed, no idea on how that works
+*/
+
+   while(enter)
     {
-	if (inb(COM1+5)&1) // Is a character available?
-	{
-           unsigned char letter = (inb(COM1)); //Get the character
-	   int letterNum = (int) letter;
-	     
-	    if ( (letterNum >=97 && letterNum <=122) || (letterNum >=65 && letterNum <=90) || (letterNum >=48 && letterNum <=57) )//must be number/letter to add to buffer
-	    {
-		if((leftCount-rightCount) == 0) //arrow keys not used or cancel
-		{	
-		   buffer = &letter; //add letter to buffer
-		   klogv(buffer);
-		   buffer++; //move the pointer of the buffer forward one		   
-		   counter++;
-		   count = &counter; //increase counter
-		   
-		}
-		 
-		else if((leftCount - rightCount) > 0)//Cursor is moved to the left
+      
+        if (inb(COM1+5)&1) // Is a character available?
+        {
+            letter[0] = inb(COM1);// stores single character to print to com1
+            letter[1] = '\0';
+     	      
+	    if ( (letter[0] >=97 && letter[0] <=122) || (letter[0] >=65 && letter[0] <=90) || (letter[0] >=48 && letter[0] <=57) )//checks for charater or number
 		{
- 		  buffer -= (leftCount - rightCount); //moves pointer to where new character will be inserted
-		  char temp1 = *buffer; //saves character being overwritten by new character
-		  char temp2; //saves the next character in the buffer
-		  buffer = &letter; // writes new letter overtop of the char saved in temp1 
-		  for(i = 0; i<(leftCount - rightCount); i++)
-		   {
-		     buffer++; // moves ptr over one
-		     temp2 = *buffer; //saves next character in sequence
-		     buffer = &temp1; // replaces character with char saved in temp 1
-		     temp1 = temp2; // temp 1 equal temp 2
-
-		   }
-		  buffer++;// moves ptr to end of string
-		  counter++;
-		  count = &counter; //increase counter
-
+	  	  newBuffer[counter] = letter[0]; //adds single character to buffer
+	 	  counter++;
+	  	  newBuffer[counter] = letter[1];// adds null terminate
+	   	  counter++;
+		  int count = 2; //used only to print the single character
+                  sys_req(WRITE, COM1, letter, &count);//prints single character from input
 		}
+	    else
+		{
+		     switch(letter[0])
+		     {
+			 int i;
 
-		
-	      }
-	     
-	    else //check for command keys
-	     {
-	       switch(letterNum) 
-		 {
-		   case 127 : //backspace, removes previous character
-		     klogv("backspace");
-		     buffer--;//moves buffer back one
-		     counter--;
-		     count = &counter; //decrease counter
-		     buffer = &emptyChar;//I think this would erase the character
-                   break;
-		   
-		  case 8: // delete, deletes entire buffer
+		         case '\r': //enter, works, reprints the buffer in whole and terminates polling
+	                 for(i=0; i<counter; i++)
+	   	         {
+ 	    	           sys_req(WRITE, COM1, &newBuffer[i], &count);
+          	         }    
+			 enter =0;                                 
+		     	break;
+ 			
+			case 127 : //backspace, works in memory but not on console line
+		     	counter--;
+			newBuffer[counter] = emptyChar;
+			counter--;
+			newBuffer[counter] = emptyChar;
+                        break;
+
+			case 8: // delete,does not work, prints '3'
 			 klogv("delete");
-			for(i = 0; i<counter; i++)
-			{
-			    buffer = &emptyChar;//I think this would erase the character
-			    buffer--;//moves buffer back one
-			}
-			counter = 0;
-  			count = &counter; //reset counter
-		   break;
-
-		 case 13 ://enter, checks for valid command
-		      klogv("enter");
-		     buffer = buffer - counter;
-		     klogv(buffer);
-		     enter = 0;
-		   break;
-		   
-		 case 10 :  //new line, 
+			
+		        break;
+			
+			case '\n' :  //new line, also does not work
 			klogv("newline");
-		       buffer = &newLine; //add letter to buffer
-		       rightCount = 0;//changes cursor to begining of new line
-		       leftCount = 0;//changes cursor to begining of new line
-		       buffer++; //move the pointer of the buffer forward one
-		       counter++;
-  		       count = &counter; //increase counter
-		       
-		   break;
+		      
+		  	 break;
 
-                //IMPORTANT These ints are 100% wrong but they are not on the ascii table
-		 case 37 : //left arrow key
+			case 37 : //left arrow key, prints 'D'
 			klogv("left arrow key");
-			if((leftCount-rightCount) < *count)//will not go before the buffer starts
-			{
-			   leftCount++;
- 			}
-		   break;
+			
+		   	break;
 
-		case 39 : //right arrow key
+			case 39 : //right arrow key, prints 'C'
 			klogv("right arrow key");
-			if((leftCount-rightCount) > 0)//will not go past the end of the string
-			{
-		       	   rightCount++;
-			}
-		   break;
+			
+		        break;
 
-		 }
-	     }
-
-	}
-    }
-
-	return *count;
+	
+                     }
+		}		
+        }
+	
+    }	
+	
+	count = &counter;   
+	buffer = newBuffer;
+	return 0;
 }
 
- /*
-int counter = 0;
-	while(counter <10)
-	{
-		if (inb(COM1+5)&1)// Is a character available?
-		{
-           		char letter = (inb(COM1)); //Get the character
-			int letterNum = (int) letter;
-			klogv(&letterNum);
-			//serial_printNum(&letterNum);
-			counter++;
-		}
-		
-	}
-*/
+ 
