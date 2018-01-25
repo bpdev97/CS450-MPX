@@ -5,12 +5,13 @@
 #include "processcommand.h"
 
 void help (int argc, char* argv[]) {
-
+    
     //checking array size and setting up the Help menu
     if (argc == 1) {
         serial_println("To use the help command type 'help' followed by the command you would like to use.");
         serial_println("The commands you can use include: Help, Shutdown, and Date and Time.");
     }
+
     //listing each command and what they do
     else if (argc == 2) {
         if (strcmp(argv[1], "shutdown") == 0) {
@@ -24,12 +25,13 @@ void help (int argc, char* argv[]) {
         } else if (strcmp(argv[1], "gettime") == 0) {
             serial_println("The Get Time command allows the user to retrieve the set time.");
         }
-     //error checking
-        else{
+        //error checking
+        else {
             serial_println("Invalid input, command not valid.");
         }
     }
-    else{
+    
+    else {
         serial_println("Invalid input, too many arguments.");
     }
 }
@@ -93,7 +95,6 @@ void settime (int argc, char* argv[]) {
     outb(0x71, tobcd(atoi(second)));
 
     sti();
-
 }
 
 //allows user to set the date
