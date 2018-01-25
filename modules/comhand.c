@@ -1,6 +1,6 @@
 #include <system.h>
 #include <core/serial.h>
-#include "string.h"
+#include <string.h>
 #include "mpx_supt.h"
 #include "polling.h"
 #include "comhand.h"
@@ -21,9 +21,11 @@ int comhand() {
   int quit=0;
   
   while(!quit) {
-    //memset(cmdBuffer,‘\0’, 100);
+    memset(cmdBuffer, '\0', 100); // make cmdBuffer all terminators
     bufferSize = 99; // reset size before each call to read 
     sys_req(READ, DEFAULT_DEVICE, cmdBuffer, &bufferSize);
+    sys_req(WRITE, COM1, cmdBuffer, &bufferSize);
+
   }
   return 0; // quit was entered
 }
