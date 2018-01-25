@@ -3,40 +3,41 @@
 #include <core/serial.h>
 #include <core/io.h>
 #include "processcommand.h"
+#include "println.h"
 
 void help (int argc, char* argv[]) {
 
     //checking array size and setting up the Help menu
     if (argc == 1) {
-        serial_println("To use the help command type 'help' followed by the command you would like to use.");
-        serial_println("The commands you can use include: Help, Shutdown, and Date and Time.");
+        print("To use the help command type 'help' followed by the command you would like to use.");
+        print("The commands you can use include: Help, Shutdown, and Date and Time.");
     }
     //listing each command and what they do
     else if (argc == 2) {
         if (strcmp(argv[1], "shutdown") == 0) {
-            serial_println("The Shutdown command shuts down the computer system.");
+            print("The Shutdown command shuts down the computer system.");
         } else if (strcmp(argv[1], "setdate") == 0) {
-            serial_println("The Set Date command allows the user to input a date.");
+            print("The Set Date command allows the user to input a date.");
         } else if (strcmp(argv[1], "getdate") == 0) {
-            serial_println("The Get Date command allows the user to retrieve the set date.");
+            print("The Get Date command allows the user to retrieve the set date.");
         } else if (strcmp(argv[1], "settime") == 0) {
-            serial_println("The Set Time command allows the user to input a time.");
+            print("The Set Time command allows the user to input a time.");
         } else if (strcmp(argv[1], "gettime") == 0) {
-            serial_println("The Get Time command allows the user to retrieve the set time.");
+            print("The Get Time command allows the user to retrieve the set time.");
         }
      //error checking
         else{
-            serial_println("Invalid input, command not valid.");
+            print("Invalid input, command not valid.");
         }
     }
     else{
-        serial_println("Invalid input, too many arguments.");
+        print("Invalid input, too many arguments.");
     }
 }
 
 //shuts down system
 void shutdown (int argc, char* argv[]) {
-    serial_println("Are you sure you want to shut down?");
+    print("Are you sure you want to shut down?");
 }
 
 //allows user to set the time
@@ -45,7 +46,7 @@ void settime (int argc, char* argv[]) {
 
     //checking array size and error checking
     if(argc == 1){
-        serial_println("Invalid input, did not put the time.");
+        print("Invalid input, did not put the time.");
         return;
     }
 
@@ -53,7 +54,7 @@ void settime (int argc, char* argv[]) {
     char* hour = strtok(argv[1], ":");
     int hours = atoi(hour);
     if(hours < 0 || hours > 24){
-        serial_println("Invalid input, hour not in range.");
+        print("Invalid input, hour not in range.");
         return;
     }
     //setting in the actual hour
@@ -63,13 +64,13 @@ void settime (int argc, char* argv[]) {
     //checking if minute is valid
     char* minute = strtok(NULL, ":");
     if(minute == NULL){
-        serial_println("Invalid input, did not put a minute.");
+        print("Invalid input, did not put a minute.");
         return;
     }
 
     int minutes = atoi(minute);
     if(minutes < 0 || minutes > 59){
-        serial_println("Invalid input, minute not in range.");
+        print("Invalid input, minute not in range.");
         return;
     }
     //setting the actual minute
@@ -79,13 +80,13 @@ void settime (int argc, char* argv[]) {
     //checking if second is valid
     char* second = strtok(NULL, ":");
     if(second == NULL){
-        serial_println("Invalid input, did not put a second.");
+        print("Invalid input, did not put a second.");
         return;
     }
 
     int seconds = atoi(second);
     if(seconds < 0 || seconds > 59){
-        serial_println("Invalid input, minute not in range.");
+        print("Invalid input, minute not in range.");
         return;
     }
     //setting the actual seconds
@@ -102,7 +103,7 @@ void setdate (int argc, char* argv[]) {
 
     //checking array size and error checking
     if(argc == 1){
-        serial_println("Invalid input, did not put the date.");
+        print("Invalid input, did not put the date.");
         return;
     }
 
@@ -110,7 +111,7 @@ void setdate (int argc, char* argv[]) {
     char* month = strtok(argv[1], "/");
     int months = atoi(month);
     if(months > 12 || months < 1){
-        serial_println("Invalid input, month is not in range.");
+        print("Invalid input, month is not in range.");
         return;
     }
     //setting the month
@@ -120,12 +121,12 @@ void setdate (int argc, char* argv[]) {
     //checking if the day of month is valid
     char* dayofmonth = strtok(NULL, "/");
     if(dayofmonth == NULL) {
-        serial_println("Invalid input, did not put a day of the month.");
+        print("Invalid input, did not put a day of the month.");
         return;
     }
     int days = atoi(dayofmonth);
     if(days > 31 || days < 1){
-        serial_println("Invalid input, day of month is not in range.");
+        print("Invalid input, day of month is not in range.");
         return;
     }
     //setting the day of month
@@ -135,7 +136,7 @@ void setdate (int argc, char* argv[]) {
     //checking if year is valid
     char* year = strtok(NULL, "/");
     if(year == NULL) {
-        serial_println("Invalid input, did not put a year.");
+        print("Invalid input, did not put a year.");
         return;
     }
     //setting the year
@@ -160,7 +161,7 @@ void getdate (int argc, char* argv[]) {
     //Year
     outb(0x70, 0x09);
     printbcd(inb(0x71));
-    serial_println(" ");
+    print(" ");
 }
 
 //allows user to get the time
@@ -178,7 +179,7 @@ void gettime (int argc, char* argv[]) {
     //Second
     outb(0x70, 0x00);
     printbcd(inb(0x71));
-    serial_println(" ");
+    print(" ");
 }
 
 //function to convert from binary to BCD
