@@ -1,6 +1,9 @@
 #include <system.h>
 #include <core/serial.h>
 #include <core/io.h>
+#include <string.h>
+#include "polling.h"
+#include "mpx_supt.h"
 
 /*
   Procedure..: poll
@@ -8,140 +11,81 @@
   Params..: 
 */
 
-int poll(char * buffer, int* count)
-{
-   int maxBufferSize = *count;
-   int counter = 0;
-   int enter = 1;
-   count = &counter;
-   char emptyChar = ' ';
-   char newLine = '\n';
-   int leftCount = 0; 
-   int rightCount = 0;
-   int i;
- 
+int poll(char * buffer, int* count) {
+	char newBuffer[100]; //size will be alocated later
+	char letter[4];
+	int counter = 0;
+	int maxBufferSize = *count;
+	int exit =0;
+	int enter = 0;
+	char emptyChar = ' ';
+	char backspace[] = {'\b',' ','\b','\0'};
 
-    while (enter) // Run continuously
-    {
-	if (inb(COM1+5)&1) // Is a character available?
-	{
-           unsigned char letter = (inb(COM1)); //Get the character
-	   int letterNum = (int) letter;
-	     
-	    if ( (letterNum >=97 && letterNum <=122) || (letterNum >=65 && letterNum <=90) || (letterNum >=48 && letterNum <=57) )//must be number/letter to add to buffer
-	    {
-		if((leftCount-rightCount) == 0) //arrow keys not used or cancel
-		{	
-		   buffer = &letter; //add letter to buffer
-		   klogv(buffer);
-		   buffer++; //move the pointer of the buffer forward one		   
-		   counter++;
-		   count = &counter; //increase counter
-		   
-		}
-		 
-		else if((leftCount - rightCount) > 0)//Cursor is moved to the left
-		{
- 		  buffer -= (leftCount - rightCount); //moves pointer to where new character will be inserted
-		  char temp1 = *buffer; //saves character being overwritten by new character
-		  char temp2; //saves the next character in the buffer
-		  buffer = &letter; // writes new letter overtop of the char saved in temp1 
-		  for(i = 0; i<(leftCount - rightCount); i++)
-		   {
-		     buffer++; // moves ptr over one
-		     temp2 = *buffer; //saves next character in sequence
-		     buffer = &temp1; // replaces character with char saved in temp 1
-		     temp1 = temp2; // temp 1 equal temp 2
+	while(!enter) {  
+    	if (inb(COM1+5)&1) { // Check for character
+            letter[0] = inb(COM1); // Build letter from inb(COM1)
+            letter[1] = inb(COM1);
+            letter[2] = inb(COM1);
+            letter[3] = '\0';
 
-		   }
-		  buffer++;// moves ptr to end of string
-		  counter++;
-		  count = &counter; //increase counter
-
-		}
-
-		
-	      }
-	     
-	    else //check for command keys
-	     {
-	       switch(letterNum) 
-		 {
-		   case 127 : //backspace, removes previous character
-		     klogv("backspace");
-		     buffer--;//moves buffer back one
-		     counter--;
-		     count = &counter; //decrease counter
-		     buffer = &emptyChar;//I think this would erase the character
-                   break;
-		   
-		  case 8: // delete, deletes entire buffer
-			 klogv("delete");
-			for(i = 0; i<counter; i++)
-			{
-			    buffer = &emptyChar;//I think this would erase the character
-			    buffer--;//moves buffer back one
+			// Look for special case characters
+			if ( (letter[0] != BACKSPACE) && (letter[0] != ENTER) && (letter[0] != '\033') ) {
+				newBuffer[++counter] = letter[0]; // Add character to buffer and then increment counter
+				// LOOK AT THIS LATER SOMETHING ISNT RIGHT... BUFFER NEEDS TO BE INIT TO NULL TERM
+				// This will be done in the command handler and when we pass the buffer in
+				newBuffer[++counter] = '\0'; // adds null terminate
+				
+				int count = 4;
+				sys_req(WRITE, COM1, letter, &count); // Write the character to COM1
 			}
-			counter = 0;
-  			count = &counter; //reset counter
-		   break;
 
-		 case 13 ://enter, checks for valid command
-		      klogv("enter");
-		     buffer = buffer - counter;
-		     klogv(buffer);
-		     enter = 0;
-		   break;
-		   
-		 case 10 :  //new line, 
-			klogv("newline");
-		       buffer = &newLine; //add letter to buffer
-		       rightCount = 0;//changes cursor to begining of new line
-		       leftCount = 0;//changes cursor to begining of new line
-		       buffer++; //move the pointer of the buffer forward one
-		       counter++;
-  		       count = &counter; //increase counter
-		       
-		   break;
+			// Handle special case characters
+			else {
+				// Enter Recieved
+				if(strcmp(letter, "\r\000\000") == 0) {
+					int i = 0;
+					serial_println("");
 
-                //IMPORTANT These ints are 100% wrong but they are not on the ascii table
-		 case 37 : //left arrow key
-			klogv("left arrow key");
-			if((leftCount-rightCount) < *count)//will not go before the buffer starts
-			{
-			   leftCount++;
- 			}
-		   break;
+					for(i = 0; i < counter; i++) {
+						sys_req(WRITE, COM1, &newBuffer[i], &counter);
+					}
+					enter = 1;                                 
+				}
+					
+				// Backspace Recieved
+				else if(strcmp(letter, "\177\000\000") == 0) {			
+					newBuffer[counter--] = emptyChar; // @Joe can you explain why we have to do this twice
+					newBuffer[counter--] = emptyChar; // I'm a bit confused on that
+					int backCount = 4;
+					sys_req(WRITE, COM1, &backspace, &backCount);
+				}
+				
+				// Delete recieved
+				else if (strcmp(letter, "\033[3") == 0) {
+					serial_print("\nDelete recieved!");
+					int count = 4;
+					sys_req(WRITE, COM1, letter, &count); // Write letter to COM1
+				}
 
-		case 39 : //right arrow key
-			klogv("right arrow key");
-			if((leftCount-rightCount) > 0)//will not go past the end of the string
-			{
-		       	   rightCount++;
+				// Left arrow Key recieved
+				else if (strcmp(letter, "\033[D") == 0) {
+					int count = 4;
+					sys_req(WRITE, COM1, letter, &count); // Write letter to COM1
+				}
+
+				// Right arrow Key recieved
+				else if (strcmp(letter, "\033[C") == 0) {
+					serial_print("\nRight arrow recieved!");
+					int count = 4;
+					sys_req(WRITE, COM1, letter, &count); // Write letter to COM1
+					// counter++; // Move buffer counter to the right
+				}
 			}
-		   break;
-
-		 }
-	     }
-
+		}
 	}
-    }
-
-	return *count;
+	
+	// Enter pressed
+	count = &counter;   
+	buffer = newBuffer;
+	return 0;
 }
-
- /*
-int counter = 0;
-	while(counter <10)
-	{
-		if (inb(COM1+5)&1)// Is a character available?
-		{
-           		char letter = (inb(COM1)); //Get the character
-			int letterNum = (int) letter;
-			klogv(&letterNum);
-			//serial_printNum(&letterNum);
-			counter++;
-		}
-		
-	}
-*/
