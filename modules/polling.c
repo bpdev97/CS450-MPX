@@ -1,6 +1,7 @@
 #include <system.h>
 #include <core/serial.h>
 #include <core/io.h>
+#include <string.h>
 #include "polling.h"
 #include "mpx_supt.h"
 
@@ -10,99 +11,81 @@
   Params..: 
 */
 
-int poll(char * buffer, int* count)
-{
-   char newBuffer[100]; //size will be alocated later
-   char letter[2];
-   int counter = 0;
-   int maxBufferSize = *count;
-   int exit =0;
-   int enter = 1;
-   char emptyChar = ' ';
-   char backspace[] = {'\b',' ','\b','\0'};
-/*
-   count = &counter;
-   char emptyChar = ' ';
-   char newLine = '\n';
-   int leftCount = 0; 
-   int rightCount = 0; */
+int poll(char * buffer, int* count) {
+	char newBuffer[100]; //size will be alocated later
+	char letter[4];
+	int counter = 0;
+	int maxBufferSize = *count;
+	int exit =0;
+	int enter = 0;
+	char emptyChar = ' ';
+	char backspace[] = {'\b',' ','\b','\0'};
 
-/*  WHAT NEEDS TO BE DONE
-   -Character Values for delete, newline, and arrow keys needed for case statement
-   -delete, newline, and arrow keys implemetation, i have a good idea for how that is done but have't done it yet
-   -how to manipulate console line when backspace, delete, and arrow keys are pressed, no idea on how that works
-*/
+	while(!enter) {  
+    	if (inb(COM1+5)&1) { // Check for character
+            letter[0] = inb(COM1); // Build letter from inb(COM1)
+            letter[1] = inb(COM1);
+            letter[2] = inb(COM1);
+            letter[3] = '\0';
 
-   while(enter)
-    {
-      
-        if (inb(COM1+5)&1) // Is a character available?
-        {
-            letter[0] = inb(COM1);// stores single character to print to com1
-            letter[1] = '\0';
-     	      
-	    if ( (letter[0] >=97 && letter[0] <=122) || (letter[0] >=65 && letter[0] <=90) || (letter[0] >=48 && letter[0] <=57) )//checks for charater or number
-		{
-	  	  newBuffer[counter] = letter[0]; //adds single character to buffer
-	 	  counter++;
-	  	  newBuffer[counter] = letter[1];// adds null terminate
-	   	  counter++;
-		  int count = 2; //used only to print the single character
-                  sys_req(WRITE, COM1, letter, &count);//prints single character from input
+			// Look for special case characters
+			if ( (letter[0] != BACKSPACE) && (letter[0] != ENTER) && (letter[0] != '\033') ) {
+				newBuffer[++counter] = letter[0]; // Add character to buffer and then increment counter
+				// LOOK AT THIS LATER SOMETHING ISNT RIGHT... BUFFER NEEDS TO BE INIT TO NULL TERM
+				// This will be done in the command handler and when we pass the buffer in
+				newBuffer[++counter] = '\0'; // adds null terminate
+				
+				int count = 4;
+				sys_req(WRITE, COM1, letter, &count); // Write the character to COM1
+			}
+
+			// Handle special case characters
+			else {
+				// Enter Recieved
+				if(strcmp(letter, "\r\000\000") == 0) {
+					int i = 0;
+					serial_println("");
+
+					for(i = 0; i < counter; i++) {
+						sys_req(WRITE, COM1, &newBuffer[i], &counter);
+					}
+					enter = 1;                                 
+				}
+					
+				// Backspace Recieved
+				else if(strcmp(letter, "\177\000\000") == 0) {			
+					newBuffer[counter--] = emptyChar; // @Joe can you explain why we have to do this twice
+					newBuffer[counter--] = emptyChar; // I'm a bit confused on that
+					int backCount = 4;
+					sys_req(WRITE, COM1, &backspace, &backCount);
+				}
+				
+				// Delete recieved
+				else if (strcmp(letter, "\033[3") == 0) {
+					serial_print("\nDelete recieved!");
+					int count = 4;
+					sys_req(WRITE, COM1, letter, &count); // Write letter to COM1
+				}
+
+				// Left arrow Key recieved
+				else if (strcmp(letter, "\033[D") == 0) {
+					int count = 4;
+					sys_req(WRITE, COM1, letter, &count); // Write letter to COM1
+				}
+
+				// Right arrow Key recieved
+				else if (strcmp(letter, "\033[C") == 0) {
+					serial_print("\nRight arrow recieved!");
+					int count = 4;
+					sys_req(WRITE, COM1, letter, &count); // Write letter to COM1
+					// counter++; // Move buffer counter to the right
+				}
+			}
 		}
-	    else
-		{
-		     switch(letter[0])
-		     {
-			 int i;
-
-		         case '\r': //enter, works, reprints the buffer in whole and terminates polling
-	                 for(i=0; i<counter; i++)
-	   	         {
- 	    	           sys_req(WRITE, COM1, &newBuffer[i], &count);
-          	         }    
-			 enter =0;                                 
-		     	break;
- 			
-			case 127 : //backspace, works in memory but not on console line
-		     	counter--;
-			newBuffer[counter] = emptyChar;
-			counter--;
-			newBuffer[counter] = emptyChar;
-			int backCount = 4;
- 	    	        sys_req(WRITE, COM1, &backspace, &backCount);
-			break;
-
-			case 8: // delete,does not work, prints '3'
-			 klogv("delete");
-			
-		        break;
-			
-			case '\n' :  //new line, also does not work
-			klogv("newline");
-		      
-		  	 break;
-
-			case 37 : //left arrow key, prints 'D'
-			klogv("left arrow key");
-			
-		   	break;
-
-			case 39 : //right arrow key, prints 'C'
-			klogv("right arrow key");
-			
-		        break;
-
+	}
 	
-                     }
-		}		
-        }
-	
-    }	
-	
+	// Enter pressed
 	count = &counter;   
 	buffer = newBuffer;
 	return 0;
 }
-
- 
