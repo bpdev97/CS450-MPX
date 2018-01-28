@@ -21,7 +21,7 @@ polling.o
 .s.o:
 	$(AS) $(ASFLAGS) -o $@ $<
 .c.o:
-	$(CC) $(CFLAGS) -I../include -o $@ $<3
+	$(CC) $(CFLAGS) -I../include -o $@ $<
 
 all: modules.o
 

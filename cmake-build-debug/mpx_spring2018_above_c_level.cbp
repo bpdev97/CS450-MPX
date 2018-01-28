@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="mpx_spring2018_above_c_level"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="mpx_spring2018_above_c_level">
+				<Option output="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/cmake-build-debug/mpx_spring2018_above_c_level" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/include"/>
+					<Add directory="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/."/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include/c++/v1"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/9.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/cmake-build-debug/Makefile&quot;  VERBOSE=1 mpx_spring2018_above_c_level"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="mpx_spring2018_above_c_level/fast">
+				<Option output="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/cmake-build-debug/mpx_spring2018_above_c_level" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/include"/>
+					<Add directory="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/."/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include/c++/v1"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/9.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/cmake-build-debug/Makefile&quot;  VERBOSE=1 mpx_spring2018_above_c_level/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/include/core/asm.h">
+			<Option target="mpx_spring2018_above_c_level"/>
+		</Unit>
+		<Unit filename="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/include/core/interrupts.h">
+			<Option target="mpx_spring2018_above_c_level"/>
+		</Unit>
+		<Unit filename="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/include/core/io.h">
+			<Option target="mpx_spring2018_above_c_level"/>
+		</Unit>
+		<Unit filename="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/include/core/serial.h">
+			<Option target="mpx_spring2018_above_c_level"/>
+		</Unit>
+		<Unit filename="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/include/core/tables.h">
+			<Option target="mpx_spring2018_above_c_level"/>
+		</Unit>
+		<Unit filename="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/include/mem/heap.h">
+			<Option target="mpx_spring2018_above_c_level"/>
+		</Unit>
+		<Unit filename="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/include/mem/paging.h">
+			<Option target="mpx_spring2018_above_c_level"/>
+		</Unit>
+		<Unit filename="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/include/string.h">
+			<Option target="mpx_spring2018_above_c_level"/>
+		</Unit>
+		<Unit filename="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/include/system.h">
+			<Option target="mpx_spring2018_above_c_level"/>
+		</Unit>
+		<Unit filename="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/kernel/core/interrupts.c">
+			<Option target="mpx_spring2018_above_c_level"/>
+		</Unit>
+		<Unit filename="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/kernel/core/kmain.c">
+			<Option target="mpx_spring2018_above_c_level"/>
+		</Unit>
+		<Unit filename="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/kernel/core/serial.c">
+			<Option target="mpx_spring2018_above_c_level"/>
+		</Unit>
+		<Unit filename="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/kernel/core/system.c">
+			<Option target="mpx_spring2018_above_c_level"/>
+		</Unit>
+		<Unit filename="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/kernel/core/tables.c">
+			<Option target="mpx_spring2018_above_c_level"/>
+		</Unit>
+		<Unit filename="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/kernel/mem/heap.c">
+			<Option target="mpx_spring2018_above_c_level"/>
+		</Unit>
+		<Unit filename="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/kernel/mem/paging.c">
+			<Option target="mpx_spring2018_above_c_level"/>
+		</Unit>
+		<Unit filename="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/lib/string.c">
+			<Option target="mpx_spring2018_above_c_level"/>
+		</Unit>
+		<Unit filename="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/modules/comhand.c">
+			<Option target="mpx_spring2018_above_c_level"/>
+		</Unit>
+		<Unit filename="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/modules/comhand.h">
+			<Option target="mpx_spring2018_above_c_level"/>
+		</Unit>
+		<Unit filename="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/modules/mpx_supt.c">
+			<Option target="mpx_spring2018_above_c_level"/>
+		</Unit>
+		<Unit filename="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/modules/mpx_supt.h">
+			<Option target="mpx_spring2018_above_c_level"/>
+		</Unit>
+		<Unit filename="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/modules/polling.c">
+			<Option target="mpx_spring2018_above_c_level"/>
+		</Unit>
+		<Unit filename="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/modules/polling.h">
+			<Option target="mpx_spring2018_above_c_level"/>
+		</Unit>
+		<Unit filename="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/modules/processcommand.c">
+			<Option target="mpx_spring2018_above_c_level"/>
+		</Unit>
+		<Unit filename="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/modules/processcommand.h">
+			<Option target="mpx_spring2018_above_c_level"/>
+		</Unit>
+		<Unit filename="/Users/Yasi/Desktop/CS450/mpx-spring2018-above-c-level/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
