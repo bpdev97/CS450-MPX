@@ -196,4 +196,23 @@ void idle()
 	sys_req( WRITE, DEFAULT_DEVICE, msg, &count);
     sys_req(IDLE, DEFAULT_DEVICE, NULL, NULL);
   }
+
 }
+
+void print (char* string){
+
+	int character = strlen(string);
+
+	sys_req(WRITE, COM1, string, &character);
+
+}
+
+void println (char* string){
+
+	int character = strlen(string);
+
+	sys_req(WRITE, COM1, string, &character);
+	sys_req(WRITE, COM1, '\n', 1);
+
+}
+
