@@ -24,7 +24,10 @@ void help (int argc, char* argv[]) {
             println("The Set Time command allows the user to input a time.");
         } else if (strcmp(argv[1], "gettime") == 0) {
             println("The Get Time command allows the user to retrieve the set time.");
+        } else if (strcmp(argv[1], "version") == 0) {
+            println("The Version command displays the current version of MPX and the completion date.");
         }
+
      //error checking
         else{
             println("Invalid input, command not valid.");
@@ -36,7 +39,7 @@ void help (int argc, char* argv[]) {
 }
 
 void version (int argc, char* argv[]) {
-    println("Version R1");
+    println("Version R1.");
 }
 
 //shuts down system
