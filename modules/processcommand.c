@@ -35,6 +35,10 @@ void help (int argc, char* argv[]) {
     }
 }
 
+void version (int argc, char* argv[]) {
+    println("Version R1");
+}
+
 //shuts down system
 void shutdown (int argc, char* argv[]) {
     println("Are you sure you want to shut down?");
