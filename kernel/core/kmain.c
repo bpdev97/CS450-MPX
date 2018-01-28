@@ -16,6 +16,7 @@
 #include <core/interrupts.h>
 #include <mem/heap.h>
 #include <mem/paging.h>
+#include <modules/processcommand.h>
 
 
 #include "modules/mpx_supt.h"
@@ -72,4 +73,5 @@ void kmain(void)
    /* Shutdown Procedure */
    klogv("Shutdown complete. You may now turn off the machine. (QEMU: C-a x)");
    hlt();
+
 }

@@ -3,7 +3,7 @@
 #include <core/serial.h>
 #include <core/io.h>
 #include "processcommand.h"
-#include "println.h"
+#include "mpx_supt.h"
 
 void help (int argc, char* argv[]) {
 
@@ -24,7 +24,10 @@ void help (int argc, char* argv[]) {
             println("The Set Time command allows the user to input a time.");
         } else if (strcmp(argv[1], "gettime") == 0) {
             println("The Get Time command allows the user to retrieve the set time.");
+        } else if (strcmp(argv[1], "version") == 0) {
+            println("The Version command displays the current version of MPX and the completion date.");
         }
+
      //error checking
         else{
             println("Invalid input, command not valid.");
@@ -35,9 +38,8 @@ void help (int argc, char* argv[]) {
     }
 }
 
-//shuts down system
-void shutdown (int argc, char* argv[]) {
-    println("Are you sure you want to shut down?");
+void version (int argc, char* argv[]) {
+    println("Version R1.");
 }
 
 //allows user to set the time
@@ -151,12 +153,12 @@ void getdate (int argc, char* argv[]) {
     //Month
     outb(0x70, 0x08);
     printbcd(inb(0x71));
-    println("/");
+    print("/");
 
     //Day of month
     outb(0x70, 0x07);
     printbcd(inb(0x71));
-    println("/");
+    print("/");
 
     //Year
     outb(0x70, 0x09);
@@ -169,12 +171,12 @@ void gettime (int argc, char* argv[]) {
     //Hour
     outb(0x70, 0x04);
     printbcd(inb(0x71));
-    println(":");
+    print(":");
 
     //Minute
     outb(0x70, 0x02);
     printbcd(inb(0x71));
-    println(":");
+    print(":");
 
     //Second
     outb(0x70, 0x00);

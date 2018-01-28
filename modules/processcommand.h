@@ -3,6 +3,7 @@
 #define MPX_SPRING2018_ABOVE_C_LEVEL_PROCESSCOMMAND_H
 
 void help (int numword, char* args[]);
+void version (int argc, char* argv[]);
 void shutdown (int argc, char* argv[]);
 void settime (int argc, char* argv[]);
 void setdate (int argc, char* argv[]);
