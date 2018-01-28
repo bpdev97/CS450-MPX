@@ -2,8 +2,8 @@
 #include <string.h>
 #include <core/serial.h>
 #include <core/io.h>
-#include "processcommand.h"
 #include "mpx_supt.h"
+#include "processcommand.h"
 
 void help (int argc, char* argv[]) {
 
@@ -15,22 +15,36 @@ void help (int argc, char* argv[]) {
     //listing each command and what they do
     else if (argc == 2) {
         if (strcmp(argv[1], "shutdown") == 0) {
-            println("The Shutdown command shuts down the computer system.");
-        } else if (strcmp(argv[1], "setdate") == 0) {
-            println("The Set Date command allows the user to input a date.");
-        } else if (strcmp(argv[1], "getdate") == 0) {
-            println("The Get Date command allows the user to retrieve the set date.");
-        } else if (strcmp(argv[1], "settime") == 0) {
-            println("The Set Time command allows the user to input a time.");
-        } else if (strcmp(argv[1], "gettime") == 0) {
-            println("The Get Time command allows the user to retrieve the set time.");
-        } else if (strcmp(argv[1], "version") == 0) {
-            println("The Version command displays the current version of MPX and the completion date.");
+            println("The shutdown command shuts down the computer system.");
+        } 
+        
+        else if (strcmp(argv[1], "clear") == 0) {
+            println("The clear command clears com1 by printing a number of new lines.");
+        }        
+
+        else if (strcmp(argv[1], "setdate") == 0) {
+            println("The Set date command allows the user to input a date.");
+        } 
+        
+        else if (strcmp(argv[1], "getdate") == 0) {
+            println("The getdate command allows the user to retrieve the set date.");
+        } 
+        
+        else if (strcmp(argv[1], "settime") == 0) {
+            println("The settime command allows the user to input a time.");
+        } 
+        
+        else if (strcmp(argv[1], "gettime") == 0) {
+            println("The gettime command allows the user to retrieve the set time.");
+        } 
+        
+        else if (strcmp(argv[1], "version") == 0) {
+            println("The version command displays the current version of MPX and the completion date.");
         }
 
      //error checking
         else{
-            println("Invalid input, command not valid.");
+            println("Invalid input, command not found.");
         }
     }
     else{
@@ -39,7 +53,7 @@ void help (int argc, char* argv[]) {
 }
 
 void version (int argc, char* argv[]) {
-    println("Version R1.");
+    println("Version: R1.");
 }
 
 //allows user to set the time
@@ -99,28 +113,28 @@ void settime (int argc, char* argv[]) {
 
 }
 
-//allows user to set the date
+// sets the date
 void setdate (int argc, char* argv[]) {
     cli();
 
-    //checking array size and error checking
+    // checking array size and error checking
     if(argc == 1){
         println("Invalid input, did not put the date.");
         return;
     }
 
-    //checking if month is valid
+    // checking if month is valid
     char* month = strtok(argv[1], "/");
     int months = atoi(month);
     if(months > 12 || months < 1){
         println("Invalid input, month is not in range.");
         return;
     }
-    //setting the month
+    // setting the month
     outb(0x70, 0x08);
     outb(0x71, tobcd(atoi(month)));
 
-    //checking if the day of month is valid
+    // checking if the day of month is valid
     char* dayofmonth = strtok(NULL, "/");
     if(dayofmonth == NULL) {
         println("Invalid input, did not put a day of the month.");
@@ -131,60 +145,60 @@ void setdate (int argc, char* argv[]) {
         println("Invalid input, day of month is not in range.");
         return;
     }
-    //setting the day of month
+    // setting the day of month
     outb(0x70, 0x07);
     outb(0x71, tobcd(atoi(dayofmonth)));
 
-    //checking if year is valid
+    // checking if year is valid
     char* year = strtok(NULL, "/");
     if(year == NULL) {
         println("Invalid input, did not put a year.");
         return;
     }
-    //setting the year
+    // setting the year
     outb(0x70, 0x09);
     outb(0x71, tobcd(atoi(year)));
 
     sti();
 }
 
-//allows user to get the date
+// allows user to get the date
 void getdate (int argc, char* argv[]) {
-    //Month
+    // Month
     outb(0x70, 0x08);
     printbcd(inb(0x71));
     print("/");
 
-    //Day of month
+    // Day of month
     outb(0x70, 0x07);
     printbcd(inb(0x71));
     print("/");
 
-    //Year
+    // Year
     outb(0x70, 0x09);
     printbcd(inb(0x71));
     println(" ");
 }
 
-//allows user to get the time
+// allows user to get the time
 void gettime (int argc, char* argv[]) {
-    //Hour
+    // Hour
     outb(0x70, 0x04);
     printbcd(inb(0x71));
     print(":");
 
-    //Minute
+    // Minute
     outb(0x70, 0x02);
     printbcd(inb(0x71));
     print(":");
 
-    //Second
+    // Second
     outb(0x70, 0x00);
     printbcd(inb(0x71));
     println(" ");
 }
 
-//function to convert from binary to BCD
+// function to convert from binary to BCD
 int tobcd (int binary) {
     int firstdigit = binary % 10;
     int seconddigit = binary / 10;
@@ -200,7 +214,7 @@ int tobcd (int binary) {
 //    return fulldigit;
 //}
 
-//function to print out BCD
+// function to print out BCD
 void printbcd (int bcd){
     int firstdigit = bcd >> 4;
     int seconddigit = bcd & 15;
