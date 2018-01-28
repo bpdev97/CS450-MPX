@@ -212,7 +212,7 @@ void println (char* string){
 	int character = strlen(string);
 
 	sys_req(WRITE, COM1, string, &character);
-	sys_req(WRITE, COM1, '\n', 1);
+	sys_req(WRITE, COM1, " \n", 1);
 
 }
 

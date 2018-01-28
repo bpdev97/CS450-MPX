@@ -42,11 +42,6 @@ void version (int argc, char* argv[]) {
     println("Version R1.");
 }
 
-//shuts down system
-void shutdown (int argc, char* argv[]) {
-    println("Are you sure you want to shut down?");
-}
-
 //allows user to set the time
 void settime (int argc, char* argv[]) {
     cli();
@@ -158,12 +153,12 @@ void getdate (int argc, char* argv[]) {
     //Month
     outb(0x70, 0x08);
     printbcd(inb(0x71));
-    println("/");
+    print("/");
 
     //Day of month
     outb(0x70, 0x07);
     printbcd(inb(0x71));
-    println("/");
+    print("/");
 
     //Year
     outb(0x70, 0x09);
@@ -176,12 +171,12 @@ void gettime (int argc, char* argv[]) {
     //Hour
     outb(0x70, 0x04);
     printbcd(inb(0x71));
-    println(":");
+    print(":");
 
     //Minute
     outb(0x70, 0x02);
     printbcd(inb(0x71));
-    println(":");
+    print(":");
 
     //Second
     outb(0x70, 0x00);
