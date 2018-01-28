@@ -93,5 +93,7 @@ int sys_free_mem(void *ptr);
   Params..: None
 */
 void idle();
+void print (char* string);
+void println (char* string);
 
 #endif
