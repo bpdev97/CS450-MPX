@@ -10,6 +10,9 @@
   Description..: 
   Params..: 
 */
+//alt delete - insert
+//tab delete needs to go back five spaces
+//sys_req to print
 /*
 TO BE DONE
   Need to fix console line for delete and backspace
