@@ -14,15 +14,14 @@ OBJFILES =\
 mpx_supt.o \
 comhand.o \
 processcommand.o\
-polling.o\
-println.o
+polling.o
 
 .c.s:
 	$(CC) $(CFLAGS) -S -o $@ $<
 .s.o:
 	$(AS) $(ASFLAGS) -o $@ $<
 .c.o:
-	$(CC) $(CFLAGS) -I../include -o $@ $<
+	$(CC) $(CFLAGS) -I../include -o $@ $<3
 
 all: modules.o
 
