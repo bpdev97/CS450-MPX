@@ -221,5 +221,5 @@ void printbcd (int bcd){
     char ascii = firstdigit + 48;
     char asciii = seconddigit + 48;
     char array[3] = {ascii , asciii, '\0'};
-    println(array);
+    print(array);
 }
