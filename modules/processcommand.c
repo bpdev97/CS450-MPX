@@ -67,7 +67,7 @@ void settime (int argc, char* argv[]) {
     }
 
     //checking if hour is valid
-    char* hour = strtok(argv[1], ":");
+    char* hour = strtok(argv[1], ":"); //ERROR
     int hours = atoi(hour);
     if(hours < 0 || hours > 24){
         println("Invalid input, hour not in range.");

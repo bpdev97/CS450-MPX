@@ -43,7 +43,7 @@ int comhand() {
     }
 
     else if(strcmp(argv[0], "version") == 0) {
-      version(argc, argc);
+      version(argc, argv);
     }
 
     // shutdown the os
@@ -61,19 +61,19 @@ int comhand() {
     }
 
     else if(strcmp(argv[0], "settime") == 0) {
-      settime(argc, argc);
+      settime(argc, argv);
     }
 
     else if(strcmp(argv[0], "gettime") == 0) {
-      gettime(argc, argc);
+      gettime(argc, argv);
     }
     
     else if(strcmp(argv[0], "setdate") == 0) {
-      setdate(argc, argc);
+      setdate(argc, argv);
     }
 
     else if(strcmp(argv[0], "getdate") == 0) {
-      getdate(argc, argc);
+      getdate(argc, argv);
     }
     
     // Command not recognized
