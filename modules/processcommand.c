@@ -102,7 +102,7 @@ void settime (int argc, char* argv[]) {
 
     int seconds = atoi(second);
     if(seconds < 0 || seconds > 59){
-        println("Invalid input, minute not in range.");
+        println("Invalid input, second not in range.");
         return;
     }
     //setting the actual seconds
