@@ -10,139 +10,130 @@
   Description..: 
   Params..: 
 */
-/*
-TO BE DONE
-  Need to fix console line for delete and backspace
-  Probably need some more error handling
-  Delete and insert is actually bigger than a byte which is a problem we need to discuss
-  New line implementation?
-*/
+char backspace[] = {'\b',' ','\b','\0'};
+
 
 int poll(char * buffer, int* count) {
-	char letter[4];
+	char letter[5];
 	int counter = 0;
 	int maxBufferSize = *count;
 	int enter = 0;
-	char backspace[] = {'\b',' ','\b','\0'};
-        int leftCount = 0;
-	int rightCount = 0;
-
+	int cursorPosition = 0;
 
 	while(!enter) {  
     	if (inb(COM1+5)&1) { // Check for character
             letter[0] = inb(COM1); // Build letter from inb(COM1)
             letter[1] = inb(COM1);
             letter[2] = inb(COM1);
-            letter[3] = '\0';
+	    letter[3] = inb(COM1);
+            letter[4] = '\0';
 			// Look for special case characters
-			if ( (letter[0] != BACKSPACE) && (letter[0] != ENTER) && (letter[0] != '\033') &&  (strcmp(letter, "~\000\000") != 0) && (counter < maxBufferSize))
-			 {
-				if((leftCount-rightCount) == 0)
-				{
-				   
+			if ( (letter[0] != BACKSPACE) && (letter[0] != TAB) &&(letter[0] != ENTER) && (letter[0] != '\033') && (counter < maxBufferSize)) {
+				if(cursorPosition == 0){
 				   buffer[counter] = letter[0]; // Add character to buffer and then increment counter
  			           counter++;//increase counter
-				   int count = 4;
-				   sys_req(WRITE, COM1, letter, &count); // Write the character to COM1
+				   print(letter); // Write the character to COM1
 				}
 
-				else if((leftCount - rightCount) > 0)//Cursor is moved to the left
-				{
-				   
- 		 		   counter -= ((leftCount - rightCount)); //moves pointer to null terminator left of char to be inserted
+				else if(cursorPosition> 0){//Cursor is moved to the left
+				   clearCommandLine(counter,cursorPosition);  
+ 		 		   counter -= (cursorPosition); //moves pointer to null terminator left of char to be inserted
 		 		   char temp1 =  buffer[counter]; //saves character being overwritten by new character
 		 		   char temp2; 			    //saves the next character in the buffer
 		 		   buffer[counter] = letter[0]; // writes new letter overtop of the char saved in temp1 
 		 		   int i;
-				   for(i = 0; i<(leftCount - rightCount); i++)
-		                   {
+
+				   for(i = 0; i<cursorPosition; i++) {
 		    			 counter++; // moves ptr over to next character
 		    			 temp2 = buffer[counter]; //saves next character in sequence
 		    			 buffer[counter] = temp1; // replaces character with char saved in temp 1
 		     			 temp1 = temp2; // temp 1 equal temp 2
 		  		   }
+
 				  counter++;
 			          buffer[counter] = temp1;//adds last character
-				  
-			          int count = 4;
-				  sys_req(WRITE, COM1, letter, &count); // Write the character to COM1
+			          print(buffer);
+				  resetCursor(cursorPosition);
 				}
 				
 			}
 
 			// Handle special case characters
-			else if(counter != 0){
+			else if(counter > 0){
 				// Enter Recieved
-				if(strcmp(letter, "\r\000\000") == 0) {
+				if(strcmp(letter, "\r\000\000\000") == 0) {
 					
 					   int i = 0;
-					   serial_println("");
+					   print("\r");
 					   buffer[counter] = '\0';
 					   enter = 1;     
 					                          
 				}
 					
 				// Backspace Recieved
-				else if(strcmp(letter, "\177\000\000") == 0) {	
-					if((leftCount - rightCount) == 0)
-					{ 
+				else if(strcmp(letter, "\177\000\000\000") == 0 && ((counter - cursorPosition)>0) ) {	
+
+					if(cursorPosition == 0){ //no cursor shift
 				          counter--;
-					  buffer[counter] = '\0'; 
+					  print(backspace);
+					  buffer[counter] = '\0';
 					}
-					else if((leftCount - rightCount) > 0)
-					{
-			                 counter -= ((leftCount - rightCount)+1); //moves pointer to  char that is to be deleted
+
+					else if(cursorPosition> 0){//cursor shift
+					 clearCommandLine(counter,cursorPosition);  
+			                 counter -= (cursorPosition+1); //moves pointer to  char that is to be deleted
 		 		   	 int i;
-				  	 for(i = 0; i<(leftCount - rightCount); i++)
-		                  	 {
+
+				  	 for(i = 0; i<cursorPosition; i++){
 					   buffer[counter] = buffer[counter+1];//shifts characters to the left
 		    		           counter++;
 		  		   	 }
+
+					 buffer[counter] = '\0';
+					 print(buffer);
+					 resetCursor(cursorPosition);
 					}
-					int backCount = 4;
-					sys_req(WRITE, COM1, &backspace, &backCount);
 				}
 				
 				// Delete recieved
-				else if (strcmp(letter, "\033[3") == 0) {
+				else if (strcmp(letter, "\033[3~") == 0) {
 					 
-					//delete is bigger than 4 long "\033[3" and "~\000\000"
-					//insert is "\033[3" and ";2~"
-
-
-					/*int count = 4; //Does not work
-					sys_req(WRITE, COM1, letter, &count);*/
-					if((leftCount - rightCount) > 0)
-					{
-			                 counter -= ((leftCount - rightCount)); //moves pointer to  char that is to be deleted
+					if(cursorPosition > 0 && counter >1){ //must have more than one char and cursor is shifter
+					 clearCommandLine(counter,cursorPosition);
+			                 counter -= cursorPosition; //moves pointer to  char that is to be deleted
 		 		   	 int i;
-				  	 for(i = 0; i<((leftCount - rightCount)); i++)
-		                  	 {
+				  	 for(i = 0; i<cursorPosition; i++){
 						buffer[counter] = buffer[counter+1]; //moves characters to the left
 		    			 	counter++;
 		  		   	 }
 					  counter--;	
-					  leftCount--;//moves cursor to the right one
+					  cursorPosition--;//moves cursor to the right one
+					  print(buffer);
+					  resetCursor(cursorPosition);
 					}
+					else if(cursorPosition > 0 && counter == 1){ //if there is only one character left
+					   buffer[0] = '\0';
+					   clearCommandLine(counter,cursorPosition);
+					   counter--;
+					   cursorPosition = 0;
+					}
+				        
 				}
 
 				// Left arrow Key recieved
-				else if (strcmp(letter, "\033[D") == 0) {
+				else if (strcmp(letter, "\033[D\000") == 0) {
 					
-					if((leftCount-rightCount) < counter)//will not go before the buffer starts
-					{
-			   		   leftCount ++;
-					   int count = 4;
-					   sys_req(WRITE, COM1, letter, &count); // Write letter to COM1
+					if(cursorPosition < counter){//will not go before the buffer starts
+			   		   cursorPosition++;
+				           print(letter);
  					}
 				}
 				// Right arrow Key recieved
-				else if (strcmp(letter, "\033[C") == 0) {
-					if((leftCount-rightCount) > 0)//will not go past the end of the string
-					{
-		       	  		   rightCount++;
-					   int count = 4;
-					   sys_req(WRITE, COM1, letter, &count); // Write letter to COM1
+				else if (strcmp(letter, "\033[C\000") == 0) {
+
+					if(cursorPosition > 0){//will not go past the end of the buffer
+		       	  		   cursorPosition--;
+					   print(letter);
 					}
 					
 				}
@@ -151,7 +142,23 @@ int poll(char * buffer, int* count) {
 	}
 	
 	// Enter pressed
-	count = &counter;  
+ 	count = &counter;  
 	return 0;
+}
+
+void clearCommandLine(int counter,  int cursorPosition){
+  int i;
+  for(i=0; i<cursorPosition;i++){
+	print("\033[C\000");
+  }
+  for(i=0; i<counter; i++){
+	print(backspace);
+  }
+}
+void resetCursor(int cursorPosition){
+  int i;
+  for(i=0; i<cursorPosition;i++){
+	print("\033[D\000");
+  }
 }
 
