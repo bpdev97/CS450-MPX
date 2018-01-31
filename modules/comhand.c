@@ -21,6 +21,10 @@ int comhand() {
   int bufferSize;
   int quit=0;
   char *argv[20];
+
+  // char tempstring[50];
+  // sprintf(tempstring, "Hello World");
+  // println(tempstring);
   
   while(!quit) {
     sys_req(WRITE, DEFAULT_DEVICE, "~> ", 3); // print prompt
