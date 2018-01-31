@@ -279,7 +279,7 @@ char *itoa(int value, char *str, int base){
 int sprintf(char *str, const char *format, ...){
     va_list ap;
     va_start(ap, format);
-    char *index;
+    const char *index;
     int i = 0;
     int length = 0;
     char s[33];

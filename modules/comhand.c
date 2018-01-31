@@ -21,7 +21,6 @@ int comhand() {
   char cmdBuffer[100];
   int bufferSize;
   int quit=0;
-  char *argv[20];
   char *argv[20]; // Maximum number of command arguments is 19
 
   // char tempstring[50];
