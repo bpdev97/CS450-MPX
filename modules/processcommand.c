@@ -155,6 +155,12 @@ void setdate (int argc, char* argv[]) {
         println("Invalid input, did not put a year.");
         return;
     }
+    //checking length of year
+    int years = atoi(year);
+    if(years > 99){
+        println("Invalid input, year must be two characters long.");
+        return;
+    }
     // setting the year
     outb(0x70, 0x09);
     outb(0x71, tobcd(atoi(year)));

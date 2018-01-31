@@ -53,7 +53,16 @@ int comhand() {
     // shutdown the os
     else if(strcmp(argv[0], "shutdown") == 0 || strcmp(argv[0], "quit") == 0
       || strcmp(argv[0], "exit") == 0) {
-      quit = 1;
+      println("Are you sure you want to shutdown? Enter Y or N.");
+      int num = 1;
+      char array[1];
+      poll(array, &num);
+      strcmp(array, "Y");
+      strcmp(array, "N");
+
+      if(strcmp(array, "Y") == 0) {
+        quit = 1;
+      }
     }
 
     // Clear the screen
