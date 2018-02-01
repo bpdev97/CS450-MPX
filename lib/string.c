@@ -277,16 +277,30 @@ char *itoa(int value, char *str, int base){
     return reverse(str, 0, i-1);
 }
 
+/**************************************************
+ * sprintf takes in a blank character array, a string with or without format tags,
+ * and as many arguments as there are tags. sprintf formats the given
+ * string and outputs it into the blank character array. The return value is an integer
+ * value representing the number of character written to the character array.
+ * Format tags that work as of now include, integers, hexadecimal, octal,
+ * single characters, and strings.
+**************************************************/
 int sprintf(char *str, const char *format, ...){
+    //va_lists are how you pass in arbitrary amounts of arguments
     va_list ap;
     va_start(ap, format);
 
     char *index = str; //Index represents the end of the output string
-    int i = 0;
-    int length = 0;
-    char s[33];
-    char *s2;
+    int i = 0; //Used to store the current argument from va_list
+    int length = 0; //This is used to track how many characters are being concatenated onto the output string
+    char s[33]; //Temp string storage for itoa output
+    char *s2; //Used to store the current argument from va_list
 
+    /*********************************************
+     * These loops don't make a ton of sense right now but
+     * they work. I will come back and clean them up later if
+     * there is time. -Addison
+    *********************************************/
     while(*format != '\0'){
         while(*format != '%' && *format != '\0'){
             *index++ = *format++;
@@ -353,6 +367,7 @@ int sprintf(char *str, const char *format, ...){
                 index += length;
                 break;
 
+            //Default case just breaks out if the tag is bad
             default:
               break;
         }
@@ -362,6 +377,9 @@ int sprintf(char *str, const char *format, ...){
     va_end(ap);
     return strlen(str);
 }
+
+
+//EVERYTHING AFTER THIS POINT IS EXPERIMENTAL AND INCOMPLETE
 
 
 /*
@@ -460,25 +478,9 @@ int printf(const char *format, ...){
 
   va_start(ap, format);
   len = sprintfv(s, format, ap);
-  va_end;
   print(s);
   return len;
 }
-*/
-
-
-
-/* And finally....
-   For the brave ones! (Note: you'll need to add a prototype to string.h)
-   sprintf must work properly for the following types to receive extra credit:
-     1) characters
-     2) strings
-     3) signed integers
-     4) hexadecimal numbers may be useful
-     ...
-     \infty) Or feel free to completely implement sprintf
-             (Read the man Page: $ man sprintf)
-   int sprintf(char *str, const char *format, ...); 
 */
 
 
