@@ -102,7 +102,7 @@ void settime (int argc, char* argv[]) {
 
     int seconds = atoi(second);
     if(seconds < 0 || seconds > 59){
-        println("Invalid input, minute not in range.");
+        println("Invalid input, second not in range.");
         return;
     }
     //setting the actual seconds
@@ -130,9 +130,6 @@ void setdate (int argc, char* argv[]) {
         println("Invalid input, month is not in range.");
         return;
     }
-    // setting the month
-    outb(0x70, 0x08);
-    outb(0x71, tobcd(atoi(month)));
 
     // checking if the day of month is valid
     char* dayofmonth = strtok(NULL, "/");
@@ -145,9 +142,6 @@ void setdate (int argc, char* argv[]) {
         println("Invalid input, day of month is not in range.");
         return;
     }
-    // setting the day of month
-    outb(0x70, 0x07);
-    outb(0x71, tobcd(atoi(dayofmonth)));
 
     // checking if year is valid
     char* year = strtok(NULL, "/");
@@ -155,9 +149,23 @@ void setdate (int argc, char* argv[]) {
         println("Invalid input, did not put a year.");
         return;
     }
+    //checking length of year
+    int years = atoi(year);
+    if(years > 99){
+        println("Invalid input, year must be two characters long.");
+        return;
+    }
     // setting the year
     outb(0x70, 0x09);
     outb(0x71, tobcd(atoi(year)));
+
+    // setting the day of month
+    outb(0x70, 0x07);
+    outb(0x71, tobcd(atoi(dayofmonth)));
+
+    // setting the month
+    outb(0x70, 0x08);
+    outb(0x71, tobcd(atoi(month)));
 
     sti();
 }
