@@ -59,10 +59,43 @@ char* strtok(char *s1, const char *s2);
 */
 int atoi(const char *s);
 
+/*
+  Procedure..: swap
+  Description..: Swaps two charcters
+  Params..: char *x-single char, char*y-single char
+*/
 void swap(char *x, char *y);
+
+/*
+  Procedure..: reverse
+  Description..: Reverses a string
+  Params..: char *buffer-string buffer, int i-first position, int j-last position
+*/
 char *reverse(char *buffer, int i, int j);
+
+/*
+  Procedure..: abs
+  Description..: Returns absolute value of signed int
+  Params..: int x-signed int
+*/
+int abs(int x);
+
+/*
+  Procedure..: itoa
+  Description..: Converts an integer to an ASCII string
+  Params..: int value-integer to convert, char *str-output string, int base-number base
+*/
 char *itoa(int value, char *str, int base);
+
+/*
+  Procedure..: sprintf
+  Description..: Formats a string using tags and given a list of arguments
+  Params..: char *str-output string, const char *format-format string, ...-arbitrary list of arguments
+*/
 int sprintf(char *str, const char *format, ...);
+
+
+
 // int sprintfv(char *str, const char *format, va_list ap);
 //int printf(const char *format, ...);
 
