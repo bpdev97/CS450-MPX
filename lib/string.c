@@ -1,6 +1,7 @@
 #include <system.h>
 #include <string.h>
 #include <stdarg.h>
+#include "../modules/mpx_supt.h"
 
 /* ************************************ *
  * Author:  Forrest Desjardins    	*
@@ -279,27 +280,32 @@ char *itoa(int value, char *str, int base){
 int sprintf(char *str, const char *format, ...){
     va_list ap;
     va_start(ap, format);
-    const char *index;
+
+    char *index = str; //Index represents the end of the output string
     int i = 0;
     int length = 0;
     char s[33];
     char *s2;
 
-    for(index = format; *index != '\0'; index++){
-        while(*index != '%'){
-            *str++ = *index++;
+    while(*format != '\0'){
+        while(*format != '%' && *format != '\0'){
+            *index++ = *format++;
         }
-        index++;
-
-        switch(*index){
+        if(*format == '\0'){
+          // *index = '\0';
+          break;
+        }
+        format++;
+        
+        switch(*format){
 
             //Decimal/Integer argument
             case 'd':
                 i = va_arg(ap, int);
                 strcpy(s, itoa(i, s, 10));
                 length = strlen(s);
-                strcat(str, s);
-                str += length;
+                strcat(index, s);
+                index += length;
                 memset(s, 0, 33);
                 break;
 
@@ -308,8 +314,8 @@ int sprintf(char *str, const char *format, ...){
                 i = va_arg(ap, int);
                 strcpy(s, itoa(i, s, 10));
                 length = strlen(s);
-                strcat(str, s);
-                str += length;
+                strcat(index, s);
+                index += length;
                 memset(s, 0, 33);
                 break;
 
@@ -318,8 +324,8 @@ int sprintf(char *str, const char *format, ...){
                 i = va_arg(ap, int);
                 strcpy(s, itoa(i, s, 16));
                 length = strlen(s);
-                strcat(str, s);
-                str += length;
+                strcat(index, s);
+                index += length;
                 memset(s, 0, 33);
                 break;
 
@@ -328,30 +334,138 @@ int sprintf(char *str, const char *format, ...){
                 i = va_arg(ap, int);
                 strcpy(s, itoa(i, s, 8));
                 length = strlen(s);
-                strcat(str, s);
-                str += length;
+                strcat(index, s);
+                index += length;
                 memset(s, 0, 33);
                 break;
 
             //Character argument
             case 'c':
                 i = va_arg(ap, int);
-                *str++ = i;
+                *index++ = i;
                 break;
 
             //String argument
             case 's':
                 s2 = va_arg(ap, char*);
                 length = strlen(s2);
-                strcat(str, s2);
-                str += length;
+                strcat(index, s2);
+                index += length;
                 break;
 
+            default:
+              break;
         }
+
+        format++;
     }
     va_end(ap);
-    return strlen(str)+1;
+    return strlen(str);
 }
+
+
+/*
+int sprintfv(char *str, const char *format, va_list ap){
+    // va_list ap;
+    // va_start(ap, format);
+
+    char *index = str; //Index represents the end of the output string
+    int i = 0;
+    int length = 0;
+    char s[33];
+    char *s2;
+
+    while(*format != '\0'){
+        while(*format != '%' && *format != '\0'){
+            *index++ = *format++;
+        }
+        if(*format == '\0'){
+          // *index = '\0';
+          break;
+        }
+        format++;
+        
+        switch(*format){
+
+            //Decimal/Integer argument
+            case 'd':
+                i = va_arg(ap, int);
+                strcpy(s, itoa(i, s, 10));
+                length = strlen(s);
+                strcat(index, s);
+                index += length;
+                memset(s, 0, 33);
+                break;
+
+            //Alternate decimal/integer argument
+            case 'i':
+                i = va_arg(ap, int);
+                strcpy(s, itoa(i, s, 10));
+                length = strlen(s);
+                strcat(index, s);
+                index += length;
+                memset(s, 0, 33);
+                break;
+
+            //Hex argument
+            case 'x':
+                i = va_arg(ap, int);
+                strcpy(s, itoa(i, s, 16));
+                length = strlen(s);
+                strcat(index, s);
+                index += length;
+                memset(s, 0, 33);
+                break;
+
+            //Octal argument
+            case 'o':
+                i = va_arg(ap, int);
+                strcpy(s, itoa(i, s, 8));
+                length = strlen(s);
+                strcat(index, s);
+                index += length;
+                memset(s, 0, 33);
+                break;
+
+            //Character argument
+            case 'c':
+                i = va_arg(ap, int);
+                *index++ = i;
+                break;
+
+            //String argument
+            case 's':
+                s2 = va_arg(ap, char*);
+                length = strlen(s2);
+                strcat(index, s2);
+                index += length;
+                break;
+
+            default:
+              break;
+        }
+
+        format++;
+    }
+    va_end(ap);
+    return strlen(str);
+}
+*/
+
+/*
+int printf(const char *format, ...){
+  char s[128];
+  int len = 0;
+  va_list ap;
+
+  va_start(ap, format);
+  len = sprintfv(s, format, ap);
+  va_end;
+  print(s);
+  return len;
+}
+*/
+
 
 
 /* And finally....

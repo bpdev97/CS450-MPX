@@ -23,10 +23,6 @@ int comhand() {
   int quit=0;
   char *argv[20]; // Maximum number of command arguments is 19
 
-  // char tempstring[50];
-  // sprintf(tempstring, "Hello World");
-  // println(tempstring);
-  
   while(!quit) {
     print("~> "); // print prompt
     memset(cmdBuffer, '\0', 100); // make cmdBuffer all terminators

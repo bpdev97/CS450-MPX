@@ -63,5 +63,7 @@ void swap(char *x, char *y);
 char *reverse(char *buffer, int i, int j);
 char *itoa(int value, char *str, int base);
 int sprintf(char *str, const char *format, ...);
+// int sprintfv(char *str, const char *format, va_list ap);
+//int printf(const char *format, ...);
 
 #endif
