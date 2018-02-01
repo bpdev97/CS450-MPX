@@ -130,9 +130,6 @@ void setdate (int argc, char* argv[]) {
         println("Invalid input, month is not in range.");
         return;
     }
-    // setting the month
-    outb(0x70, 0x08);
-    outb(0x71, tobcd(atoi(month)));
 
     // checking if the day of month is valid
     char* dayofmonth = strtok(NULL, "/");
@@ -145,9 +142,6 @@ void setdate (int argc, char* argv[]) {
         println("Invalid input, day of month is not in range.");
         return;
     }
-    // setting the day of month
-    outb(0x70, 0x07);
-    outb(0x71, tobcd(atoi(dayofmonth)));
 
     // checking if year is valid
     char* year = strtok(NULL, "/");
@@ -164,6 +158,14 @@ void setdate (int argc, char* argv[]) {
     // setting the year
     outb(0x70, 0x09);
     outb(0x71, tobcd(atoi(year)));
+
+    // setting the day of month
+    outb(0x70, 0x07);
+    outb(0x71, tobcd(atoi(dayofmonth)));
+
+    // setting the month
+    outb(0x70, 0x08);
+    outb(0x71, tobcd(atoi(month)));
 
     sti();
 }
