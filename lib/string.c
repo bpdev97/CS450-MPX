@@ -223,12 +223,12 @@ int abs(int x){
     return x;
 }
 
-/*********************************************************
+/**
  * itoa converts an integer value to a string using the given base and stores the result.
  * If the base is 10 and the value is negative then the string will have a leading minus
  * sign. With all other bases the value is considered unsigned. The number base is 
  * limited between 2 and 36. The returned string is null terminated.
-*********************************************************/
+*/
 char *itoa(int value, char *str, int base){
     //Reject bases outside of the range
     if(base < 2 || base > 36){
@@ -246,21 +246,21 @@ char *itoa(int value, char *str, int base){
         return str;
     }
 
-    /*******************************************************
+    /**
      * Since itoa is defined to allow users to convert to arbitrary number bases we
      * have to do that before converting to a string. The way to do this is to continually
      * take the modulo of the original number and append the remainder to the string while
      * dividing the original number by the base. You do this until the original number is not
      * greater than 0.
-    *******************************************************/
+    */
     while(n > 0){
         int remainder = n % base;
-        /***************************************************
+        /**
          * If the remainder is greater than 9 then it cannot be represented by a single number.
          * Therefore, characters A-Z are used. In ASCII, '0' is 48 and 'A' is 65. These numbers
          * are used as offsets to get the correct ASCII characters. This behavior is easily
          * represented with a ternary operator.
-        ***************************************************/
+        */
         str[i++] = (remainder > 9)? 65 + (remainder - 10) : 48 + remainder;
         n = n/base;
     }
