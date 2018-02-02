@@ -10,7 +10,7 @@ void help (int argc, char* argv[]) {
     //checking array size and setting up the Help menu
     if (argc == 1) {
         println("To use the help command type 'help' followed by the command you would like to use.");
-        println("The commands you can use include: Help, Shutdown, and Date and Time.");
+        println("The commands you can use include: clear, shutdown, setdate, getdate, settime, gettime, and version.");
     }
     //listing each command and what they do
     else if (argc == 2) {

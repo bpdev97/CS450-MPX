@@ -7,8 +7,8 @@
 
 /*
   Procedure..: poll
-  Description..: 
-  Params..: 
+  Description..: Takes keyboard input and checks to see if it is a character or command key.  Characters are stored in the buffer and commands modify the buffer
+  Params..: pointer to buffer and pointer to buffersize 
 */
 char backspace[] = {'\b',' ','\b','\0'};
 
@@ -29,7 +29,7 @@ int poll(char * buffer, int* count) {
             letter[4] = '\0';
 			// Look for special case characters
 			if ( (letter[0] != BACKSPACE) && (letter[0] != TAB) &&(letter[0] != ENTER) && (letter[0] != '\033') && (counter < maxBufferSize)) {
-				if(cursorPosition == 0){
+				if(cursorPosition == 0){ //if cursor is at the end of the buffer
 				   buffer[counter] = letter[0]; // Add character to buffer and then increment counter
  			           counter++;//increase counter
 				   print(letter); // Write the character to COM1
@@ -37,12 +37,13 @@ int poll(char * buffer, int* count) {
 
 				else if(cursorPosition> 0){//Cursor is moved to the left
 				   clearCommandLine(counter,cursorPosition);  
- 		 		   counter -= (cursorPosition); //moves pointer to null terminator left of char to be inserted
+ 		 		   counter -= (cursorPosition); //moves pointer to left of char to be inserted
 		 		   char temp1 =  buffer[counter]; //saves character being overwritten by new character
 		 		   char temp2; 			    //saves the next character in the buffer
 		 		   buffer[counter] = letter[0]; // writes new letter overtop of the char saved in temp1 
 		 		   int i;
-
+				   
+				   //shifts the rest of the characters to the right
 				   for(i = 0; i<cursorPosition; i++) {
 		    			 counter++; // moves ptr over to next character
 		    			 temp2 = buffer[counter]; //saves next character in sequence
@@ -52,7 +53,7 @@ int poll(char * buffer, int* count) {
 
 				  counter++;
 			          buffer[counter] = temp1;//adds last character
-			          print(buffer);
+			          print(buffer); //reprints new buffer
 				  resetCursor(cursorPosition);
 				}
 				
@@ -60,37 +61,37 @@ int poll(char * buffer, int* count) {
 
 			// Handle special case characters
 			else if(counter > 0){
+				
 				// Enter Recieved
 				if(strcmp(letter, "\r\000\000\000") == 0) {
-					
 					   int i = 0;
 					   print("\r");
 					   buffer[counter] = '\0';
-					   enter = 1;     
-					                          
+					   enter = 1;                           
 				}
 					
 				// Backspace Recieved
 				else if(strcmp(letter, "\177\000\000\000") == 0 && ((counter - cursorPosition)>0) ) {	
 
-					if(cursorPosition == 0){ //no cursor shift
+					if(cursorPosition == 0){ //cursor is at end of buffer
 				          counter--;
 					  print(backspace);
-					  buffer[counter] = '\0';
+					  buffer[counter] = '\0'; //writes over last char with null terminator
 					}
 
-					else if(cursorPosition> 0){//cursor shift
+					else if(cursorPosition> 0){//cursor shifted to left
 					 clearCommandLine(counter,cursorPosition);  
-			                 counter -= (cursorPosition+1); //moves pointer to  char that is to be deleted
+			                 counter -= (cursorPosition+1); //moves pointer to char that is to be deleted
 		 		   	 int i;
-
+				          
+					 //shifts characters past the one being deleted to the left
 				  	 for(i = 0; i<cursorPosition; i++){
 					   buffer[counter] = buffer[counter+1];//shifts characters to the left
 		    		           counter++;
 		  		   	 }
 
-					 buffer[counter] = '\0';
-					 print(buffer);
+					 buffer[counter] = '\0'; //replaces last character with null terminator so it is not repeated
+					 print(buffer); //reprints new buffer
 					 resetCursor(cursorPosition);
 					}
 				}
@@ -102,13 +103,15 @@ int poll(char * buffer, int* count) {
 					 clearCommandLine(counter,cursorPosition);
 			                 counter -= cursorPosition; //moves pointer to  char that is to be deleted
 		 		   	 int i;
+					 
+					 //shifts characters past the one being deleted to the left
 				  	 for(i = 0; i<cursorPosition; i++){
 						buffer[counter] = buffer[counter+1]; //moves characters to the left
 		    			 	counter++;
 		  		   	 }
-					  counter--;	
+					  counter--;
 					  cursorPosition--;//moves cursor to the right one
-					  print(buffer);
+					  print(buffer); //reprints new buffer
 					  resetCursor(cursorPosition);
 					}
 					else if(cursorPosition > 0 && counter == 1){ //if there is only one character left
@@ -146,6 +149,11 @@ int poll(char * buffer, int* count) {
 	return 0;
 }
 
+/*
+  Procedure..: clearCommandLine
+  Description..:clears the buffer from the terminal 
+  Params..: number of characters and the position of the cursor 
+*/
 void clearCommandLine(int counter,  int cursorPosition){
   int i;
   for(i=0; i<cursorPosition;i++){
@@ -155,6 +163,11 @@ void clearCommandLine(int counter,  int cursorPosition){
 	print(backspace);
   }
 }
+/*
+  Procedure..: resetCursor
+  Description..:moves the cursor to appropriate position after a new buffer is reprinted to the terminal
+  Params..: original position of the cursor 
+*/
 void resetCursor(int cursorPosition){
   int i;
   for(i=0; i<cursorPosition;i++){
