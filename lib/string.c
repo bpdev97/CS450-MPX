@@ -200,8 +200,6 @@ char* strtok(char *s1, const char *s2)
   return s1;
 }
 
-#include <stdarg.h>
-
 //Basic function to swap two characters.
 void swap(char *x, char *y){
     char temp = *x;

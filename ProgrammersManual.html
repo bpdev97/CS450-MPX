@@ -1,0 +1,307 @@
+<h1 id="programmersmanual">Programmer's Manual</h1>
+
+<p>The purpose of this manual is to give information on all of the functions included in this MPX. Each .c file will have its own section for the functions contained in it.</p>
+
+<h2 id="functionsprocesscommandc">Functions - processcommand.c</h2>
+
+<p>proccesscommand.c contains the functions for all of the commands that can be executed in MPX.</p>
+
+<h3 id="help">help()</h3>
+
+<p><em>Description:</em> <br />
+The help function is used to print help messages for commands.</p>
+
+<p><em>Declaration:</em> <br />
+void help(int numword, char* args[]);</p>
+
+<p><em>Parameters:</em> <br />
+numword - represents the number of arguments passed from the command line. <br />
+args - an array of character pointers containing the arguments from the command line. Help can only take one argument and it will check to see if that argument corresponds to a command with a help message. If no argument is given, help will print out a list of possible commands that it can help with.</p>
+
+<p><em>Return Value:</em> <br />
+help has no return value.</p>
+
+<h3 id="version">version()</h3>
+
+<p><em>Description:</em> <br />
+The version function prints the current version of MPX.</p>
+
+<p><em>Declaration:</em> <br />
+void version(int argc, char* argv[]);</p>
+
+<p><em>Parameters:</em> <br />
+argc - represents the number of arguments passed from the command line. <br />
+argv - an array of character pointers containing the arguments from the command line. Version consumes no arguments.</p>
+
+<p><em>Return Value:</em> <br />
+version has no return value.</p>
+
+<h3 id="settime">settime()</h3>
+
+<p><em>Description:</em> <br />
+The settime function sets the system time in 24 hour format. If an improper time string is passed to settime, an error message will be given.</p>
+
+<p><em>Declaration:</em> <br />
+void settime(int argc, char* argv[]);</p>
+
+<p><em>Parameters:</em> <br />
+argc - represents the number of arguments passed from the command line. <br />
+argv - an array of character pointers containing the arguments from the command line. Settime can only take one argument from the command line. That argument is a string in the format <em>hour:minute:second:</em>.</p>
+
+<p><em>Return Value:</em> <br />
+settime has no return value.</p>
+
+<p><em>Example:</em> <br />
+settime 15:30:45 sets the time to the equivalent of 3:30:45 PM.</p>
+
+<h3 id="gettime">gettime()</h3>
+
+<p><em>Description:</em> <br />
+The gettime function prints the current system time.</p>
+
+<p><em>Declaration:</em> <br />
+void gettime(int argc, char* argv[]);</p>
+
+<p><em>Parameters:</em> <br />
+argc - represents the number of arguments passed from the command line. <br />
+argv - an array of character pointers containing the arguments from the command line. Gettime consumes no arguments.</p>
+
+<p><em>Return Value:</em> <br />
+gettime has no return value.</p>
+
+<h3 id="setdate">setdate()</h3>
+
+<p><em>Description:</em> <br />
+The setdate function sets the system date.</p>
+
+<p><em>Declaration:</em> <br />
+void setdate(int argc, char* argv[]);</p>
+
+<p><em>Parameters:</em> <br />
+argc - represents the number of arguments passed from the command line. <br />
+argv - an array of character pointers containing the arguments from the command line. Setdate can only take one argument from the command line. That is a string in the format <em>Month/Day/Year</em>. <em>Year</em> must be in two digit format.</p>
+
+<p><em>Return Value:</em> <br />
+setdate has no return value.</p>
+
+<h3 id="getdate">getdate()</h3>
+
+<p><em>Description:</em> <br />
+The getdate function prints the current system date in the format <em>Month/Day/Year</em>.</p>
+
+<p><em>Declaration:</em> <br />
+void getdate(int argc, char* argv[]);</p>
+
+<p><em>Parameters:</em> <br />
+argc - represents the number of arguments passed from the command line. <br />
+argv - an array of character pointers containing the arguments from the command line. The getdate function consumes no arguments.</p>
+
+<p><em>Return Value:</em> <br />
+getdate has no return value.</p>
+
+<h3 id="tobcd">tobcd()</h3>
+
+<p><em>Description:</em> <br />
+The tobcd function take a binary value and converts it to binary coded decimal.</p>
+
+<p><em>Declaration:</em> <br />
+int tobcd(int binary);</p>
+
+<p><em>Parameters:</em> <br />
+binary - binary value to be converted</p>
+
+<p><em>Return Value:</em> <br />
+Returns a BCD value</p>
+
+<h3 id="printbcd">printbcd</h3>
+
+<p><em>Description:</em> <br />
+Takes in a BCD value and prints out its ASCII representation</p>
+
+<p><em>Declaration:</em> <br />
+void printbcd(int bcd);</p>
+
+<p><em>Parameters:</em> <br />
+bcd - BCD value to be printed</p>
+
+<p><em>Return Value:</em> <br />
+No return value.</p>
+
+<h2 id="functionspollingc">Functions - polling.c</h2>
+
+<p>polling.c contains the functions necessary to poll user input from the com port.</p>
+
+<h3 id="poll">poll()</h3>
+
+<p><em>Description:</em> <br />
+The poll function takes keyboard input and checks to see if it is a character or a command key.</p>
+
+<p><em>Declaration:</em> <br />
+int poll(char *buffer, int *count);</p>
+
+<p><em>Parameters:</em> <br />
+buffer - pointer to a character buffer <br />
+count - pointer to the size of the buffer  </p>
+
+<p><em>Return Value:</em> <br />
+poll returns 0.</p>
+
+<h3 id="clearcommandline">clearCommandLine()</h3>
+
+<p><em>Description:</em> <br />
+Clears the character buffer from the command line.</p>
+
+<p><em>Declaration:</em> <br />
+void clearCommandLine(int counter, int cursorPosition);</p>
+
+<p><em>Parameters:</em> <br />
+counter - number of characters on the line
+cursorPosition - position of the cursor on the line</p>
+
+<p><em>Return Value:</em> <br />
+No return value.</p>
+
+<h3 id="resetcursor">resetCursor()</h3>
+
+<p><em>Description:</em> <br />
+Moves the cursor to the original position after a new buffer is printed to the terminal</p>
+
+<p><em>Declaration:</em> <br />
+void resetCursor(int cursorPosition);</p>
+
+<p><em>Parameters:</em> <br />
+cursorPosition - original position of the cursor</p>
+
+<p><em>Return Value:</em> <br />
+No return value.</p>
+
+<h2 id="functionscomhandc">Functions - comhand.c</h2>
+
+<p>comhand.c contains the functions necessary to handle commands in MPX</p>
+
+<h3 id="comhand">comhand()</h3>
+
+<p><em>Description:</em> <br />
+comhand is a control functions that initializes several other systems. It sets up the polling function, handles the command prompt, and handles commands and arguments. It also facilitates the shutdown of the operating system.</p>
+
+<p><em>Declaration:</em> <br />
+int comhand();</p>
+
+<p><em>Parameters:</em> <br />
+No parameters.</p>
+
+<p><em>Return Value:</em> <br />
+Returns 0 when exiting the operating system.</p>
+
+<h2 id="functionsstringc">Functions - string.c</h2>
+
+<p>string.c contains a multitude of functions used to manipulate strings.</p>
+
+<h3 id="swap">swap()</h3>
+
+<p><em>Description:</em> <br />
+swap swaps two characters.</p>
+
+<p><em>Declaration:</em> <br />
+void swap(char *x, char *y);</p>
+
+<p><em>Parameters:</em> <br />
+x - pointer to first character
+y - pointer to second character</p>
+
+<p><em>Return Value:</em> <br />
+No return value.</p>
+
+<h3 id="reverse">reverse()</h3>
+
+<p><em>Description:</em> <br />
+reverse is given a character pointer and the first and last positons of the string. Reverse then reverses all of the characters in the string.</p>
+
+<p><em>Declaration:</em> <br />
+char *reverse(char *buffer, int i, intj);</p>
+
+<p><em>Parameters:</em> <br />
+buffer - pointer to the string to be reversed
+i - first position
+j - second position</p>
+
+<p><em>Return Value:</em> <br />
+reverse returns the reversed character buffer.</p>
+
+<h3 id="abs">abs()</h3>
+
+<p><em>Description:</em> <br />
+abs returns the absolute value of a signed int.</p>
+
+<p><em>Declaration:</em> <br />
+int abs(int x);</p>
+
+<p><em>Parameters:</em> <br />
+x - signed integer value</p>
+
+<p><em>Return Value:</em> <br />
+Returns absolute value of input.</p>
+
+<h3 id="itoa">itoa()</h3>
+
+<p><em>Description:</em> <br />
+itoa converts an integer value to a string using a given number base and then stores and returns the result.</p>
+
+<p><em>Declaration:</em> <br />
+char *itoa(int value, char *str, int base);</p>
+
+<p><em>Parameters:</em> <br />
+value - integer value to be converted
+str - pointer to buffer for string storage
+base - number base to convert to</p>
+
+<p><em>Return Value:</em> <br />
+itoa returns the number string</p>
+
+<h3 id="sprintf">sprintf</h3>
+
+<p><em>Description:</em> <br />
+sprintf takes in a blank character array, a string with format tags, and then an arbitrary number of arguments. sprintf formats a string given these inputs and saves and returns the result. Arguments are formatted into the string using format tags. Integers are formated using %d or #i, hex uses %x, octal uses %o, single characters use %c, and strings use %s.</p>
+
+<p><em>Declaration:</em> <br />
+int sprintf(char *str, const char *format, ...);</p>
+
+<p><em>Parameters:</em> <br />
+str - character array that ouput is stored in
+format - string containing format tags
+... - list of arguments to be formatted into the string</p>
+
+<p><em>Return Value:</em> <br />
+Returns a formatted string.</p>
+
+<h2 id="functionsmpx_suptc">Functions - mpx_supt.c</h2>
+
+<p>mpx_supt.c contains supplemental functions for MPX</p>
+
+<h3 id="print">print()</h3>
+
+<p><em>Description:</em> <br />
+Prints a character string to the terminal with no new line character.</p>
+
+<p><em>Declaration:</em> <br />
+void print(char *string);</p>
+
+<p><em>Parameters:</em> <br />
+string - character pointer to string that will be printed</p>
+
+<p><em>Return Value:</em> <br />
+No return value.</p>
+
+<h3 id="println">println()</h3>
+
+<p><em>Description:</em> <br />
+Prints a character string to the terminal with a new line character.</p>
+
+<p><em>Declaration:</em> <br />
+void println(char *string);</p>
+
+<p><em>Parameters:</em> <br />
+string - character pointer to string that will be printed</p>
+
+<p><em>Return Value:</em> <br />
+No return value.</p>

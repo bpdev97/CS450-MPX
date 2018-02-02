@@ -33,7 +33,7 @@ The clear command effectively clears the terminal display. The clear command pri
 ### setdate
 *Usage:*
 
-The setdate command allows the user to input and set the system date. The setdate command follows American *Month/Day/Year* format. For example, today is the first of February so the input would look like: *setdate 2/1/18* or *setdate 02/01/18* or even *setdate 02/01/2018*.
+The setdate command allows the user to input and set the system date. The setdate command follows American *Month/Day/Year* format. For example, today is the first of February so the input would look like: *setdate 2/1/18* or *setdate 02/01/18*.
 
 ### getdate
 *Usage:*
