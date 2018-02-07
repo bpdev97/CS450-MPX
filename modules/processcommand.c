@@ -4,6 +4,8 @@
 #include <core/io.h>
 #include "mpx_supt.h"
 #include "processcommand.h"
+#include "pcb.h"
+#include "queue.h"
 
 void help (int argc, char* argv[]) {
 
@@ -214,7 +216,131 @@ int tobcd (int binary) {
     return fulldigit;
 
 }
+/*
+//display PCB info using the name from user
+void showPCB(char * name){
+  pcb* selectedPCB = findPCB(name);
+  if(selectedPCB == null){
+    println("PCB name not found");
+  }
+  else{
+    println("Process Name: " + seletedPCB->name);
+    println("Class: " + seletedPCB->classNum); //need int to string
+    if(seletedPCB->readyState == 1){
+      println("State: Ready");  
+    }
+    else{
+      println("State: Blocked");  
+    }
+   if(seletedPCB->suspendState == 1){
+      println("Suspended Status: Suspended ");
+    }
+    else{
+      println("Suspended Status: Not Suspended");
+    }
+    println("Priority: " + seletedPCB->priority);// need int to string
+  }
+  
+}
+//display all PCB info in ready queues
+void showReady(){
+ readyQueue testQueue;
+ suspendedReadyQueue testQueue2;
 
+ int i;
+ for(i = 0; i< testQueue.count; i++)
+ {
+   pcb* currentPCB = (testQueue.tail + i); //need to find out how to increment through queue
+   println("Process Name: " + currentPCB->name);
+   println("Class: " + currentPCB->classNum); //need int to string
+   if(currentPCB->readyState == 1){
+      println("State: Ready");  
+   }
+   else{
+      println("State: Blocked");  
+   }
+   if(currentPCB->suspendState == 1){
+      println("Suspended Status: Suspended ");
+   }
+   else{
+      println("Suspended Status: Not Suspended");
+    }
+   println("Priority: " + currentPCB->priority);// need int to string
+ }
+
+ for(i = 0; i< testQueue2.count; i++)
+ {
+   pcb* currentPCB = (testQueue2.tail + i); //need to find out how to increment through queue
+   println("Process Name: " + currentPCB->name);
+   println("Class: " + currentPCB->classNum); //need int to string
+   if(currentPCB->readyState == 1){
+      println("State: Ready");  
+   }
+   else{
+      println("State: Blocked");  
+   }
+   if(currentPCB->suspendState == 1){
+      println("Suspended Status: Suspended ");
+   }
+   else{
+      println("Suspended Status: Not Suspended");
+    }
+   println("Priority: " + currentPCB->priority);// need int to string
+ }
+}
+//display all PCB info in blocked queues
+void showBlocked(){
+ blockedQueue testQueue;
+ suspendedBlockedQueue testQueue2;
+
+ int i;
+ for(i = 0; i< testQueue.count; i++)
+ {
+   pcb* currentPCB = (testQueue.tail + i); //need to find out how to increment through queue
+   println("Process Name: " + currentPCB->name);
+   println("Class: " + currentPCB->classNum); //need int to string
+   if(currentPCB->readyState == 1){
+      println("State: Ready");  
+   }
+   else{
+      println("State: Blocked");  
+   }
+   if(currentPCB->suspendState == 1){
+      println("Suspended Status: Suspended ");
+   }
+   else{
+      println("Suspended Status: Not Suspended");
+    }
+   println("Priority: " + currentPCB->priority);// need int to string
+ }
+
+ for(i = 0; i< testQueue2.count; i++)
+ {
+   pcb* currentPCB = (testQueue2.tail + i); //need to find out how to increment through queue
+   println("Process Name: " + currentPCB->name);
+   println("Class: " + currentPCB->classNum); //need int to string
+   if(currentPCB->readyState == 1){
+      println("State: Ready");  
+   }
+   else{
+      println("State: Blocked");  
+   }
+   if(currentPCB->suspendState == 1){
+      println("Suspended Status: Suspended ");
+   }
+   else{
+      println("Suspended Status: Not Suspended");
+    }
+   println("Priority: " + currentPCB->priority);// need int to string
+ }
+}
+//displays all PCB info
+void showAll(){
+  showReady();
+  showBlocked();
+}
+
+*/
 //int frombcd (int bcd){
 //    int firstdigit = bcd >> 4;
 //    int seconddigit = bcd & 15;
