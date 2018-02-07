@@ -64,7 +64,6 @@ int poll(char * buffer, int* count) {
 				
 				// Enter Recieved
 				if(strcmp(letter, "\r\000\000\000") == 0) {
-					   int i = 0;
 					   print("\r");
 					   buffer[counter] = '\0';
 					   enter = 1;                           
