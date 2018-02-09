@@ -10,7 +10,10 @@ int readyState;
 int suspendState;
 unsigned char* stackBase;
 unsigned char* stackTop;
+char* stack;
+int  FreePCB;
 struct pcb* nextPcb;
 }pcb;
-
+pcb* AllocatePCB;
+pcb* SetupPCB;
 #endif

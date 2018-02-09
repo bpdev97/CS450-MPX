@@ -6,6 +6,7 @@
 #include "processcommand.h"
 #include "pcb.h"
 #include "queue.h"
+#include "pcb.h"
 
 void help (int argc, char* argv[]) {
 
@@ -216,6 +217,14 @@ int tobcd (int binary) {
     return fulldigit;
 
 }
+//CREATE PCB WILL WORK ON WHEN ADDING QUEUE IS DONE
+/*void CreatePCB(int argc, char* argv[]){
+    pcb* pointpcb = SetupPCB(argv[1], atoi(argv[2]), atoi(argv[3]);
+
+
+}*/
+
+
 /*
 //display PCB info using the name from user
 void showPCB(char * name){
