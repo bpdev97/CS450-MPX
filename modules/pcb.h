@@ -14,6 +14,6 @@ char* stack;
 int  FreePCB;
 struct pcb* nextPcb;
 }pcb;
-pcb* AllocatePCB;
-pcb* SetupPCB;
+pcb* AllocatePCB();
+pcb* SetupPCB(char*, int, int);
 #endif

@@ -9,7 +9,7 @@
 
 pcb* AllocatePCB(){
     pcb* pointpcb = sys_alloc_mem(sizeof(pcb));
-    char* pointstack = sys_alloc_mem(1000); //Stack Size?
+    char* pointstack = sys_alloc_mem(1024); //Stack Size?
     if(pointpcb == NULL || pointstack == NULL){
         return NULL;
     }
