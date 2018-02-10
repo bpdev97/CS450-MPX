@@ -7,9 +7,10 @@
 #include "pcb.h"
 
 
-pcb* AllocatePCB(){
-    pcb* pointpcb = sys_alloc_mem(sizeof(pcb));
-    char* pointstack = sys_alloc_mem(1024); //Stack Size?
+PCB* AllocatePCB(){
+    PCB* pointpcb = sys_alloc_mem(sizeof(PCB));
+    unsigned char* pointstack = sys_alloc_mem(1024); //Stack Size?
+    // ^ This has to be an unsigned char -Addison
     if(pointpcb == NULL || pointstack == NULL){
         return NULL;
     }
@@ -19,7 +20,7 @@ pcb* AllocatePCB(){
     }
 }
 
-int FreePCB(pcb* freepcb){
+int FreePCB(PCB* freepcb){
     int success = sys_free_mem(freepcb -> stack);
     int error = sys_free_mem(freepcb);
 
@@ -31,8 +32,8 @@ int FreePCB(pcb* freepcb){
     }
 }
 
-pcb* SetupPCB(char* name, int classNum, int priority){
-    pcb* pointpcb = AllocatePCB();
+PCB* SetupPCB(char* name, int classNum, int priority){
+    PCB* pointpcb = AllocatePCB();
     pointpcb -> name = name;
     if(classNum == 1 || classNum == 0){
         pointpcb -> classNum = classNum;

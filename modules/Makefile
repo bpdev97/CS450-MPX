@@ -14,7 +14,8 @@ OBJFILES =\
 mpx_supt.o \
 comhand.o \
 processcommand.o\
-polling.o
+polling.o\
+queue.o
 
 .c.s:
 	$(CC) $(CFLAGS) -S -o $@ $<

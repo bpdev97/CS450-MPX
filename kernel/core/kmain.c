@@ -22,6 +22,8 @@
 #include "modules/mpx_supt.h"
 #include "modules/comhand.h"
 #include "modules/polling.h"
+#include "modules/queue.h"
+#include "modules/pcb.h"
 
 void kmain(void)
 {
@@ -61,7 +63,12 @@ void kmain(void)
    sti();         // turn on interrupts
    init_paging(); // init paging
 
- 
+  // 4.5) PCB Queues
+  klogv("Initializing PCB queues...");
+  ready = sys_alloc_mem(sizeof(QUEUE));
+  readySuspended = sys_alloc_mem(sizeof(QUEUE));
+  blocked = sys_alloc_mem(sizeof(QUEUE));
+  blockedSuspended = sys_alloc_mem(sizeof(QUEUE));
 
    // 5) Call YOUR command handler -  interface method
    klogv("Transferring control to commhand...");
