@@ -50,3 +50,15 @@ PCB* SetupPCB(char* name, int classNum, int priority){
     return pointpcb;
 }
 
+PCB *FindPCB(const char *name){
+    return NULL;
+}
+
+void InsertPCB(PCB *p){
+    return;
+}
+
+int RemovePCB(PCB *p){
+    return NULL;
+}
+

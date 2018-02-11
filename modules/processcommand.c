@@ -2,11 +2,11 @@
 #include <string.h>
 #include <core/serial.h>
 #include <core/io.h>
+#include <system.h>
 #include "mpx_supt.h"
 #include "processcommand.h"
 #include "pcb.h"
 #include "queue.h"
-#include "pcb.h"
 
 void help (int argc, char* argv[]) {
 
@@ -228,7 +228,7 @@ int tobcd (int binary) {
 /*
 //display PCB info using the name from user
 void showPCB(char * name){
-  pcb* selectedPCB = findPCB(name);
+  pcb* selectedPCB = FindPCB(name);
   if(selectedPCB == null){
     println("PCB name not found");
   }
@@ -348,8 +348,61 @@ void showAll(){
   showReady();
   showBlocked();
 }
-
 */
+
+int blockPCB(int argc, char *argv[]){
+    PCB *find = FindPCB(argv[1]);
+    if(!find) return 0;
+
+    RemovePCB(find);
+    find -> readyState = 0;
+    InsertPCB(find);
+    return 1;
+}
+
+int unblockPCB(int argc, char *argv[]){
+    PCB *find = FindPCB(argv[1]);
+    if(!find) return 0;
+
+    RemovePCB(find);
+    find -> readyState = 1;
+    InsertPCB(find);
+    return 1;
+}
+
+int suspendPCB(int argc, char *argv[]){
+    PCB *find = FindPCB(argv[1]);
+    if(!find) return 0;
+
+    RemovePCB(find);
+    find -> suspendState = 1;
+    InsertPCB(find);
+    return 1;
+}
+
+int resumePCB(int argc, char *argv[]){
+    PCB *find = FindPCB(argv[1]);
+    if(!find) return 0;
+
+    RemovePCB(find);
+    find -> suspendState = 0;
+    InsertPCB(find);
+    return 1;
+}
+
+int setPriority(int argc, char *argv[]){
+    PCB *find = FindPCB(argv[1]);
+    if(!find) return 0;
+
+    int p = atoi(argv[2]);
+    if(p < 0 || p > 9) return 0;
+
+    RemovePCB(find);
+    find -> priority = p;
+    InsertPCB(find);
+    return 1;
+}
+
 //int frombcd (int bcd){
 //    int firstdigit = bcd >> 4;
 //    int seconddigit = bcd & 15;

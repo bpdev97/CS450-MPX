@@ -6,16 +6,21 @@ typedef struct pcb{
 char* name;
 int classNum;
 int priority; 
-int readyState;
-int suspendState;
+int readyState; // readyState == 1 indicates ready
+int suspendState; // suspendState == 1 indicates suspended
 unsigned char* stackBase;
 unsigned char* stackTop;
-char* stack;
+unsigned char* stack;
 int  FreePCB;
 struct pcb* nextPcb;
 } PCB;
 
 PCB *AllocatePCB();
 PCB *SetupPCB(char*, int, int);
+
+PCB *FindPCB(const char *name);
+void InsertPCB(PCB *p);
+int RemovePCB(PCB *p);
+
 
 #endif

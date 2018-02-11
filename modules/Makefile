@@ -15,7 +15,8 @@ mpx_supt.o \
 comhand.o \
 processcommand.o\
 polling.o\
-queue.o
+queue.o\
+pcb.o
 
 .c.s:
 	$(CC) $(CFLAGS) -S -o $@ $<

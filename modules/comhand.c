@@ -88,12 +88,15 @@ int comhand() {
     else if(strcmp(argv[0], "showPCB") == 0) {
       showPCB("String here");
     }
+
     else if(strcmp(argv[0], "showReady") == 0) {
       showReady();
     }
+
     else if(strcmp(argv[0], "showBlocked") == 0) {
       showBlocked();
     }
+
     else if(strcmp(argv[0], "showAll") == 0) {
       showAll();
     }
