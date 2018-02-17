@@ -12,5 +12,9 @@ void gettime (int argc, char* argv[]);
 int tobcd (int binary);
 //int frombcd (int bcd);
 void printbcd (int bcd);
+void showPCB(char * name);
+void showReady();
+void showBlocked();
+void showAll();
 
 #endif //MPX_SPRING2018_ABOVE_C_LEVEL_PROCESSCOMMAND_H

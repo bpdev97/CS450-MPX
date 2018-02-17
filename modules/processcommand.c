@@ -227,122 +227,196 @@ int tobcd (int binary) {
 
 /*
 //display PCB info using the name from user
+//Not Functional yet but close
 void showPCB(char * name){
-  pcb* selectedPCB = FindPCB(name);
-  if(selectedPCB == null){
+  pcb* currentPCB = FindPCB(name);
+  if(currentPCB == null){
     println("PCB name not found");
   }
   else{
-    println("Process Name: " + seletedPCB->name);
-    println("Class: " + seletedPCB->classNum); //need int to string
-    if(seletedPCB->readyState == 1){
+   print("Process Name: "); 
+   println(currentPCB->name); 
+   
+   print("Class: "); 
+   itoa((currentPCB->classNum),classNumber, 10); //converts class int to char *
+   println(classNumber);
+   
+   if(currentPCB->readyState == 1){
       println("State: Ready");  
-    }
-    else{
+   }
+   else{
       println("State: Blocked");  
-    }
-   if(seletedPCB->suspendState == 1){
+   }
+
+   if(currentPCB->suspendState == 1){
       println("Suspended Status: Suspended ");
-    }
-    else{
+   }
+   else{
       println("Suspended Status: Not Suspended");
     }
-    println("Priority: " + seletedPCB->priority);// need int to string
+
+   print("Priority: ");
+   itoa((currentPCB->priority),priorityNumber, 10);//converts priority int to char *
+   println(priorityNumber);
+   
+   println(" ");
   }
   
 }
+*/
+
+/*
 //display all PCB info in ready queues
-void showReady(){
- readyQueue testQueue;
- suspendedReadyQueue testQueue2;
+void showReady()
+{
+ PCB* currentPCB = ready.head;// will not work if queue is a pointer, if that the case change . to ->
+ char classNumber[2];
+ char priorityNumber[2];
 
  int i;
- for(i = 0; i< testQueue.count; i++)
+
+ for(i = 0; i< ready.count; i++)
  {
-   pcb* currentPCB = (testQueue.tail + i); //need to find out how to increment through queue
-   println("Process Name: " + currentPCB->name);
-   println("Class: " + currentPCB->classNum); //need int to string
+   print("Process Name: "); 
+   println(currentPCB->name); 
+   
+   print("Class: "); 
+   itoa((currentPCB->classNum),classNumber, 10); //converts class int to char *
+   println(classNumber);
+   
    if(currentPCB->readyState == 1){
       println("State: Ready");  
    }
    else{
       println("State: Blocked");  
    }
+
    if(currentPCB->suspendState == 1){
       println("Suspended Status: Suspended ");
    }
    else{
       println("Suspended Status: Not Suspended");
     }
-   println("Priority: " + currentPCB->priority);// need int to string
+
+   print("Priority: ");
+   itoa((currentPCB->priority),priorityNumber, 10);//converts priority int to char *
+   println(priorityNumber);
+   
+   println(" ");
+   currentPCB = currentPCB->nextPcb;
  }
 
- for(i = 0; i< testQueue2.count; i++)
+  currentPCB = readySuspended.head;// will not work if queue is a pointer, don't know yet but easy fix if a problem
+
+for(i = 0; i< readySuspended.count; i++)
  {
-   pcb* currentPCB = (testQueue2.tail + i); //need to find out how to increment through queue
-   println("Process Name: " + currentPCB->name);
-   println("Class: " + currentPCB->classNum); //need int to string
+   print("Process Name: "); 
+   println(currentPCB->name); 
+   
+   print("Class: "); 
+   itoa((currentPCB->classNum),classNumber, 10); //converts class int to char *
+   println(classNumber);
+   
    if(currentPCB->readyState == 1){
       println("State: Ready");  
    }
    else{
       println("State: Blocked");  
    }
+
    if(currentPCB->suspendState == 1){
       println("Suspended Status: Suspended ");
    }
    else{
       println("Suspended Status: Not Suspended");
     }
-   println("Priority: " + currentPCB->priority);// need int to string
+
+   print("Priority: ");
+   itoa((currentPCB->priority),priorityNumber, 10);//converts priority int to char *
+   println(priorityNumber);
+   
+   println(" ");
+   currentPCB = currentPCB->nextPcb;
  }
+
+ 
 }
+
+
+
 //display all PCB info in blocked queues
 void showBlocked(){
- blockedQueue testQueue;
- suspendedBlockedQueue testQueue2;
+ PCB* currentPCB = blocked.head;// will not work if queue is a pointer, don't know yet but easy fix if a problem
+ char classNumber[2];
+ char priorityNumber[2];
 
  int i;
- for(i = 0; i< testQueue.count; i++)
+
+ for(i = 0; i< blocked.count; i++)
  {
-   pcb* currentPCB = (testQueue.tail + i); //need to find out how to increment through queue
-   println("Process Name: " + currentPCB->name);
-   println("Class: " + currentPCB->classNum); //need int to string
+   print("Process Name: "); 
+   println(currentPCB->name); 
+   
+   print("Class: "); 
+   itoa((currentPCB->classNum),classNumber, 10); //converts class int to char *
+   println(classNumber);
+   
    if(currentPCB->readyState == 1){
       println("State: Ready");  
    }
    else{
       println("State: Blocked");  
    }
+
    if(currentPCB->suspendState == 1){
       println("Suspended Status: Suspended ");
    }
    else{
       println("Suspended Status: Not Suspended");
     }
-   println("Priority: " + currentPCB->priority);// need int to string
+
+   print("Priority: ");
+   itoa((currentPCB->priority),priorityNumber, 10);//converts priority int to char *
+   println(priorityNumber);
+   
+   println(" ");
+   currentPCB = currentPCB->nextPcb;
  }
 
- for(i = 0; i< testQueue2.count; i++)
+currentPCB = blockedSuspended.head;// will not work if queue is a pointer, don't know yet but easy fix if a problem
+
+for(i = 0; i< blockedSuspended.count; i++)
  {
-   pcb* currentPCB = (testQueue2.tail + i); //need to find out how to increment through queue
-   println("Process Name: " + currentPCB->name);
-   println("Class: " + currentPCB->classNum); //need int to string
+   print("Process Name: "); 
+   println(currentPCB->name); 
+   
+   print("Class: "); 
+   itoa((currentPCB->classNum),classNumber, 10); //converts class int to char *
+   println(classNumber);
+   
    if(currentPCB->readyState == 1){
       println("State: Ready");  
    }
    else{
       println("State: Blocked");  
    }
+
    if(currentPCB->suspendState == 1){
       println("Suspended Status: Suspended ");
    }
    else{
       println("Suspended Status: Not Suspended");
     }
-   println("Priority: " + currentPCB->priority);// need int to string
+
+   print("Priority: ");
+   itoa((currentPCB->priority),priorityNumber, 10);//converts priority int to char *
+   println(priorityNumber);
+   
+   println(" ");
+   currentPCB = currentPCB->nextPcb;
  }
 }
+
 //displays all PCB info
 void showAll(){
   showReady();

@@ -84,11 +84,11 @@ int comhand() {
     else if(strcmp(argv[0], "getdate") == 0) {
       getdate(argc, argv);
     }
-/*
+   /*
     else if(strcmp(argv[0], "showPCB") == 0) {
       showPCB("String here");
     }
-
+  
     else if(strcmp(argv[0], "showReady") == 0) {
       showReady();
     }
@@ -100,8 +100,7 @@ int comhand() {
     else if(strcmp(argv[0], "showAll") == 0) {
       showAll();
     }
-*/
-    
+    */
     // Command not recognized
     else {
       print("Command not found: ");
