@@ -225,9 +225,8 @@ int tobcd (int binary) {
 }*/
 
 
+
 /*
-//display PCB info using the name from user
-//Not Functional yet but close
 void showPCB(char * name){
   pcb* currentPCB = FindPCB(name);
   if(currentPCB == null){
@@ -265,17 +264,17 @@ void showPCB(char * name){
 }
 */
 
-/*
+
 //display all PCB info in ready queues
 void showReady()
 {
- PCB* currentPCB = ready.head;// will not work if queue is a pointer, if that the case change . to ->
+ PCB* currentPCB = ready->head;
  char classNumber[2];
  char priorityNumber[2];
 
  int i;
 
- for(i = 0; i< ready.count; i++)
+ for(i = 0; i< ready->count; i++)
  {
    print("Process Name: "); 
    println(currentPCB->name); 
@@ -306,9 +305,9 @@ void showReady()
    currentPCB = currentPCB->nextPcb;
  }
 
-  currentPCB = readySuspended.head;// will not work if queue is a pointer, don't know yet but easy fix if a problem
+  currentPCB = readySuspended->head;
 
-for(i = 0; i< readySuspended.count; i++)
+for(i = 0; i< readySuspended->count; i++)
  {
    print("Process Name: "); 
    println(currentPCB->name); 
@@ -343,16 +342,15 @@ for(i = 0; i< readySuspended.count; i++)
 }
 
 
-
 //display all PCB info in blocked queues
 void showBlocked(){
- PCB* currentPCB = blocked.head;// will not work if queue is a pointer, don't know yet but easy fix if a problem
+ PCB* currentPCB = blocked->head;
  char classNumber[2];
  char priorityNumber[2];
 
  int i;
 
- for(i = 0; i< blocked.count; i++)
+ for(i = 0; i< blocked->count; i++)
  {
    print("Process Name: "); 
    println(currentPCB->name); 
@@ -383,9 +381,9 @@ void showBlocked(){
    currentPCB = currentPCB->nextPcb;
  }
 
-currentPCB = blockedSuspended.head;// will not work if queue is a pointer, don't know yet but easy fix if a problem
+currentPCB = blockedSuspended->head; 
 
-for(i = 0; i< blockedSuspended.count; i++)
+for(i = 0; i< blockedSuspended->count; i++)
  {
    print("Process Name: "); 
    println(currentPCB->name); 
@@ -422,7 +420,7 @@ void showAll(){
   showReady();
   showBlocked();
 }
-*/
+
 
 int blockPCB(int argc, char *argv[]){
     PCB *find = FindPCB(argv[1]);
