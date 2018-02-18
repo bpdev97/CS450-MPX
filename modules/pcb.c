@@ -98,6 +98,120 @@ void InsertPCB(PCB *p){
 }
 
 int RemovePCB(PCB *p){
-    return NULL;
+    // Traverse queues
+    // Ready queue
+    // only one pcb in queue
+    if(p == ready -> head && p == ready -> tail){
+        ready -> head = NULL;
+        ready -> tail = NULL;
+        ready -> count--;
+        return 0;
+    }
+    
+    // PCB is head
+    if(p == ready -> head){
+        ready -> head = p -> nextPcb;
+        ready -> count--;
+        return 0;
+    }
+
+    PCB* currentPCB = ready -> head;
+    for(i = 0; i < ready -> count; i++){
+        if(currentPCB -> nextPcb == p) {
+            currentPCB -> nextPcb = currentPCB -> next -> nextPcb;
+            ready -> count--;
+            return 0;
+        }
+        else {
+            currentPCB = currentPCB -> nextPcb;
+        }
+    }
+
+    // readySuspended queue
+    // only one pcb in queue
+    if(p == readySuspended -> head && p == readySuspended -> tail){
+        readySuspended -> head = NULL;
+        readySuspended -> tail = NULL;
+        readySuspended -> count--;
+        return 0;
+    }
+    
+    // PCB is head
+    if(p == readySuspended -> head){
+        readySuspended -> head = p -> nextPcb;
+        readySuspended -> count--;
+        return 0;
+    }
+
+    currentPCB = readySuspended -> head;
+    for(i = 0; i < readySuspended -> count; i++){
+        if(currentPCB -> nextPcb == p) {
+            currentPCB -> nextPcb = currentPCB -> next -> nextPcb;
+            readySuspended -> count--;
+            return 0;
+        }
+        else {
+            currentPCB = currentPCB -> nextPcb;
+        }
+    }
+
+    // blocked queue
+    // only one pcb in queue
+    if(p == blocked -> head && p == blocked -> tail){
+        blocked -> head = NULL;
+        blocked -> tail = NULL;
+        blocked -> count--;
+        return 0;
+    }
+    
+    // PCB is head
+    if(p == blocked -> head){
+        blocked -> head = p -> nextPcb;
+        blocked -> count--;
+        return 0;
+    }
+
+    currentPCB = blocked -> head;
+    for(i = 0; i < blocked -> count; i++){
+        if(currentPCB -> nextPcb == p) {
+            currentPCB -> nextPcb = currentPCB -> next -> nextPcb;
+            blocked -> count--;
+            return 0;
+        }
+        else {
+            currentPCB = currentPCB -> nextPcb;
+        }
+    }
+
+    // blockedSuspended queue
+    // only one pcb in queue
+    if(p == blockedSuspended -> head && p == blockedSuspended -> tail){
+        blockedSuspended -> head = NULL;
+        blockedSuspended -> tail = NULL;
+        blockedSuspended -> count--;
+        return 0;
+    }
+    
+    // PCB is head
+    if(p == blockedSuspended -> head){
+        blockedSuspended -> head = p -> nextPcb;
+        blockedSuspended -> count--;
+        return 0;
+    }
+
+    currentPCB = blockedSuspended -> head;
+    for(i = 0; i < blockedSuspended -> count; i++){
+        if(currentPCB -> nextPcb == p) {
+            currentPCB -> nextPcb = currentPCB -> next -> nextPcb;
+            blockedSuspended -> count--;
+            return 0;
+        }
+        else {
+            currentPCB = currentPCB -> nextPcb;
+        }
+    }
+
+    // Didn't remove PCB
+    return -1;
 }
 
