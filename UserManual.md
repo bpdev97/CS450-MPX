@@ -4,7 +4,7 @@ The purpose of this manual is to give users a summary of the commands that can b
 
 Commands
 ---------
-Currently there are eight commands including the help command that can be executed in this operating system.
+Currently there are twelve commands including the help command that can be executed in this operating system.
 
 1. help
 2. shutdown
@@ -14,6 +14,10 @@ Currently there are eight commands including the help command that can be execut
 6. settime
 7. gettime
 8. version
+9. showPCB
+10. showReady
+11. showBlocked
+12. showAll
 
 ### help
 *Usage:*  
@@ -46,3 +50,19 @@ The gettime command will retrieve and print out the current system time in 24 ho
 ### version
 *Usage:*  
 The version command displays the current version of MPX and the completion date. The version command can be used by typing *version*.
+
+### showPCB
+*Usage:*  
+The showPCB checks to see if the PCB name exists in the in the ready queue, readySuspended queue, blocked queue, or blockedSuspended queue.  If the PCB exists then the name, class, ready state, blocked state, and priority of the PCB is displayed. The showPCB command can be used by typing *showPCB* followed by the name of the PCB. For example *showPCB testName* will search the queues for a PCB with the name *testName*.
+
+### showReady
+*Usage:*  
+The showReady command displays the name, class, ready state, blocked state, and priority for all PCBs in the ready queue and readySuspended queue. The showReady command can be used by typing *showReady*.
+
+### showBlocked
+*Usage:*  
+The showBlocked command displays the name, class, ready state, blocked state, and priority for all PCBs in the blocked queue and blockedSuspended queue. The showBlocked command can be used by typing *showBlocked*.
+
+### showAll
+*Usage:*  
+The showAll command displays the name, class, ready state, blocked state, and priority for all PCBs in the ready queue, readySuspended queue, blocked queue, and blockedSuspended queue. The showAll command can be used by typing *showAll*.

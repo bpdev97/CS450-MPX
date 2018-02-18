@@ -119,6 +119,59 @@ bcd - BCD value to be printed
 *Return Value:*  
 No return value.
 
+### showPCB()
+*Description:*  
+The showPCB function searches the ready and blocked queues for a PCB name and if found, prints the name, class, ready state, blocked state, and priority of the PCB.  If the PCB name is not found in the queues then a error message is displayed.
+
+*Declaration:*  
+void showPCB(int argc, char* argv[]);
+
+*Parameters:*  
+argc - represents the number of arguments passed from the command line.  
+argv - an array of character pointers containing the arguments from the command line. The PCB name is found in argv[1]
+
+*Return Value:*  
+showPCB has no return value.
+
+### showReady()
+*Description:*  
+The showReady function prints the name, class, ready state, blocked state, and priority of every PCB in the ready queue and readySuspended queue.
+
+*Declaration:*  
+void showReady();
+
+*Parameters:*  
+No parameters
+
+*Return Value:*  
+showReady has no return value.
+
+### showBlocked()
+*Description:*  
+The showBlocked function prints the name, class, ready state, blocked state, and priority of every PCB in the blocked queue and blockedSuspended queue.
+
+*Declaration:*  
+void showBlocked();
+
+*Parameters:*  
+No parameters
+
+*Return Value:*  
+showBlocked has no return value.
+
+### showAll()
+*Description:*  
+The showBlocked function prints the name, class, ready state, blocked state, and priority of every PCB in the ready, suspendedReady, blocked, and blockedSuspended queues.
+
+*Declaration:*  
+void showAll();
+
+*Parameters:*  
+No parameters
+
+*Return Value:*  
+showAll has no return value.
+
 Functions - polling.c
 ---------------------
 polling.c contains the functions necessary to poll user input from the com port.
