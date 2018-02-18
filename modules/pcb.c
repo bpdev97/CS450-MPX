@@ -115,10 +115,11 @@ int RemovePCB(PCB *p){
         return 0;
     }
 
+    int i;
     PCB* currentPCB = ready -> head;
     for(i = 0; i < ready -> count; i++){
         if(currentPCB -> nextPcb == p) {
-            currentPCB -> nextPcb = currentPCB -> next -> nextPcb;
+            currentPCB -> nextPcb = currentPCB -> nextPcb -> nextPcb;
             ready -> count--;
             return 0;
         }
@@ -146,7 +147,7 @@ int RemovePCB(PCB *p){
     currentPCB = readySuspended -> head;
     for(i = 0; i < readySuspended -> count; i++){
         if(currentPCB -> nextPcb == p) {
-            currentPCB -> nextPcb = currentPCB -> next -> nextPcb;
+            currentPCB -> nextPcb = currentPCB -> nextPcb -> nextPcb;
             readySuspended -> count--;
             return 0;
         }
@@ -174,7 +175,7 @@ int RemovePCB(PCB *p){
     currentPCB = blocked -> head;
     for(i = 0; i < blocked -> count; i++){
         if(currentPCB -> nextPcb == p) {
-            currentPCB -> nextPcb = currentPCB -> next -> nextPcb;
+            currentPCB -> nextPcb = currentPCB -> nextPcb -> nextPcb;
             blocked -> count--;
             return 0;
         }
@@ -202,7 +203,7 @@ int RemovePCB(PCB *p){
     currentPCB = blockedSuspended -> head;
     for(i = 0; i < blockedSuspended -> count; i++){
         if(currentPCB -> nextPcb == p) {
-            currentPCB -> nextPcb = currentPCB -> next -> nextPcb;
+            currentPCB -> nextPcb = currentPCB -> nextPcb -> nextPcb;
             blockedSuspended -> count--;
             return 0;
         }
