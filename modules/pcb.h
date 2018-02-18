@@ -6,7 +6,10 @@ typedef struct pcb{
 char* name;
 int classNum;
 int priority; 
-int readyState; // readyState == 1 indicates ready
+// readyState == 1 indicates ready
+//            == 0 running
+//            == -1 blocked
+int readyState; 
 int suspendState; // suspendState == 1 indicates suspended
 unsigned char* stackBase;
 unsigned char* stackTop;
