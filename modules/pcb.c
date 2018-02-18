@@ -55,7 +55,8 @@ PCB *FindPCB(const char *name){
     // Traverse queues
     // Ready queue
     PCB* currentPCB = ready -> head;
-    while(currentPCB != ready -> tail){
+    int i;
+    for(i = 0; i < ready -> count; i++){
         if(strcmp(currentPCB -> name, name) == 0)
             return currentPCB;
         else
@@ -64,7 +65,7 @@ PCB *FindPCB(const char *name){
 
     // ReadySuspended queue
     currentPCB = readySuspended -> head;
-    while(currentPCB != readySuspended -> tail){
+    for(i = 0; i < readySuspended -> count; i++){
         if(strcmp(currentPCB -> name, name) == 0)
             return currentPCB;
         else
@@ -73,7 +74,7 @@ PCB *FindPCB(const char *name){
 
     // Blocked queue
     currentPCB = blocked -> head;
-    while(currentPCB != blocked -> tail){
+    for(i = 0; i < blocked -> count; i++){
         if(strcmp(currentPCB -> name, name) == 0)
             return currentPCB;
         else
@@ -82,7 +83,7 @@ PCB *FindPCB(const char *name){
 
      // BlockedSuspended queue
     currentPCB = blockedSuspended -> head;
-    while(currentPCB != blockedSuspended -> tail){
+    for(i = 0; i < blockedSuspended -> count; i++){
         if(strcmp(currentPCB -> name, name) == 0)
             return currentPCB;
         else
