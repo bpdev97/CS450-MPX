@@ -105,6 +105,7 @@ int RemovePCB(PCB *p){
         ready -> head = NULL;
         ready -> tail = NULL;
         ready -> count--;
+        FreePCB(p);
         return 0;
     }
     
@@ -112,6 +113,8 @@ int RemovePCB(PCB *p){
     if(p == ready -> head){
         ready -> head = p -> nextPcb;
         ready -> count--;
+        FreePCB(p);
+
         return 0;
     }
 
@@ -121,6 +124,7 @@ int RemovePCB(PCB *p){
         if(currentPCB -> nextPcb == p) {
             currentPCB -> nextPcb = currentPCB -> nextPcb -> nextPcb;
             ready -> count--;
+            FreePCB(p);
             return 0;
         }
         else {
@@ -134,6 +138,7 @@ int RemovePCB(PCB *p){
         readySuspended -> head = NULL;
         readySuspended -> tail = NULL;
         readySuspended -> count--;
+        FreePCB(p);
         return 0;
     }
     
@@ -141,6 +146,7 @@ int RemovePCB(PCB *p){
     if(p == readySuspended -> head){
         readySuspended -> head = p -> nextPcb;
         readySuspended -> count--;
+        FreePCB(p);
         return 0;
     }
 
@@ -149,6 +155,7 @@ int RemovePCB(PCB *p){
         if(currentPCB -> nextPcb == p) {
             currentPCB -> nextPcb = currentPCB -> nextPcb -> nextPcb;
             readySuspended -> count--;
+            FreePCB(p);
             return 0;
         }
         else {
@@ -162,6 +169,7 @@ int RemovePCB(PCB *p){
         blocked -> head = NULL;
         blocked -> tail = NULL;
         blocked -> count--;
+        FreePCB(p);
         return 0;
     }
     
@@ -169,6 +177,7 @@ int RemovePCB(PCB *p){
     if(p == blocked -> head){
         blocked -> head = p -> nextPcb;
         blocked -> count--;
+        FreePCB(p);
         return 0;
     }
 
@@ -177,6 +186,7 @@ int RemovePCB(PCB *p){
         if(currentPCB -> nextPcb == p) {
             currentPCB -> nextPcb = currentPCB -> nextPcb -> nextPcb;
             blocked -> count--;
+            FreePCB(p);
             return 0;
         }
         else {
@@ -190,6 +200,7 @@ int RemovePCB(PCB *p){
         blockedSuspended -> head = NULL;
         blockedSuspended -> tail = NULL;
         blockedSuspended -> count--;
+        FreePCB(p);
         return 0;
     }
     
@@ -197,6 +208,7 @@ int RemovePCB(PCB *p){
     if(p == blockedSuspended -> head){
         blockedSuspended -> head = p -> nextPcb;
         blockedSuspended -> count--;
+        FreePCB(p);
         return 0;
     }
 
@@ -205,6 +217,7 @@ int RemovePCB(PCB *p){
         if(currentPCB -> nextPcb == p) {
             currentPCB -> nextPcb = currentPCB -> nextPcb -> nextPcb;
             blockedSuspended -> count--;
+            FreePCB(p);
             return 0;
         }
         else {
