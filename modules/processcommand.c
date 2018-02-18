@@ -226,10 +226,15 @@ int tobcd (int binary) {
 
 
 
-/*
-void showPCB(char * name){
-  pcb* currentPCB = FindPCB(name);
-  if(currentPCB == null){
+
+void showPCB(int argc, char* argv[]){
+  char* name = argv[1];
+  //PCB* currentPCB = findPCB(name); //uncomment when findPCB is done
+  PCB* currentPCB;
+  char classNumber[2];
+  char priorityNumber[2];
+
+  if(currentPCB == NULL){
     println("PCB name not found");
   }
   else{
@@ -262,7 +267,7 @@ void showPCB(char * name){
   }
   
 }
-*/
+
 
 
 //display all PCB info in ready queues

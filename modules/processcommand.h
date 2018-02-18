@@ -12,7 +12,7 @@ void gettime (int argc, char* argv[]);
 int tobcd (int binary);
 //int frombcd (int bcd);
 void printbcd (int bcd);
-void showPCB(char * name);
+void showPCB(int argc, char* argv[]);
 void showReady();
 void showBlocked();
 void showAll();

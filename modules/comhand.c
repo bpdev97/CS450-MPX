@@ -84,11 +84,11 @@ int comhand() {
     else if(strcmp(argv[0], "getdate") == 0) {
       getdate(argc, argv);
     }
-   /*
+   
     else if(strcmp(argv[0], "showPCB") == 0) {
-      showPCB("String here");
+      showPCB(argc, argv);
     }
-  */
+  
     else if(strcmp(argv[0], "showReady") == 0) {
       showReady();
     }
