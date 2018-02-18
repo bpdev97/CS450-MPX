@@ -13,36 +13,49 @@ void help (int argc, char* argv[]) {
     //checking array size and setting up the Help menu
     if (argc == 1) {
         println("To use the help command type 'help' followed by the command you would like to use.");
-        println("The commands you can use include: clear, shutdown, setdate, getdate, settime, gettime, and version.");
+        println("The commands you can use include: clear, shutdown, setdate, getdate, settime, gettime, version, showPCB, showReady, showBlocked, and showAll.");
     }
     //listing each command and what they do
     else if (argc == 2) {
         if (strcmp(argv[1], "shutdown") == 0) {
-            println("The shutdown command shuts down the computer system.");
+            println("The shutdown command shuts down the operating system. Shutdown takes no arguments and will prompt the user to enter 'Y' or 'N' to choose whether to really shutdown or not. The shutdown command can be used by typing shutdown.");
         } 
         
         else if (strcmp(argv[1], "clear") == 0) {
-            println("The clear command clears com1 by printing a number of new lines.");
+            println("The clear command effectively clears the terminal display. The clear command prints out many new line characters to move past outputs off the screen. The clear command can be used by typing clear.");
         }        
 
         else if (strcmp(argv[1], "setdate") == 0) {
-            println("The Set date command allows the user to input a date.");
+            println("The setdate command allows the user to input and set the system date. The setdate command follows American Month/Day/Year format. For example, today is the first of February so the input would look like: setdate 2/1/18 or setdate 02/01/18.");
         } 
         
         else if (strcmp(argv[1], "getdate") == 0) {
-            println("The getdate command allows the user to retrieve the set date.");
+            println("The getdate command will print out the current date. The getdate command can be used by simply typing getdate.");
         } 
         
         else if (strcmp(argv[1], "settime") == 0) {
-            println("The settime command allows the user to input a time.");
+            println("The settime command allows the user to input and set the system time. Settime only works with 24 hour time and the hour, minute, and second must all be entered for the input to be valid. For example: settime 20:24:28 will set the time to the equivalent of 8:24:28 PM.");
         } 
         
         else if (strcmp(argv[1], "gettime") == 0) {
-            println("The gettime command allows the user to retrieve the set time.");
+            println("The gettime command will retrieve and print out the current system time in 24 hour format. The gettime command can be used by typing gettime.");
         } 
         
         else if (strcmp(argv[1], "version") == 0) {
-            println("The version command displays the current version of MPX and the completion date.");
+            println("The version command displays the current version of MPX and the completion date. The version command can be used by typing version.");
+        }
+
+        else if (strcmp(argv[1], "showPCB") == 0) {
+            println("The showPCB checks to see if the PCB name exists in the in the ready queue, readySuspended queue, blocked queue, or blockedSuspended queue. If the PCB exists then the name, class, ready state, blocked state, and priority of the PCB is displayed. The showPCB command can be used by typing showPCB followed by the name of the PCB. For example 'showPCB testName' will search the queues for a PCB with the name testName.");
+        }
+       else if (strcmp(argv[1], "showReady") == 0) {
+            println("The showReady command displays the name, class, ready state, blocked state, and priority for all PCBs in the ready queue and readySuspended queue. The showReady command can be used by typing showReady.");
+        }
+       else if (strcmp(argv[1], "showBlocked") == 0) {
+            println("The showBlocked command displays the name, class, ready state, blocked state, and priority for all PCBs in the blocked queue and blockedSuspended queue. The showBlocked command can be used by typing showBlocked.");
+        }
+      else if (strcmp(argv[1], "showAll") == 0) {
+            println("The showAll command displays the name, class, ready state, blocked state, and priority for all PCBs in the ready queue, readySuspended queue, blocked queue, and blockedSuspended queue. The showAll command can be used by typing showAll.");
         }
 
      //error checking
