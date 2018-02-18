@@ -4,6 +4,7 @@
 #include "mpx_supt.h"
 #include "polling.h"
 #include "processcommand.h"
+#include "queue.h"
 #include "pcb.h"
 
 
@@ -51,6 +52,43 @@ PCB* SetupPCB(char* name, int classNum, int priority){
 }
 
 PCB *FindPCB(const char *name){
+    // Traverse queues
+    // Ready queue
+    PCB* currentPCB = ready -> head;
+    while(currentPCB != ready -> tail){
+        if(strcmp(currentPCB -> name, name) == 0)
+            return currentPCB;
+        else
+            currentPCB = currentPCB -> nextPcb;
+    }
+
+    // ReadySuspended queue
+    currentPCB = readySuspended -> head;
+    while(currentPCB != readySuspended -> tail){
+        if(strcmp(currentPCB -> name, name) == 0)
+            return currentPCB;
+        else
+            currentPCB = currentPCB -> nextPcb;
+    }
+
+    // Blocked queue
+    currentPCB = blocked -> head;
+    while(currentPCB != blocked -> tail){
+        if(strcmp(currentPCB -> name, name) == 0)
+            return currentPCB;
+        else
+            currentPCB = currentPCB -> nextPcb;
+    }
+
+     // BlockedSuspended queue
+    currentPCB = blockedSuspended -> head;
+    while(currentPCB != blockedSuspended -> tail){
+        if(strcmp(currentPCB -> name, name) == 0)
+            return currentPCB;
+        else
+            currentPCB = currentPCB -> nextPcb;
+    }
+
     return NULL;
 }
 
