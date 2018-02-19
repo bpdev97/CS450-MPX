@@ -94,6 +94,85 @@ PCB *FindPCB(const char *name){
 }
 
 void InsertPCB(PCB *p){
+    int i;
+    PCB* currentPCB = ready -> head;
+
+    // Find correct queue
+    // ready - priority queue
+    if(p -> readyState == 1 && p -> suspendState == 0){
+        // nothing in queue
+        if(ready -> count == 0){
+            ready -> head = p;
+            ready -> tail = p;
+            return;
+        }
+        // new head
+        if(p -> priority < currentPCB -> priority){
+            p -> nextPcb = currentPCB;
+            ready -> head = p;
+            return;
+        }
+        // new tail
+        if(p -> priority > ready -> tail -> priority){
+            ready -> tail -> nextPcb = p;
+            ready -> tail = p;
+            return;
+        }
+        // in between
+        for(i = 0; i < ready -> count; i++){
+            if(p -> priority < currentPCB -> nextPcb -> priority){
+                p -> nextPcb = currentPCB -> nextPcb;
+                currentPCB -> nextPcb = p;
+                return;
+            }
+        }
+    }
+
+    // readySuspended - priority queue
+    else if(p -> readyState == 1 && p -> suspendState == 1){
+        // nothing in queue
+        if(readySuspended -> count == 0){
+            readySuspended -> head = p;
+            readySuspended -> tail = p;
+            return;
+        }
+        currentPCB = readySuspended -> head;
+        // new head
+        if(p -> priority < currentPCB -> priority){
+            p -> nextPcb = currentPCB;
+            readySuspended -> head = p;
+            return;
+        }
+        // new tail
+        if(p -> priority > readySuspended -> tail -> priority){
+            readySuspended -> tail -> nextPcb = p;
+            readySuspended -> tail = p;
+            return;
+        }
+        // in between
+        for(i = 0; i < readySuspended -> count; i++){
+            if(p -> priority < currentPCB -> nextPcb -> priority){
+                p -> nextPcb = currentPCB -> nextPcb;
+                currentPCB -> nextPcb = p;
+                return;
+            }
+        }
+    }
+
+    // blocked - FIFO queue
+    else if(p -> readyState == -1 && p -> suspendState == 0){
+        p -> nextPcb = blocked -> head;
+        blocked -> head = p;
+        return;
+    }
+
+    // blockedSuspended - FIFO queue
+    else if(p -> readyState == -1 && p -> suspendState == 1){
+        p -> nextPcb = blockedSuspended -> head;
+        blockedSuspended -> head = p;
+        return;
+    }
+
     return;
 }
 

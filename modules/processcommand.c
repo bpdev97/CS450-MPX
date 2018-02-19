@@ -445,7 +445,7 @@ int blockPCB(int argc, char *argv[]){
     if(!find) return 0;
 
     RemovePCB(find);
-    find -> readyState = 0;
+    find -> readyState = -1;
     InsertPCB(find);
     return 1;
 }
