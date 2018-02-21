@@ -48,14 +48,20 @@ void help (int argc, char* argv[]) {
         else if (strcmp(argv[1], "showPCB") == 0) {
             println("The showPCB checks to see if the PCB name exists in the in the ready queue, readySuspended queue, blocked queue, or blockedSuspended queue. If the PCB exists then the name, class, ready state, blocked state, and priority of the PCB is displayed. The showPCB command can be used by typing showPCB followed by the name of the PCB. For example 'showPCB testName' will search the queues for a PCB with the name testName.");
         }
-       else if (strcmp(argv[1], "showReady") == 0) {
+        else if (strcmp(argv[1], "showReady") == 0) {
             println("The showReady command displays the name, class, ready state, blocked state, and priority for all PCBs in the ready queue and readySuspended queue. The showReady command can be used by typing showReady.");
         }
-       else if (strcmp(argv[1], "showBlocked") == 0) {
+        else if (strcmp(argv[1], "showBlocked") == 0) {
             println("The showBlocked command displays the name, class, ready state, blocked state, and priority for all PCBs in the blocked queue and blockedSuspended queue. The showBlocked command can be used by typing showBlocked.");
         }
-      else if (strcmp(argv[1], "showAll") == 0) {
+        else if (strcmp(argv[1], "showAll") == 0) {
             println("The showAll command displays the name, class, ready state, blocked state, and priority for all PCBs in the ready queue, readySuspended queue, blocked queue, and blockedSuspended queue. The showAll command can be used by typing showAll.");
+        }
+        else if (strcmp(argv[1], "CreatePCB") == 0) {
+            println("The CreatePCB command will call SetupPCB() and insert the PCB in the appropriate queue.");
+        }
+        else if (strcmp(argv[1], "DeletePCB") == 0) {
+            println("The DeletePCB command will remove a PCB from the appropriate queue and then free all associated memory..");
         }
 
      //error checking
@@ -69,7 +75,7 @@ void help (int argc, char* argv[]) {
 }
 
 void version (int argc, char* argv[]) {
-    println("Version: R1.");
+    println("Version: R2.");
 }
 
 //allows user to set the time
@@ -508,4 +514,67 @@ void printbcd (int bcd){
     char asciii = seconddigit + 48;
     char array[3] = {ascii , asciii, '\0'};
     print(array);
+}
+
+//Creates PCB
+void CreatePCB(int argc, char *argv[]){
+    //Checks if argc is the appropriate value
+    if(argc != 4){
+        println("Error, not in range.");
+        return;
+    }
+    //Sets parameters to argv
+    char* name = argv[1];
+    int class = atoi(argv[2]);
+    int priority = atoi(argv[3]);
+
+    //Error checking the name length, priority, and class
+    if(FindPCB(name) != NULL){
+        println("Error, name must be unique and valid.");
+        return;
+    }
+
+    if(strlen(name) < 8){
+        println("Error, name has to be AT LEAST 8 characters.");
+        return;
+    }
+
+    if(priority < 0 || priority > 9){
+        println("Error. Priority must be between 0 and 9.");
+        return;
+    }
+
+    if(class < 0 || class > 9){
+        println("Error. Class must be between 0 and 9.");
+        return;
+    }
+    //Inserts PCB
+    PCB* pcb = SetupPCB(name, class, priority);
+    InsertPCB(pcb);
+}
+
+//Deletes the PCB
+void DeletePCB(int argc, char *argv[]){
+    //Checks if argc is the appropriate value
+    if(argc != 2){
+        println("Error, not in range.");
+        return;
+    }
+    //Sets parameter to argv
+    char* name = argv[1];
+
+    //Error checks name
+    if(strlen(name) < 8){
+        println("Error, name has to be AT LEAST 8 characters.");
+        return;
+    }
+
+    if(FindPCB(name) == NULL){
+        println("Error, name does not exist.");
+        return;
+    }
+    //Removes and then frees the PCB
+    PCB* pcb =  FindPCB(name);
+    RemovePCB(pcb);
+    FreePCB(pcb);
 }
