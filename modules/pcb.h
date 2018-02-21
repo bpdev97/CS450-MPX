@@ -24,6 +24,7 @@ PCB *SetupPCB(char*, int, int);
 PCB *FindPCB(const char *name);
 void InsertPCB(PCB *p);
 int RemovePCB(PCB *p);
+int FreePCB(PCB* freepcb);
 
 
 #endif

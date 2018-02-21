@@ -16,5 +16,7 @@ void showPCB(int argc, char* argv[]);
 void showReady();
 void showBlocked();
 void showAll();
+void CreatePCB(int argc, char *argv[]);
+void DeletePCB(int argc, char *argv[]);
 
 #endif //MPX_SPRING2018_ABOVE_C_LEVEL_PROCESSCOMMAND_H

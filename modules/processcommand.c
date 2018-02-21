@@ -539,13 +539,13 @@ void CreatePCB(int argc, char *argv[]){
         return;
     }
 
-    if(priority < 0 || priority > 9){
-        println("Error. Priority must be between 0 and 9.");
+    if(class != 0 && class != 1){
+        println("Error. Class must be between 0 and 1.");
         return;
     }
 
-    if(class < 0 || class > 9){
-        println("Error. Class must be between 0 and 9.");
+    if(priority < 0 || priority > 9){
+        println("Error. Priority must be between 0 and 9.");
         return;
     }
     //Inserts PCB
