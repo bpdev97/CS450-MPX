@@ -57,11 +57,11 @@ void help (int argc, char* argv[]) {
         else if (strcmp(argv[1], "showAll") == 0) {
             println("The showAll command displays the name, class, ready state, blocked state, and priority for all PCBs in the ready queue, readySuspended queue, blocked queue, and blockedSuspended queue. The showAll command can be used by typing showAll.");
         }
-        else if (strcmp(argv[1], "CreatePCB") == 0) {
-            println("The CreatePCB command will call SetupPCB() and insert the PCB in the appropriate queue.");
+        else if (strcmp(argv[1], "createPCB") == 0) {
+            println("The createPCB command will call SetupPCB() and insert the PCB in the appropriate queue.");
         }
-        else if (strcmp(argv[1], "DeletePCB") == 0) {
-            println("The DeletePCB command will remove a PCB from the appropriate queue and then free all associated memory..");
+        else if (strcmp(argv[1], "deletePCB") == 0) {
+            println("The deletePCB command will remove a PCB from the appropriate queue and then free all associated memory..");
         }
 
      //error checking
@@ -438,74 +438,112 @@ void showAll(){
 //Finds a PCB and sets its state to blocked, then reinserts
 int blockPCB(int argc, char *argv[]){
     PCB *find = FindPCB(argv[1]);
-    if(!find){
+    if(argc == 1){
+        println("Error: no process name given.");
+        return 0;
+    }
+
+    else if(!find){
         println("PCB not found.");
         return 0;
     }
 
-    RemovePCB(find);
-    find -> readyState = -1;
-    InsertPCB(find);
-    return 1;
+    else{
+        RemovePCB(find);
+        find -> readyState = -1;
+        InsertPCB(find);
+        return 1;
+    }
 }
 
 //Finds a PCB and sets its state to unblocked, then reinserts
 int unblockPCB(int argc, char *argv[]){
     PCB *find = FindPCB(argv[1]);
-    if(!find){
+    if(argc == 1){
+        println("Error: no process name given.");
+        return 0;
+    }
+
+    else if(!find){
         println("PCB not found.");
         return 0;
     }
 
-    RemovePCB(find);
-    find -> readyState = 1;
-    InsertPCB(find);
-    return 1;
+    else{
+        RemovePCB(find);
+        find -> readyState = 1;
+        InsertPCB(find);
+        return 1;
+    }
 }
 
 //Finds a PCB and sets its state to suspended, then reinserts
 int suspendPCB(int argc, char *argv[]){
     PCB *find = FindPCB(argv[1]);
-    if(!find){
+    if(argc == 1){
+        println("Error: no process name given.");
+        return 0;
+    }
+
+    else if(!find){
         println("PCB not found.");
         return 0;
     }
 
-    RemovePCB(find);
-    find -> suspendState = 1;
-    InsertPCB(find);
-    return 1;
+    else{
+        RemovePCB(find);
+        find -> suspendState = 1;
+        InsertPCB(find);
+        return 1;
+    }
 }
 
 //Finds a PCB and sets its state to resumed, then reinserts
 int resumePCB(int argc, char *argv[]){
     PCB *find = FindPCB(argv[1]);
-    if(!find){
+    if(argc == 1){
+        println("Error: no process name given.");
+        return 0;
+    }
+
+    else if(!find){
         println("PCB not found.");
         return 0;
     }
 
-    RemovePCB(find);
-    find -> suspendState = 0;
-    InsertPCB(find);
-    return 1;
+    else{
+        RemovePCB(find);
+        find -> suspendState = 0;
+        InsertPCB(find);
+        return 1;
+    }
 }
 
 //Finds PCB, sets priority, reinserts
 int setPriority(int argc, char *argv[]){
     PCB *find = FindPCB(argv[1]);
-    if(!find){
+    if(argc != 3){
+        println("Error: not enough inputs.");
+        return 0;
+    }
+
+    else if(!find){
         println("PCB not found.");
         return 0;
     }
 
     int p = atoi(argv[2]);
-    if(p < 0 || p > 9) return 0;
-
-    RemovePCB(find);
-    find -> priority = p;
-    InsertPCB(find);
-    return 1;
+    if(p < 0 || p > 9){
+        println("Error: invalid priority.");
+        return 0;
+    }
+    
+    else{
+        RemovePCB(find);
+        find -> priority = p;
+        InsertPCB(find);
+        return 1;
+    }
 }
 
 //int frombcd (int bcd){
