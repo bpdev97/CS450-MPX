@@ -248,13 +248,13 @@ int tobcd (int binary) {
 
 void showPCB(int argc, char* argv[]){
   char* name = argv[1];
-  //PCB* currentPCB = findPCB(name); //uncomment when findPCB is done
-  PCB* currentPCB;
+  PCB* currentPCB = FindPCB(name);
   char classNumber[2];
   char priorityNumber[2];
 
   if(currentPCB == NULL){
-    println("PCB name not found");
+    print(name);
+    println(" PCB not found!");
   }
   else{
    print("Process Name: "); 
