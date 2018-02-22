@@ -57,11 +57,11 @@ void help (int argc, char* argv[]) {
         else if (strcmp(argv[1], "showAll") == 0) {
             println("The showAll command displays the name, class, ready state, blocked state, and priority for all PCBs in the ready queue, readySuspended queue, blocked queue, and blockedSuspended queue. The showAll command can be used by typing showAll.");
         }
-        else if (strcmp(argv[1], "CreatePCB") == 0) {
-            println("The CreatePCB command will call SetupPCB() and insert the PCB in the appropriate queue.");
+        else if (strcmp(argv[1], "createPCB") == 0) {
+            println("The createPCB command will call SetupPCB() and insert the PCB in the appropriate queue.");
         }
-        else if (strcmp(argv[1], "DeletePCB") == 0) {
-            println("The DeletePCB command will remove a PCB from the appropriate queue and then free all associated memory..");
+        else if (strcmp(argv[1], "deletePCB") == 0) {
+            println("The deletePCB command will remove a PCB from the appropriate queue and then free all associated memory..");
         }
 
      //error checking
