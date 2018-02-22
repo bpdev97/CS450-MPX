@@ -109,18 +109,21 @@ void InsertPCB(PCB *p){
         if(ready -> count == 0){
             ready -> head = p;
             ready -> tail = p;
+            ready -> count++;
             return;
         }
         // new head
         if(p -> priority < currentPCB -> priority){
             p -> nextPcb = currentPCB;
             ready -> head = p;
+            ready -> count++;
             return;
         }
         // new tail
         if(p -> priority > ready -> tail -> priority){
             ready -> tail -> nextPcb = p;
             ready -> tail = p;
+            ready -> count++;
             return;
         }
         // in between
@@ -128,7 +131,11 @@ void InsertPCB(PCB *p){
             if(p -> priority < currentPCB -> nextPcb -> priority){
                 p -> nextPcb = currentPCB -> nextPcb;
                 currentPCB -> nextPcb = p;
+                ready -> count++;
                 return;
+            }
+            else {
+                currentPCB = currentPCB -> nextPcb;
             }
         }
     }
@@ -139,6 +146,7 @@ void InsertPCB(PCB *p){
         if(readySuspended -> count == 0){
             readySuspended -> head = p;
             readySuspended -> tail = p;
+            readySuspended -> count++;
             return;
         }
         currentPCB = readySuspended -> head;
@@ -146,12 +154,14 @@ void InsertPCB(PCB *p){
         if(p -> priority < currentPCB -> priority){
             p -> nextPcb = currentPCB;
             readySuspended -> head = p;
+            readySuspended -> count++;
             return;
         }
         // new tail
         if(p -> priority > readySuspended -> tail -> priority){
             readySuspended -> tail -> nextPcb = p;
             readySuspended -> tail = p;
+            readySuspended -> count++;
             return;
         }
         // in between
@@ -159,7 +169,11 @@ void InsertPCB(PCB *p){
             if(p -> priority < currentPCB -> nextPcb -> priority){
                 p -> nextPcb = currentPCB -> nextPcb;
                 currentPCB -> nextPcb = p;
+                readySuspended -> count++;
                 return;
+            }
+            else {
+                currentPCB = currentPCB -> nextPcb;
             }
         }
     }
@@ -168,6 +182,7 @@ void InsertPCB(PCB *p){
     else if(p -> readyState == -1 && p -> suspendState == 0){
         p -> nextPcb = blocked -> head;
         blocked -> head = p;
+        blocked -> count++;
         return;
     }
 
@@ -175,6 +190,7 @@ void InsertPCB(PCB *p){
     else if(p -> readyState == -1 && p -> suspendState == 1){
         p -> nextPcb = blockedSuspended -> head;
         blockedSuspended -> head = p;
+        blockedSuspended -> count++;
         return;
     }
 
@@ -198,7 +214,6 @@ int RemovePCB(PCB *p){
         ready -> head = p -> nextPcb;
         ready -> count--;
         FreePCB(p);
-
         return 0;
     }
 

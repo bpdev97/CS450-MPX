@@ -236,15 +236,6 @@ int tobcd (int binary) {
     return fulldigit;
 
 }
-//CREATE PCB WILL WORK ON WHEN ADDING QUEUE IS DONE
-/*void CreatePCB(int argc, char* argv[]){
-    pcb* pointpcb = SetupPCB(argv[1], atoi(argv[2]), atoi(argv[3]);
-
-
-}*/
-
-
-
 
 void showPCB(int argc, char* argv[]){
   char* name = argv[1];
