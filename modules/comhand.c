@@ -105,6 +105,10 @@ int comhand() {
       CreatePCB(argc, argv);
     }
 
+    else if(strcmp(argv[0], "deletePCB") == 0){
+      DeletePCB(argc, argv);
+    }
+
     else if(strcmp(argv[0], "block") == 0) {
       blockPCB(argc, argv);
     }
