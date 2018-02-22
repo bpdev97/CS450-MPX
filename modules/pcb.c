@@ -115,7 +115,7 @@ void InsertPCB(PCB *p){
             return;
         }
         // new tail
-        if(p -> priority > ready -> tail -> priority){
+        if(p -> priority >= ready -> tail -> priority){
             ready -> tail -> nextPcb = p;
             ready -> tail = p;
             ready -> count++;
@@ -153,7 +153,7 @@ void InsertPCB(PCB *p){
             return;
         }
         // new tail
-        if(p -> priority > readySuspended -> tail -> priority){
+        if(p -> priority >= readySuspended -> tail -> priority){
             readySuspended -> tail -> nextPcb = p;
             readySuspended -> tail = p;
             readySuspended -> count++;
