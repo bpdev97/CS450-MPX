@@ -100,11 +100,30 @@ int comhand() {
     else if(strcmp(argv[0], "showAll") == 0) {
       showAll();
     }
-    else if(strcmp(argv[0], "CreatePCB") == 0){
-      CreatePCB(argc, argv);
 
+    else if(strcmp(argv[0], "createPCB") == 0){
+      CreatePCB(argc, argv);
     }
 
+    else if(strcmp(argv[0], "block") == 0) {
+      blockPCB(argc, argv);
+    }
+
+    else if(strcmp(argv[0], "unblock") == 0) {
+      unblockPCB(argc, argv);
+    }
+
+    else if(strcmp(argv[0], "suspend") == 0) {
+      suspendPCB(argc, argv);
+    }
+
+    else if(strcmp(argv[0], "resume") == 0) {
+      resumePCB(argc, argv);
+    }
+
+    else if(strcmp(argv[0], "setPriority") == 0) {
+      setPriority(argc, argv);
+    }
     
     // Command not recognized
     else {

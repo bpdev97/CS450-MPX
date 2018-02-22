@@ -445,7 +445,7 @@ void showAll(){
   showBlocked();
 }
 
-
+//Finds a PCB and sets its state to blocked, then reinserts
 int blockPCB(int argc, char *argv[]){
     PCB *find = FindPCB(argv[1]);
     if(!find) return 0;
@@ -456,6 +456,7 @@ int blockPCB(int argc, char *argv[]){
     return 1;
 }
 
+//Finds a PCB and sets its state to unblocked, then reinserts
 int unblockPCB(int argc, char *argv[]){
     PCB *find = FindPCB(argv[1]);
     if(!find) return 0;
@@ -466,6 +467,7 @@ int unblockPCB(int argc, char *argv[]){
     return 1;
 }
 
+//Finds a PCB and sets its state to suspended, then reinserts
 int suspendPCB(int argc, char *argv[]){
     PCB *find = FindPCB(argv[1]);
     if(!find) return 0;
@@ -476,6 +478,7 @@ int suspendPCB(int argc, char *argv[]){
     return 1;
 }
 
+//Finds a PCB and sets its state to resumed, then reinserts
 int resumePCB(int argc, char *argv[]){
     PCB *find = FindPCB(argv[1]);
     if(!find) return 0;
@@ -486,6 +489,7 @@ int resumePCB(int argc, char *argv[]){
     return 1;
 }
 
+//Finds PCB, sets priority, reinserts
 int setPriority(int argc, char *argv[]){
     PCB *find = FindPCB(argv[1]);
     if(!find) return 0;
@@ -534,8 +538,8 @@ void CreatePCB(int argc, char *argv[]){
         return;
     }
 
-    if(strlen(name) < 8 || strlen(name) > 50){
-        println("Error, name has to be AT LEAST 8 characters and less than 50.");
+    if(strlen(name) < 8){
+        println("Error, name has to be AT LEAST 8 characters.");
         return;
     }
 
