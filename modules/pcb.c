@@ -10,13 +10,15 @@
 
 PCB* AllocatePCB(){
     PCB* pointpcb = sys_alloc_mem(sizeof(PCB));
-    unsigned char* pointstack = sys_alloc_mem(1024); //Stack Size?
-    // ^ This has to be an unsigned char -Addison
+    unsigned char pointstack[1024];
+    memset(pointstack, '0', 1024);
     if(pointpcb == NULL || pointstack == NULL){
         return NULL;
     }
     else{
         pointpcb -> stack = pointstack;
+        pointpcb -> stackBase = sys_alloc_mem(1024);
+        pointpcb -> stackTop = pointpcb -> stackBase + 1024;
         return pointpcb;
     }
 }
@@ -35,7 +37,7 @@ int FreePCB(PCB* freepcb){
 
 PCB* SetupPCB(char* name, int classNum, int priority){
     PCB* pointpcb = AllocatePCB();
-    pointpcb -> name = name;
+    strcpy(pointpcb -> name, name);
     if(classNum == 1 || classNum == 0){
         pointpcb -> classNum = classNum;
     }

@@ -100,6 +100,11 @@ int comhand() {
     else if(strcmp(argv[0], "showAll") == 0) {
       showAll();
     }
+    else if(strcmp(argv[0], "CreatePCB") == 0){
+      CreatePCB(argc, argv);
+
+    }
+
     
     // Command not recognized
     else {

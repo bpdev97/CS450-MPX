@@ -534,8 +534,8 @@ void CreatePCB(int argc, char *argv[]){
         return;
     }
 
-    if(strlen(name) < 8){
-        println("Error, name has to be AT LEAST 8 characters.");
+    if(strlen(name) < 8 || strlen(name) > 50){
+        println("Error, name has to be AT LEAST 8 characters and less than 50.");
         return;
     }
 
