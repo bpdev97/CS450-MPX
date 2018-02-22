@@ -38,7 +38,7 @@ void kmain(void)
    init_serial(COM1);    // init COM1
    set_serial_in(COM1); // set COM1 as input
    set_serial_out(COM1); // set COM1 as output
-   mpx_init(MODULE_R1);  // init module R1 
+   mpx_init(MODULE_R2);  // init module R1 
  
    klogv("Initialized serial I/O on COM1 device...");
 
