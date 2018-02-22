@@ -13,8 +13,6 @@ int readyState;
 int suspendState; // suspendState == 1 indicates suspended
 unsigned char* stackBase;
 unsigned char* stackTop;
-unsigned char* stack;
-int  FreePCB;
 struct pcb* nextPcb;
 } PCB;
 

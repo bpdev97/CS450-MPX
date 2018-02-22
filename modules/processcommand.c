@@ -433,7 +433,10 @@ void showAll(){
 //Finds a PCB and sets its state to blocked, then reinserts
 int blockPCB(int argc, char *argv[]){
     PCB *find = FindPCB(argv[1]);
-    if(!find) return 0;
+    if(!find){
+        println("PCB not found.");
+        return 0;
+    }
 
     RemovePCB(find);
     find -> readyState = -1;
@@ -444,7 +447,10 @@ int blockPCB(int argc, char *argv[]){
 //Finds a PCB and sets its state to unblocked, then reinserts
 int unblockPCB(int argc, char *argv[]){
     PCB *find = FindPCB(argv[1]);
-    if(!find) return 0;
+    if(!find){
+        println("PCB not found.");
+        return 0;
+    }
 
     RemovePCB(find);
     find -> readyState = 1;
@@ -455,7 +461,10 @@ int unblockPCB(int argc, char *argv[]){
 //Finds a PCB and sets its state to suspended, then reinserts
 int suspendPCB(int argc, char *argv[]){
     PCB *find = FindPCB(argv[1]);
-    if(!find) return 0;
+    if(!find){
+        println("PCB not found.");
+        return 0;
+    }
 
     RemovePCB(find);
     find -> suspendState = 1;
@@ -466,7 +475,10 @@ int suspendPCB(int argc, char *argv[]){
 //Finds a PCB and sets its state to resumed, then reinserts
 int resumePCB(int argc, char *argv[]){
     PCB *find = FindPCB(argv[1]);
-    if(!find) return 0;
+    if(!find){
+        println("PCB not found.");
+        return 0;
+    }
 
     RemovePCB(find);
     find -> suspendState = 0;
@@ -477,7 +489,10 @@ int resumePCB(int argc, char *argv[]){
 //Finds PCB, sets priority, reinserts
 int setPriority(int argc, char *argv[]){
     PCB *find = FindPCB(argv[1]);
-    if(!find) return 0;
+    if(!find){
+        println("PCB not found.");
+        return 0;
+    }
 
     int p = atoi(argv[2]);
     if(p < 0 || p > 9) return 0;
