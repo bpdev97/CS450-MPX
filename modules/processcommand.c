@@ -278,11 +278,8 @@ void showPCB(int argc, char* argv[]){
   
 }
 
-
-
 //display all PCB info in ready queues
-void showReady()
-{
+void showReady(){
  PCB* currentPCB = ready->head;
  char classNumber[2];
  char priorityNumber[2];
@@ -322,8 +319,7 @@ void showReady()
 
   currentPCB = readySuspended->head;
 
-for(i = 0; i< readySuspended->count; i++)
- {
+for(i = 0; i< readySuspended->count; i++) {
    print("Process Name: "); 
    println(currentPCB->name); 
    
@@ -352,8 +348,6 @@ for(i = 0; i< readySuspended->count; i++)
    println(" ");
    currentPCB = currentPCB->nextPcb;
  }
-
- 
 }
 
 
