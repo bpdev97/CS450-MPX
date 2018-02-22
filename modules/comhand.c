@@ -43,7 +43,7 @@ int comhand() {
     }
 
     else if(strcmp(argv[0], "version") == 0) {
-      version(argc, argv);
+      version();
     }
 
     // shutdown the os
@@ -74,7 +74,7 @@ int comhand() {
     }
 
     else if(strcmp(argv[0], "gettime") == 0) {
-      gettime(argc, argv);
+      gettime();
     }
     
     else if(strcmp(argv[0], "setdate") == 0) {
@@ -82,7 +82,7 @@ int comhand() {
     }
 
     else if(strcmp(argv[0], "getdate") == 0) {
-      getdate(argc, argv);
+      getdate();
     }
    
     else if(strcmp(argv[0], "showPCB") == 0) {
