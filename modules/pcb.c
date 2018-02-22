@@ -108,7 +108,7 @@ void InsertPCB(PCB *p){
             return;
         }
         // new head
-        if(p -> priority < currentPCB -> priority){
+        if(p -> priority <= currentPCB -> priority){
             p -> nextPcb = currentPCB;
             ready -> head = p;
             ready -> count++;
@@ -146,7 +146,7 @@ void InsertPCB(PCB *p){
         }
         currentPCB = readySuspended -> head;
         // new head
-        if(p -> priority < currentPCB -> priority){
+        if(p -> priority <= currentPCB -> priority){
             p -> nextPcb = currentPCB;
             readySuspended -> head = p;
             readySuspended -> count++;

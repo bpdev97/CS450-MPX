@@ -238,6 +238,11 @@ int tobcd (int binary) {
 }
 
 void showPCB(int argc, char* argv[]){
+  if(argc == 1){
+        println("Invalid input, did not put the PCB name.");
+        return;
+  }
+
   char* name = argv[1];
   PCB* currentPCB = FindPCB(name);
   char classNumber[2];
@@ -278,11 +283,8 @@ void showPCB(int argc, char* argv[]){
   
 }
 
-
-
 //display all PCB info in ready queues
-void showReady()
-{
+void showReady(){
  PCB* currentPCB = ready->head;
  char classNumber[2];
  char priorityNumber[2];
@@ -322,8 +324,7 @@ void showReady()
 
   currentPCB = readySuspended->head;
 
-for(i = 0; i< readySuspended->count; i++)
- {
+for(i = 0; i< readySuspended->count; i++) {
    print("Process Name: "); 
    println(currentPCB->name); 
    
@@ -352,8 +353,6 @@ for(i = 0; i< readySuspended->count; i++)
    println(" ");
    currentPCB = currentPCB->nextPcb;
  }
-
- 
 }
 
 
