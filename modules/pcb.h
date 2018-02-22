@@ -3,7 +3,7 @@
 #define _PCB_H
 
 typedef struct pcb{
-char name[50];
+char* name;
 int classNum;
 int priority; 
 // readyState == 1 indicates ready

@@ -37,7 +37,10 @@ int FreePCB(PCB* freepcb){
 
 PCB* SetupPCB(char* name, int classNum, int priority){
     PCB* pointpcb = AllocatePCB();
+    pointpcb -> name = sys_alloc_mem(strlen(name) + 1);
     strcpy(pointpcb -> name, name);
+    pointpcb -> readyState = 1;
+    pointpcb -> suspendState = 0;
     if(classNum == 1 || classNum == 0){
         pointpcb -> classNum = classNum;
     }
