@@ -238,6 +238,11 @@ int tobcd (int binary) {
 }
 
 void showPCB(int argc, char* argv[]){
+  if(argc == 1){
+        println("Invalid input, did not put the PCB name.");
+        return;
+  }
+
   char* name = argv[1];
   PCB* currentPCB = FindPCB(name);
   char classNumber[2];
