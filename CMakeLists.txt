@@ -26,7 +26,8 @@ set(SOURCE_FILES
         modules/polling.c
         modules/polling.h
         modules/comhand.c
-        modules/comhand.h modules/processcommand.c modules/processcommand.h)
+        modules/comhand.h modules/processcommand.c modules/processcommand.h
+        modules/pcb.h modules/queue.h modules/pcb.c)
 
 include_directories(include .)
 

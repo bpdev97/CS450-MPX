@@ -63,6 +63,16 @@
 <p><em>Declaration:</em><br />void showAll();</p>
 <p><em>Parameters:</em><br />No parameters</p>
 <p><em>Return Value:</em><br />showAll has no return value.</p>
+<h3 id="createpcb">CreatePCB()</h3>
+<p><em>Description:</em><br />The CreatePCB function creates a PCB with the user input name, class, and priority.</p>
+<p><em>Declaration:</em><br />void CreatePCB(int argc, char *argv[]);</p>
+<p><em>Parameters:</em><br />argc - represents the number of arguments passed from the command line.<br />argv - an array of character pointers containing the arguments from the command line. Version consumes no arguments.</p>
+<p><em>Return Value:</em><br />CreatePCB has no return value.</p>
+<h3 id="deletepcb">DeletePCB()</h3>
+<p><em>Description:</em><br />The DeletePCB function deletes a PCB with the user input name.</p>
+<p><em>Declaration:</em><br />void DeletePCB(int argc, char *argv[]);</p>
+<p><em>Parameters:</em><br />argc - represents the number of arguments passed from the command line.<br />argv - an array of character pointers containing the arguments from the command line. Version consumes no arguments.</p>
+<p><em>Return Value:</em><br />DeletePCB has no return value.</p>
 <h2 id="functions---polling.c">Functions - polling.c</h2>
 <p>polling.c contains the functions necessary to poll user input from the com port.</p>
 <h3 id="poll">poll()</h3>
@@ -126,3 +136,20 @@
 <p><em>Declaration:</em><br />void println(char *string);</p>
 <p><em>Parameters:</em><br />string - character pointer to string that will be printed</p>
 <p><em>Return Value:</em><br />No return value.</p>
+<h2 id="functions---pcb.c">Functions - pcb.c</h2>
+<p>pcb.c contains functions for the pcb</p>
+<h3 id="allocatepcb">AllocatePCB()</h3>
+<p><em>Description:</em><br />Allocates memory for a new PCB.</p>
+<p><em>Declaration:</em><br />PCB* AllocatePCB();</p>
+<p><em>Parameters:</em><br />No parameters</p>
+<p><em>Return Value:</em><br />Returns a PCB Pointer when successful and NULL when not.</p>
+<h3 id="freepcb">FreePCB()</h3>
+<p><em>Description:</em><br />Frees all memory associated with a given PCB.</p>
+<p><em>Declaration:</em><br />int FreePCB(PCB* freepcb);</p>
+<p><em>Parameters:</em><br />PCB Pointer to the pcb to be freed</p>
+<p><em>Return Value:</em><br />Returns an integer when it is successful and when it is not.</p>
+<h3 id="setuppcb">SetupPCB()</h3>
+<p><em>Description:</em><br />Sets the PCB state to ready.</p>
+<p><em>Declaration:</em><br />PCB* SetupPCB(char* name, int classNum, int priority);</p>
+<p><em>Parameters:</em><br />Process Name, Process Class, and Process Priority</p>
+<p><em>Return Value:</em><br />Returns a PCB Pointer when successful and NULL when not.</p>
