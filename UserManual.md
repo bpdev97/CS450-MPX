@@ -4,7 +4,7 @@ The purpose of this manual is to give users a summary of the commands that can b
 
 Commands
 ---------
-Currently there are twelve commands including the help command that can be executed in this operating system.
+Currently there are fourteen commands including the help command that can be executed in this operating system.
 
 1. help
 2. shutdown
@@ -18,6 +18,9 @@ Currently there are twelve commands including the help command that can be execu
 10. showReady
 11. showBlocked
 12. showAll
+13. createPCB
+14. deletePCB
+
 
 ### help
 *Usage:*  
@@ -66,3 +69,11 @@ The showBlocked command displays the name, class, ready state, blocked state, an
 ### showAll
 *Usage:*  
 The showAll command displays the name, class, ready state, blocked state, and priority for all PCBs in the ready queue, readySuspended queue, blocked queue, and blockedSuspended queue. The showAll command can be used by typing *showAll*.
+
+### CreatePCB
+*Usage:* 
+The createPCB function creates a PCB with the user input name, class, and priority. The createPCB command can be used by typing createPCB.
+
+### DeletePCB
+*Usage:* 
+The deletePCB function deletes a PCB with the user input name. The deletePCB command can be used by typing deletePCB.
