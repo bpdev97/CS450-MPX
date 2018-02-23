@@ -106,7 +106,7 @@ binary - binary value to be converted
 *Return Value:*  
 Returns a BCD value
 
-### printbcd
+### printbcd()
 *Description:*  
 Takes in a BCD value and prints out its ASCII representation
 
@@ -181,7 +181,7 @@ void CreatePCB(int argc, char *argv[]);
 
 *Parameters:*  
 argc - represents the number of arguments passed from the command line.  
-argv - an array of character pointers containing the arguments from the command line. Version consumes no arguments.
+argv - an array of character pointers containing the arguments from the command line.
 
 *Return Value:*  
 CreatePCB has no return value.
@@ -195,10 +195,79 @@ void DeletePCB(int argc, char *argv[]);
 
 *Parameters:*  
 argc - represents the number of arguments passed from the command line.  
-argv - an array of character pointers containing the arguments from the command line. Version consumes no arguments.
+argv - an array of character pointers containing the arguments from the command line.
 
 *Return Value:*  
 DeletePCB has no return value.
+
+### blockPCB()
+*Description:*
+The blockPCB function finds a PCB, changes its ready state to blocked (-1) and then inserts it into the proper queue.
+
+*Declaration:*
+int blockPCB(int argc, char *argv[]);
+
+*Parameters:*
+argc - represents the number of arguments passed from the command line.  
+argv - an array of character pointers containing the arguments from the command line.
+
+*Return Value:*
+Returns an integer representing the success or failure of the function. Returns 1 for success, 0 for failure.
+
+### unblockPCB()
+*Description:*
+The unblockPCB function finds a PCB, changes its ready state to ready (1) and then inserts it into the proper queue.
+
+*Declaration:*
+int unblockPCB(int argc, char *argv[]);
+
+*Parameters:*
+argc - represents the number of arguments passed from the command line.  
+argv - an array of character pointers containing the arguments from the command line.
+
+*Return Value:*
+Returns an integer representing the success or failure of the function. Returns 1 for success, 0 for failure.
+
+### suspendPCB()
+*Description:*
+The suspendPCB function finds a PCB, changes its suspend state to suspended (1) and then inserts it into the proper queue.
+
+*Declaration:*
+int suspendPCB(int argc, char *argv[]);
+
+*Parameters:*
+argc - represents the number of arguments passed from the command line.  
+argv - an array of character pointers containing the arguments from the command line.
+
+*Return Value:*
+Returns an integer representing the success or failure of the function. Returns 1 for success, 0 for failure.
+
+### resumePCB()
+*Description:*
+The resumePCB function finds a PCB, changes its suspend state to resumed (0) and then inserts it into the proper queue.
+
+*Declaration:*
+int resumePCB(int argc, char *argv[]);
+
+*Parameters:*
+argc - represents the number of arguments passed from the command line.  
+argv - an array of character pointers containing the arguments from the command line.
+
+*Return Value:*
+Returns an integer representing the success or failure of the function. Returns 1 for success, 0 for failure.
+
+### setPriority()
+The setPriority function finds a PCB, changes its priority to the priority given in argv and then inserts it into the proper queue.
+
+*Declaration:*
+int setPriority(int argc, char *argv[]);
+
+*Parameters:*
+argc - represents the number of arguments passed from the command line.  
+argv - an array of character pointers containing the arguments from the command line.
+
+*Return Value:*
+Returns an integer representing the success or failure of the function. Returns 1 for success, 0 for failure.
 
 Functions - polling.c
 ---------------------
@@ -449,6 +518,3 @@ PCB to be removed pointer
 
 *Return Value:*  
 Returns 0 when successful and -1 when it fails to remove the given PCB.
-
-
-

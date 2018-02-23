@@ -13,7 +13,7 @@ void help (int argc, char* argv[]) {
     //checking array size and setting up the Help menu
     if (argc == 1) {
         println("To use the help command type 'help' followed by the command you would like to use.");
-        println("The commands you can use include: clear, shutdown, setdate, getdate, settime, gettime, version, showPCB, showReady, showBlocked, and showAll.");
+        println("The commands you can use include: clear, shutdown, setdate, getdate, settime, gettime, version, showPCB, showReady, showBlocked, showAll, createPCB, deletePCB, block, unblock, suspend, resume, and setPriority.");
     }
     //listing each command and what they do
     else if (argc == 2) {
@@ -48,20 +48,45 @@ void help (int argc, char* argv[]) {
         else if (strcmp(argv[1], "showPCB") == 0) {
             println("The showPCB checks to see if the PCB name exists in the in the ready queue, readySuspended queue, blocked queue, or blockedSuspended queue. If the PCB exists then the name, class, ready state, blocked state, and priority of the PCB is displayed. The showPCB command can be used by typing showPCB followed by the name of the PCB. For example 'showPCB testName' will search the queues for a PCB with the name testName.");
         }
+
         else if (strcmp(argv[1], "showReady") == 0) {
             println("The showReady command displays the name, class, ready state, blocked state, and priority for all PCBs in the ready queue and readySuspended queue. The showReady command can be used by typing showReady.");
         }
+
         else if (strcmp(argv[1], "showBlocked") == 0) {
             println("The showBlocked command displays the name, class, ready state, blocked state, and priority for all PCBs in the blocked queue and blockedSuspended queue. The showBlocked command can be used by typing showBlocked.");
         }
+
         else if (strcmp(argv[1], "showAll") == 0) {
             println("The showAll command displays the name, class, ready state, blocked state, and priority for all PCBs in the ready queue, readySuspended queue, blocked queue, and blockedSuspended queue. The showAll command can be used by typing showAll.");
         }
+
         else if (strcmp(argv[1], "createPCB") == 0) {
             println("The createPCB function creates a PCB with the user input name, class, and priority. The createPCB command can be used by typing createPCB.");
         }
+
         else if (strcmp(argv[1], "deletePCB") == 0) {
             println("The deletePCB function deletes a PCB with the user input name. The deletePCB command can be used by typing deletePCB.");
+        }
+
+        else if (strcmp(argv[1], "block") == 0){
+            println("The block command can accept one argument, that being the name of a process. Block will find a process and change its state to blocked.");
+        }
+
+        else if (strcmp(argv[1], "unblock") == 0){
+            println("The unblock command can accept one argument, that being the name of a process. Unblock will find a process and change its state to unblocked.");
+        }
+
+        else if (strcmp(argv[1], "suspend") == 0){
+            println("The suspend command can accept one argument, that being the name of a process. Suspend will find a process and change its state to suspended.");
+        }
+
+        else if (strcmp(argv[1], "resume") == 0){
+            println("The resume command can accept one argument, that being the name of a process. Resume will find a process and change its state to resumed.");
+        }
+
+        else if (strcmp(argv[1], "setPriority") == 0){
+            println("The setPriority command can accept two arguments. The name of a process, and a priority to set in the process. The priority can be an integer between 0 and 9. SetPriority will find the process and then set the priority.");
         }
 
      //error checking

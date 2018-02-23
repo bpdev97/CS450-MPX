@@ -4,7 +4,7 @@ The purpose of this manual is to give users a summary of the commands that can b
 
 Commands
 ---------
-Currently there are fourteen commands including the help command that can be executed in this operating system.
+Currently there are nineteen commands including the help command that can be executed in this operating system.
 
 1. help
 2. shutdown
@@ -20,6 +20,11 @@ Currently there are fourteen commands including the help command that can be exe
 12. showAll
 13. createPCB
 14. deletePCB
+15. block
+16. unblock
+17. suspend
+18. resume
+19. setPriority
 
 
 ### help
@@ -70,10 +75,30 @@ The showBlocked command displays the name, class, ready state, blocked state, an
 *Usage:*  
 The showAll command displays the name, class, ready state, blocked state, and priority for all PCBs in the ready queue, readySuspended queue, blocked queue, and blockedSuspended queue. The showAll command can be used by typing *showAll*.
 
-### CreatePCB
+### createPCB
 *Usage:* 
 The createPCB function creates a PCB with the user input name, class, and priority. The createPCB command can be used by typing createPCB.
 
-### DeletePCB
+### deletePCB
 *Usage:* 
 The deletePCB function deletes a PCB with the user input name. The deletePCB command can be used by typing deletePCB.
+
+### block
+*Usage:*
+The block command can accept one argument, that being the name of a process. Block will find a process and change its state to blocked.
+
+### unblock
+*Usage:*
+The unblock command can accept one argument, that being the name of a process. Unblock will find a process and change its state to unblocked.
+
+### suspend
+*Usage:*
+The suspend command can accept one argument, that being the name of a process. Suspend will find a process and change its state to suspended.
+
+### resume
+*Usage:*
+The resume command can accept one argument, that being the name of a process. Resume will find a process and change its state to resumed.
+
+### setPriority
+*Usage:*
+The setPriority command can accept two arguments. The name of a process, and a priority to set in the process. The priority can be an integer between 0 and 9. SetPriority will find the process and then set the priority.
