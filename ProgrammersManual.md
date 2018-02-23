@@ -323,7 +323,7 @@ base - number base to convert to
 *Return Value:*  
 itoa returns the number string
 
-### sprintf
+### sprintf()
 *Description:*  
 sprintf takes in a blank character array, a string with format tags, and then an arbitrary number of arguments. sprintf formats a string given these inputs and saves and returns the result. Arguments are formatted into the string using format tags. Integers are formated using %d or #i, hex uses %x, octal uses %o, single characters use %c, and strings use %s.
 
@@ -410,6 +410,45 @@ Process Name, Process Class, and Process Priority
 
 *Return Value:*  
 Returns a PCB Pointer when successful and NULL when not. 
+
+### FindPCB()
+*Description:*  
+Searches through all queues, finds the requested PCB, and returns a pointer to that pcb.
+
+*Declaration:*  
+PCB* FindPCB(char* name);
+
+*Parameters:*  
+Process Name
+
+*Return Value:*  
+Returns a PCB Pointer when successful and NULL when not. 
+
+### InsertPCB()
+*Description:*  
+Inserts a PCB into the correct queue.
+
+*Declaration:*  
+InsertPCB(PCB *pcb);
+
+*Parameters:*  
+PCB to be inserted pointer
+
+*Return Value:*  
+Void
+
+### RemovePCB()
+*Description:*  
+Finds and removes a PCB from the queue it is currently in.
+
+*Declaration:*  
+int RemovePCB(PCB *pcb);
+
+*Parameters:*  
+PCB to be removed pointer
+
+*Return Value:*  
+Returns 0 when successful and -1 when it fails to remove the given PCB.
 
 
 

@@ -119,7 +119,7 @@
 <p><em>Declaration:</em><br />char <em>itoa(int value, char </em>str, int base);</p>
 <p><em>Parameters:</em><br />value - integer value to be converted str - pointer to buffer for string storage base - number base to convert to</p>
 <p><em>Return Value:</em><br />itoa returns the number string</p>
-<h3 id="sprintf">sprintf</h3>
+<h3 id="sprintf">sprintf()</h3>
 <p><em>Description:</em><br />sprintf takes in a blank character array, a string with format tags, and then an arbitrary number of arguments. sprintf formats a string given these inputs and saves and returns the result. Arguments are formatted into the string using format tags. Integers are formated using %d or #i, hex uses %x, octal uses %o, single characters use %c, and strings use %s.</p>
 <p><em>Declaration:</em><br />int sprintf(char <em>str, const char </em>format, ...);</p>
 <p><em>Parameters:</em><br />str - character array that ouput is stored in format - string containing format tags ... - list of arguments to be formatted into the string</p>
@@ -153,3 +153,18 @@
 <p><em>Declaration:</em><br />PCB* SetupPCB(char* name, int classNum, int priority);</p>
 <p><em>Parameters:</em><br />Process Name, Process Class, and Process Priority</p>
 <p><em>Return Value:</em><br />Returns a PCB Pointer when successful and NULL when not.</p>
+<h3 id="findpcb">FindPCB()</h3>
+<p><em>Description:</em><br />Searches through all queues, finds the requested PCB, and returns a pointer to that pcb.</p>
+<p><em>Declaration:</em><br />PCB* FindPCB(char* name);</p>
+<p><em>Parameters:</em><br />Process Name</p>
+<p><em>Return Value:</em><br />Returns a PCB Pointer when successful and NULL when not.</p>
+<h3 id="insertpcb">InsertPCB()</h3>
+<p><em>Description:</em><br />Inserts a PCB into the correct queue.</p>
+<p><em>Declaration:</em><br />InsertPCB(PCB *pcb);</p>
+<p><em>Parameters:</em><br />PCB to be inserted pointer</p>
+<p><em>Return Value:</em><br />Void</p>
+<h3 id="removepcb">RemovePCB()</h3>
+<p><em>Description:</em><br />Finds and removes a PCB from the queue it is currently in.</p>
+<p><em>Declaration:</em><br />int RemovePCB(PCB *pcb);</p>
+<p><em>Parameters:</em><br />PCB to be removed pointer</p>
+<p><em>Return Value:</em><br />Returns 0 when successful and -1 when it fails to remove the given PCB.</p>
