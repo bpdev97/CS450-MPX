@@ -58,10 +58,10 @@ void help (int argc, char* argv[]) {
             println("The showAll command displays the name, class, ready state, blocked state, and priority for all PCBs in the ready queue, readySuspended queue, blocked queue, and blockedSuspended queue. The showAll command can be used by typing showAll.");
         }
         else if (strcmp(argv[1], "createPCB") == 0) {
-            println("The createPCB command will call SetupPCB() and insert the PCB in the appropriate queue. The createPCB command can be used by typing createPCB.");
+            println("The createPCB function creates a PCB with the user input name, class, and priority. The createPCB command can be used by typing createPCB.");
         }
         else if (strcmp(argv[1], "deletePCB") == 0) {
-            println("The deletePCB command will remove a PCB from the appropriate queue and then free all associated memory. The deletePCB command can be used by typing deletePCB.");
+            println("The deletePCB function deletes a PCB with the user input name. The deletePCB command can be used by typing deletePCB.");
         }
 
      //error checking
