@@ -172,6 +172,34 @@ No parameters
 *Return Value:*  
 showAll has no return value.
 
+### CreatePCB()
+*Description:*  
+The CreatePCB function creates a PCB with the user input name, class, and priority.
+
+*Declaration:*  
+void CreatePCB(int argc, char *argv[]);
+
+*Parameters:*  
+argc - represents the number of arguments passed from the command line.  
+argv - an array of character pointers containing the arguments from the command line. Version consumes no arguments.
+
+*Return Value:*  
+CreatePCB has no return value.
+
+### DeletePCB()
+*Description:*  
+The DeletePCB function deletes a PCB with the user input name.
+
+*Declaration:*  
+void DeletePCB(int argc, char *argv[]);
+
+*Parameters:*  
+argc - represents the number of arguments passed from the command line.  
+argv - an array of character pointers containing the arguments from the command line. Version consumes no arguments.
+
+*Return Value:*  
+DeletePCB has no return value.
+
 Functions - polling.c
 ---------------------
 polling.c contains the functions necessary to poll user input from the com port.
@@ -339,6 +367,49 @@ string - character pointer to string that will be printed
 
 *Return Value:*  
 No return value.
+
+Functions - pcb.c
+----------------------
+pcb.c contains functions for the pcb
+
+### AllocatePCB()
+*Description:*  
+Allocates memory for a new PCB.
+
+*Declaration:*  
+PCB* AllocatePCB();
+
+*Parameters:*  
+No parameters
+
+*Return Value:*  
+Returns a PCB Pointer when successful and NULL when not. 
+
+### FreePCB()
+*Description:*  
+Frees all memory associated with a given PCB.
+
+*Declaration:*  
+int FreePCB(PCB* freepcb);
+
+*Parameters:*  
+PCB Pointer to the pcb to be freed
+
+*Return Value:*  
+Returns an integer when it is successful and when it is not. 
+
+### SetupPCB()
+*Description:*  
+Sets the PCB state to ready.
+
+*Declaration:*  
+PCB* SetupPCB(char* name, int classNum, int priority);
+
+*Parameters:*  
+Process Name, Process Class, and Process Priority
+
+*Return Value:*  
+Returns a PCB Pointer when successful and NULL when not. 
 
 
 
