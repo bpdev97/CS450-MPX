@@ -74,7 +74,7 @@ void help (int argc, char* argv[]) {
     }
 }
 
-void version (int argc, char* argv[]) {
+void version () {
     println("Version: R2.");
 }
 
@@ -193,7 +193,7 @@ void setdate (int argc, char* argv[]) {
 }
 
 // allows user to get the date
-void getdate (int argc, char* argv[]) {
+void getdate () {
     // Month
     outb(0x70, 0x08);
     printbcd(inb(0x71));
@@ -211,7 +211,7 @@ void getdate (int argc, char* argv[]) {
 }
 
 // allows user to get the time
-void gettime (int argc, char* argv[]) {
+void gettime () {
     // Hour
     outb(0x70, 0x04);
     printbcd(inb(0x71));
@@ -437,13 +437,17 @@ void showAll(){
 
 //Finds a PCB and sets its state to blocked, then reinserts
 int blockPCB(int argc, char *argv[]){
-    PCB *find = FindPCB(argv[1]);
+    PCB *find;
     if(argc == 1){
         println("Error: no process name given.");
         return 0;
     }
+    
+    else{
+        find = FindPCB(argv[1]);
+    }
 
-    else if(!find){
+    if(!find){
         println("PCB not found.");
         return 0;
     }
@@ -458,13 +462,17 @@ int blockPCB(int argc, char *argv[]){
 
 //Finds a PCB and sets its state to unblocked, then reinserts
 int unblockPCB(int argc, char *argv[]){
-    PCB *find = FindPCB(argv[1]);
+    PCB *find;
     if(argc == 1){
         println("Error: no process name given.");
         return 0;
     }
 
-    else if(!find){
+    else{
+        find = FindPCB(argv[1]);
+    }
+
+    if(!find){
         println("PCB not found.");
         return 0;
     }
@@ -479,13 +487,17 @@ int unblockPCB(int argc, char *argv[]){
 
 //Finds a PCB and sets its state to suspended, then reinserts
 int suspendPCB(int argc, char *argv[]){
-    PCB *find = FindPCB(argv[1]);
+    PCB *find;
     if(argc == 1){
         println("Error: no process name given.");
         return 0;
     }
 
-    else if(!find){
+    else{
+        find = FindPCB(argv[1]);
+    }
+
+    if(!find){
         println("PCB not found.");
         return 0;
     }
@@ -500,13 +512,17 @@ int suspendPCB(int argc, char *argv[]){
 
 //Finds a PCB and sets its state to resumed, then reinserts
 int resumePCB(int argc, char *argv[]){
-    PCB *find = FindPCB(argv[1]);
+    PCB *find;
     if(argc == 1){
         println("Error: no process name given.");
         return 0;
     }
 
-    else if(!find){
+    else{
+        find = FindPCB(argv[1]);
+    }
+
+    if(!find){
         println("PCB not found.");
         return 0;
     }
@@ -521,13 +537,17 @@ int resumePCB(int argc, char *argv[]){
 
 //Finds PCB, sets priority, reinserts
 int setPriority(int argc, char *argv[]){
-    PCB *find = FindPCB(argv[1]);
-    if(argc != 3){
+    PCB *find;
+    if(argc < 3){
         println("Error: not enough inputs.");
         return 0;
     }
 
-    else if(!find){
+    else{
+        find = FindPCB(argv[1]);
+    }
+
+    if(!find){
         println("PCB not found.");
         return 0;
     }
@@ -537,7 +557,7 @@ int setPriority(int argc, char *argv[]){
         println("Error: invalid priority.");
         return 0;
     }
-    
+
     else{
         RemovePCB(find);
         find -> priority = p;

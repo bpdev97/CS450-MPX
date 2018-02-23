@@ -175,7 +175,7 @@ int sys_free_mem(void *ptr)
   // otherwise we don't free anything
   return -1;
 }
-
+//ad
 /*
   Procedure..: idle
   Description..: The idle process, used in dispatching
@@ -212,7 +212,8 @@ void println (char* string){
 	int character = strlen(string);
 
 	sys_req(WRITE, COM1, string, &character);
-	sys_req(WRITE, COM1, " \n", 1);
+	int count = 1;
+	sys_req(WRITE, COM1, " \n", &count);
 
 }
 
