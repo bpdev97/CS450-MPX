@@ -58,10 +58,10 @@ void help (int argc, char* argv[]) {
             println("The showAll command displays the name, class, ready state, blocked state, and priority for all PCBs in the ready queue, readySuspended queue, blocked queue, and blockedSuspended queue. The showAll command can be used by typing showAll.");
         }
         else if (strcmp(argv[1], "createPCB") == 0) {
-            println("The createPCB command will call SetupPCB() and insert the PCB in the appropriate queue.");
+            println("The createPCB command will call SetupPCB() and insert the PCB in the appropriate queue. The createPCB command can be used by typing createPCB.");
         }
         else if (strcmp(argv[1], "deletePCB") == 0) {
-            println("The deletePCB command will remove a PCB from the appropriate queue and then free all associated memory..");
+            println("The deletePCB command will remove a PCB from the appropriate queue and then free all associated memory. The deletePCB command can be used by typing deletePCB.");
         }
 
      //error checking
@@ -587,12 +587,12 @@ void CreatePCB(int argc, char *argv[]){
     }
 
     if(class != 0 && class != 1){
-        println("Error. Class must be between 0 and 1.");
+        println("Error, Class must be between 0 and 1.");
         return;
     }
 
     if(priority < 0 || priority > 9){
-        println("Error. Priority must be between 0 and 9.");
+        println("Error, Priority must be between 0 and 9.");
         return;
     }
     //Inserts PCB
