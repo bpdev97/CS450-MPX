@@ -239,7 +239,7 @@ char *itoa(int value, char *str, int base){
     //Handle the zero case separately and take the absolute value of the number
     int n = abs(value);
     if(n == 0){
-        str[i++] = 0;
+        str[i++] = '0';
         str[i] = '\0';
         return str;
     }
