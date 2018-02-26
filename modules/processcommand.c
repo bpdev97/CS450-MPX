@@ -322,8 +322,12 @@ void showReady(){
    println(currentPCB->name); 
    
    print("Class: "); 
-   itoa((currentPCB->classNum),classNumber, 10); //converts class int to char *
-   println(classNumber);
+   if(currentPCB->classNum  == 0){
+     println("0");
+   }
+   else if(currentPCB->classNum  == 1){
+     println("1");
+   }
    
    if(currentPCB->readyState == 1){
       println("State: Ready");  
@@ -354,8 +358,12 @@ for(i = 0; i< readySuspended->count; i++) {
    println(currentPCB->name); 
    
    print("Class: "); 
-   itoa((currentPCB->classNum),classNumber, 10); //converts class int to char *
-   println(classNumber);
+   if(currentPCB->classNum  == 0){
+     println("0");
+   }
+   else if(currentPCB->classNum  == 1){
+     println("1");
+   }
    
    if(currentPCB->readyState == 1){
       println("State: Ready");  
@@ -395,8 +403,12 @@ void showBlocked(){
    println(currentPCB->name); 
    
    print("Class: "); 
-   itoa((currentPCB->classNum),classNumber, 10); //converts class int to char *
-   println(classNumber);
+   if(currentPCB->classNum  == 0){
+     println("0");
+   }
+   else if(currentPCB->classNum  == 1){
+     println("1");
+   }
    
    if(currentPCB->readyState == 1){
       println("State: Ready");  
@@ -428,8 +440,12 @@ for(i = 0; i< blockedSuspended->count; i++)
    println(currentPCB->name); 
    
    print("Class: "); 
-   itoa((currentPCB->classNum),classNumber, 10); //converts class int to char *
-   println(classNumber);
+  if(currentPCB->classNum  == 0){
+     println("0");
+   }
+   else if(currentPCB->classNum  == 1){
+     println("1");
+   }
    
    if(currentPCB->readyState == 1){
       println("State: Ready");  
