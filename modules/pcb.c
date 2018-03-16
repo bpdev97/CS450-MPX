@@ -48,6 +48,22 @@ PCB* SetupPCB(char* name, int classNum, int priority){
     else{
         return NULL;
     }
+
+    //Accounting for size of context on the stack
+    pointpcb -> stackTop = pointpcb -> stackBase - sizeof(CONTEXT);
+
+    //initializing context values
+    pointpcb -> context -> fs = 0x10;
+    pointpcb -> context -> gs = 0x10;
+    pointpcb -> context -> ds = 0x10;
+    pointpcb -> context -> es = 0x10;
+    pointpcb -> context -> cs = 0x8;
+    pointpcb -> context -> ebp = (u32int) pointpcb -> stackBase;
+    pointpcb -> context -> esp = (u32int) pointpcb -> stackTop;
+    //pointpcb -> context -> eip = (u32int) pointpcb -> &function;
+    //Really don't know what the Hell this function pointer is supposed to be ^
+    pointpcb -> context -> eflags = 0x202;
+
     return pointpcb;
 }
 
@@ -323,3 +339,11 @@ int RemovePCB(PCB *p){
     return -1;
 }
 
+/*
+u32int* sys_call(CONTEXT* registers){
+
+    
+
+
+}
+*/

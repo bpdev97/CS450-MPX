@@ -24,7 +24,6 @@ typedef struct context{
 } CONTEXT;
 
 
-
 PCB *AllocatePCB();
 PCB *SetupPCB(char*, int, int);
 
@@ -33,5 +32,6 @@ void InsertPCB(PCB *p);
 int RemovePCB(PCB *p);
 int FreePCB(PCB* freepcb);
 
+u32int* sys_call(CONTEXT* registers);
 
 #endif

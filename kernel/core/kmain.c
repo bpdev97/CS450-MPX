@@ -32,6 +32,9 @@ void kmain(void)
    // extern void *mbd;
    // char *boot_loader_name = (char*)((long*)mbd)[16];
 
+   //idt_set_gate(60, (u32int)sys_call_isr, 0x08, 0x8e);
+   //adding sys_call_isr to the interrupt table
+
   
    klogv("Starting MPX boot sequence...");
    // 0) Initialize Serial I/O and call mpx_init
