@@ -7,6 +7,7 @@
 
 #include <system.h>
 
+#include "modules/pcb.h"
 #include <core/io.h>
 #include <core/serial.h>
 #include <core/tables.h>
@@ -45,6 +46,7 @@ extern void page_fault();
 extern void reserved();
 extern void coprocessor();
 extern void rtc_isr();
+extern u32int* sys_call(CONTEXT* registers);
 
 extern idt_entry idt_entries[256];
 
@@ -193,4 +195,9 @@ void do_reserved()
 void do_coprocessor()
 {
   kpanic("Coprocessor error");
+}
+
+u32int* do_sys_call(CONTEXT* registers){
+  registers = NULL;
+  return (u32int*) registers;
 }
