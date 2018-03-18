@@ -33,5 +33,6 @@ int RemovePCB(PCB *p);
 int FreePCB(PCB* freepcb);
 
 u32int* sys_call(CONTEXT* registers);
+void IdleProcess(void);
 
 #endif
