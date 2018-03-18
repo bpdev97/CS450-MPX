@@ -130,6 +130,16 @@ int comhand() {
     else if(strcmp(argv[0], "setPriority") == 0) {
       setPriority(argc, argv);
     }
+   
+    else if(strcmp(argv[0], "createAlarm") == 0) {
+     //I do not know how argc, argv will be passed into the function createAlarm
+      char* alarmargs[3];
+      alarmargs[0] = strcat("Alarm: ", returnCurrentTime());
+      alarmargs[1] = "1";
+      alarmargs[2] = "1";
+      CreatePCB(4,alarmargs,createAlarm); //FOR R4, creates comhand process and add it to the ready queue
+    }
+    
     
     // Command not recognized
     else {

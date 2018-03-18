@@ -100,7 +100,7 @@ void help (int argc, char* argv[]) {
 }
 
 void version () {
-    println("Version: R2.");
+    println("Version: R3/R4");
 }
 
 //allows user to set the time
@@ -250,7 +250,34 @@ void gettime () {
     // Second
     outb(0x70, 0x00);
     printbcd(inb(0x71));
+   
     println(" ");
+}
+char* returnCurrentTime() {
+ char currentTime[9];
+ char* array;
+    // Hour
+    outb(0x70, 0x04);
+    array = returnBCDString(inb(0x71));
+    currentTime[0]= array[0];
+    currentTime[1]= array[1];
+    currentTime[2] = ':';
+
+    // Minute
+    outb(0x70, 0x02);
+    array =  returnBCDString (inb(0x71));
+    currentTime[3]= array[0];
+    currentTime[4]= array[1];
+    currentTime[5] = ':';
+
+    // Second
+    outb(0x70, 0x00);
+    array = returnBCDString (inb(0x71));
+    currentTime[6]= array[0];
+    currentTime[7]= array[1];
+    currentTime[8] = '\0';
+    
+   return currentTime;
 }
 
 // function to convert from binary to BCD
@@ -608,6 +635,15 @@ void printbcd (int bcd){
     print(array);
 }
 
+char* returnBCDString (int bcd){
+    int firstdigit = bcd >> 4;
+    int seconddigit = bcd & 15;
+    char ascii = firstdigit + 48;
+    char asciii = seconddigit + 48;
+    char array[2] = {ascii , asciii};
+    return array;
+}
+
 //Creates PCB
 void CreatePCB(int argc, char *argv[], void* function){
     //Checks if argc is the appropriate value
@@ -669,4 +705,27 @@ void DeletePCB(int argc, char *argv[]){
     PCB* pcb =  FindPCB(name);
     RemovePCB(pcb);
     FreePCB(pcb);
+}
+
+
+void createAlarm(int argc, char *argv[])
+{
+   if(argc == 3)
+   {
+	char* message = argv[1];
+        char* time = argv[2];
+        while(strcmp(time, returnCurrentTime()) > 0)
+        {
+           //R4
+           //sys_req(IDLE,0,0,NULL);
+        }
+        println(message);  
+   }
+   else
+   {
+        println("Wrong format. Example format is 'createAlarm exampleMessage 00:00:00' ");
+   }
+   //R4
+   //sys_req(EXIT,0,0,NULL);
+
 }
