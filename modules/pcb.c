@@ -342,8 +342,15 @@ int RemovePCB(PCB *p){
 /*
 u32int* sys_call(CONTEXT* registers){
 
-    
-
-
 }
 */
+
+//Idle Process
+void IdleProcess(void){
+    while(1){
+        sys_req(IDLE,0,0,NULL);
+    }
+}
+
+
+
