@@ -609,7 +609,7 @@ void printbcd (int bcd){
 }
 
 //Creates PCB
-void CreatePCB(int argc, char *argv[]){
+void CreatePCB(int argc, char *argv[], void* function){
     //Checks if argc is the appropriate value
     if(argc != 4){
         println("Error, not in range.");
@@ -641,7 +641,7 @@ void CreatePCB(int argc, char *argv[]){
         return;
     }
     //Inserts PCB
-    PCB* pcb = SetupPCB(name, class, priority);
+    PCB* pcb = SetupPCB(name, class, priority, function);
     InsertPCB(pcb);
 }
 

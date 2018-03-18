@@ -25,7 +25,7 @@ typedef struct context{
 
 
 PCB *AllocatePCB();
-PCB *SetupPCB(char*, int, int);
+PCB *SetupPCB(char*, int, int, void*);
 
 PCB *FindPCB(const char *name);
 void InsertPCB(PCB *p);

@@ -74,8 +74,11 @@ void kmain(void)
   blockedSuspended = sys_alloc_mem(sizeof(QUEUE));
 
    // 5) Call YOUR command handler -  interface method
-   klogv("Transferring control to commhand...");
-   comhand(); // Call command handler
+    klogv("Transferring control to commhand...");
+    //char*comargs[3] = {"comhand", "1", "1"}; //FOR R4, setting up arguments for CreatePCB
+    //CreatePCB(4,comargs,comhand); //FOR R4, creates comhand process and add it to the ready queue
+    comhand(); // Call command handler
+    //sys_req(IDLE,0,0,NULL); //FOR R4, calls ISR
 
    // 6) System Shutdown on return from your command handler
    klogv("Starting system shutdown procedure...");

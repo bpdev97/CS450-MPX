@@ -58,6 +58,8 @@ int comhand() {
 
       if(strcmp(array, "Y") == 0) {
         quit = 1;
+        //FOR R4 Exit command removes comhand from ready queue
+        //sys_req(EXIT,0,0,NULL);
       }
     }
 
@@ -102,7 +104,7 @@ int comhand() {
     }
 
     else if(strcmp(argv[0], "createPCB") == 0){
-      CreatePCB(argc, argv);
+      //CreatePCB(argc, argv);
     }
 
     else if(strcmp(argv[0], "deletePCB") == 0){

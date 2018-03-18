@@ -141,6 +141,8 @@ int poll(char * buffer, int* count) {
 				}
 			}
 		}
+		//FOR R4 Idle
+		//sys_req(IDLE,0,0,NULL);
 	}
 	
 	// Enter pressed
@@ -169,8 +171,8 @@ void clearCommandLine(int counter,  int cursorPosition){
 */
 void resetCursor(int cursorPosition){
   int i;
-  for(i=0; i<cursorPosition;i++){
-	print("\033[D\000");
+  for(i=0; i<cursorPosition;i++) {
+	  print("\033[D\000");
   }
 }
 

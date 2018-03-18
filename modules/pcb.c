@@ -30,7 +30,7 @@ int FreePCB(PCB* freepcb){
     }
 }
 
-PCB* SetupPCB(char* name, int classNum, int priority){
+PCB* SetupPCB(char* name, int classNum, int priority, void* function){
     PCB* pointpcb = AllocatePCB();
     pointpcb -> name = sys_alloc_mem(strlen(name) + 1);
     strcpy(pointpcb -> name, name);
@@ -60,8 +60,7 @@ PCB* SetupPCB(char* name, int classNum, int priority){
     pointpcb -> context -> cs = 0x8;
     pointpcb -> context -> ebp = (u32int) pointpcb -> stackBase;
     pointpcb -> context -> esp = (u32int) pointpcb -> stackTop;
-    //pointpcb -> context -> eip = (u32int) pointpcb -> &function;
-    //Really don't know what the Hell this function pointer is supposed to be ^
+    pointpcb -> context -> eip = (u32int) &function;
     pointpcb -> context -> eflags = 0x202;
 
     return pointpcb;
@@ -345,12 +344,7 @@ u32int* sys_call(CONTEXT* registers){
 }
 */
 
-//Idle Process
-void IdleProcess(void){
-    while(1){
-        sys_req(IDLE,0,0,NULL);
-    }
-}
+
 
 
 
