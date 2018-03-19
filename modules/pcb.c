@@ -8,6 +8,9 @@
 #include "pcb.h"
 
 
+PCB* COP = NULL;
+
+
 PCB* AllocatePCB(){
     PCB* pointpcb = sys_alloc_mem(sizeof(PCB));
 
