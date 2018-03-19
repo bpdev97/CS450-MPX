@@ -174,6 +174,7 @@ void InsertPCB(PCB *p){
             readySuspended -> count++;
             return;
         }
+        currentPCB = readySuspended -> head;
         // new head
         if(p -> priority <= currentPCB -> priority){
             if(p -> priority == currentPCB -> priority){
