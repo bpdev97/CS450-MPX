@@ -141,7 +141,10 @@ int comhand() {
    */
      createAlarm(argc, argv);
     }
-    
+
+    else if(strcmp(argv[0], "yield") == 0) {
+      sys_req(IDLE, DEFAULT_DEVICE, NULL, NULL);
+    }
     
     // Command not recognized
     else {
