@@ -211,8 +211,7 @@ u32int* sys_call(CONTEXT* registers){
       lastReg = registers;
   }
   // IDLE the process
-  if(params.op_code == IDLE){
-    COP -> context = lastReg;
+  if(params.op_code == IDLE && COP != NULL){
     COP -> stackTop = (unsigned char*) lastReg -> esp;
     COP -> stackBase = (unsigned char*) lastReg -> ebp;
     // Insert the COP back into the ready queue
