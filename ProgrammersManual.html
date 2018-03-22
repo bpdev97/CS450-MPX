@@ -65,8 +65,13 @@
 <p><em>Return Value:</em><br />showAll has no return value.</p>
 <h3 id="createpcb">CreatePCB()</h3>
 <p><em>Description:</em><br />The CreatePCB function creates a PCB with the user input name, class, and priority.</p>
+<<<<<<< HEAD
 <p><em>Declaration:</em><br />void CreatePCB(int argc, char *argv[]);</p>
 <p><em>Parameters:</em><br />argc - represents the number of arguments passed from the command line.<br />argv - an array of character pointers containing the arguments from the command line.</p>
+=======
+<p><em>Declaration:</em><br />void CreatePCB(int argc, char <em>argv[], void</em> function);</p>
+<p><em>Parameters:</em><br />argc - represents the number of arguments passed from the command line.<br />argv - an array of character pointers containing the arguments from the command line. function - initializes instruction pointer</p>
+>>>>>>> 738a499f35966005a21ae22f2bc9e1a158fd4964
 <p><em>Return Value:</em><br />CreatePCB has no return value.</p>
 <h3 id="deletepcb">DeletePCB()</h3>
 <p><em>Description:</em><br />The DeletePCB function deletes a PCB with the user input name.</p>
@@ -98,11 +103,14 @@
 <p><em>Declaration:</em> int setPriority(int argc, char *argv[]);</p>
 <p><em>Parameters:</em> argc - represents the number of arguments passed from the command line.<br />argv - an array of character pointers containing the arguments from the command line.</p>
 <p><em>Return Value:</em> Returns an integer representing the success or failure of the function. Returns 1 for success, 0 for failure.</p>
+<<<<<<< HEAD
 <h3 id="createalarm">createAlarm()</h3>
 <p><em>Description:</em><br />Sets an alarm with a message that is displayed when the alarm time and date has passed or is equal to the current time and date</p>
 <p><em>Declaration:</em><br />void createAlarm(int argc, char *argv[])</p>
 <p><em>Parameters:</em><br />argc - represents the number of arguments passed from the command line argv - an array of character pointers containing the arguments from the command line.</p>
 <p><em>Return Value:</em><br />No return value</p>
+=======
+>>>>>>> 738a499f35966005a21ae22f2bc9e1a158fd4964
 <h2 id="functions---polling.c">Functions - polling.c</h2>
 <p>polling.c contains the functions necessary to poll user input from the com port.</p>
 <h3 id="poll">poll()</h3>
@@ -180,8 +188,13 @@
 <p><em>Return Value:</em><br />Returns an integer when it is successful and when it is not.</p>
 <h3 id="setuppcb">SetupPCB()</h3>
 <p><em>Description:</em><br />Sets the PCB state to ready.</p>
+<<<<<<< HEAD
 <p><em>Declaration:</em><br />PCB* SetupPCB(char* name, int classNum, int priority);</p>
 <p><em>Parameters:</em><br />Process Name, Process Class, and Process Priority</p>
+=======
+<p><em>Declaration:</em><br />PCB* SetupPCB(char* name, int classNum, int priority, void* function);</p>
+<p><em>Parameters:</em><br />Process Name, Process Class, Process Priority, and Function</p>
+>>>>>>> 738a499f35966005a21ae22f2bc9e1a158fd4964
 <p><em>Return Value:</em><br />Returns a PCB Pointer when successful and NULL when not.</p>
 <h3 id="findpcb">FindPCB()</h3>
 <p><em>Description:</em><br />Searches through all queues, finds the requested PCB, and returns a pointer to that pcb.</p>

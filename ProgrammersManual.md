@@ -177,11 +177,12 @@ showAll has no return value.
 The CreatePCB function creates a PCB with the user input name, class, and priority.
 
 *Declaration:*  
-void CreatePCB(int argc, char *argv[]);
+void CreatePCB(int argc, char *argv[], void* function);
 
 *Parameters:*  
 argc - represents the number of arguments passed from the command line.  
 argv - an array of character pointers containing the arguments from the command line.
+function - initializes instruction pointer
 
 *Return Value:*  
 CreatePCB has no return value.
@@ -486,10 +487,10 @@ Returns an integer when it is successful and when it is not.
 Sets the PCB state to ready.
 
 *Declaration:*  
-PCB* SetupPCB(char* name, int classNum, int priority);
+PCB* SetupPCB(char* name, int classNum, int priority, void* function);
 
 *Parameters:*  
-Process Name, Process Class, and Process Priority
+Process Name, Process Class, Process Priority, and Function
 
 *Return Value:*  
 Returns a PCB Pointer when successful and NULL when not. 
