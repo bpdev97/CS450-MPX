@@ -72,19 +72,20 @@ void kmain(void)
   readySuspended = sys_alloc_mem(sizeof(QUEUE));
   blocked = sys_alloc_mem(sizeof(QUEUE));
   blockedSuspended = sys_alloc_mem(sizeof(QUEUE));
+  
+  // 4.6) Create the idle process and add it to the ready queue
+  klogv("Initializing the idle process");
+  InsertPCB(SetupPCB("idle", 0, 9, &idle));
 
-   // 5) Call YOUR command handler -  interface method
-    klogv("Transferring control to commhand...");
-    //char*comargs[3] = {"comhand", "1", "1"}; //FOR R4, setting up arguments for CreatePCB
-    //CreatePCB(4,comargs,comhand); //FOR R4, creates comhand process and add it to the ready queue
-    comhand(); // Call command handler
-    //sys_req(IDLE,0,0,NULL); //FOR R4, calls ISR
+  // 5) Call YOUR command handler -  interface method
+  klogv("Transferring control to commhand...");
+  comhand(); // Call command handler
 
-   // 6) System Shutdown on return from your command handler
-   klogv("Starting system shutdown procedure...");
-   
-   /* Shutdown Procedure */
-   klogv("Shutdown complete. You may now turn off the machine. (QEMU: C-a x)");
-   hlt();
+  // 6) System Shutdown on return from your command handler
+  klogv("Starting system shutdown procedure...");
+  
+  /* Shutdown Procedure */
+  klogv("Shutdown complete. You may now turn off the machine. (QEMU: C-a x)");
+  hlt();
 
 }
