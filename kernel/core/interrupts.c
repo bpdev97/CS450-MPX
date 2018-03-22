@@ -212,8 +212,8 @@ u32int* sys_call(CONTEXT* registers){
   }
   // IDLE the process
   if(params.op_code == IDLE && COP != NULL){
-    COP -> stackTop = (unsigned char*) lastReg -> esp;
-    COP -> stackBase = (unsigned char*) lastReg -> ebp;
+    COP -> stackTop = (unsigned char*) registers -> esp;
+    COP -> stackBase = (unsigned char*) registers -> ebp;
     // Insert the COP back into the ready queue
     InsertPCB(COP);
   }
