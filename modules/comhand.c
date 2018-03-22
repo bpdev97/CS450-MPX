@@ -134,14 +134,15 @@ int comhand() {
     }
    
     else if(strcmp(argv[0], "createAlarm") == 0) {
-    /* //I do not know how argc, argv will be passed into the function createAlarm
+      void (*createAlarm_ptr) (int, char) = &createAlarm;
+
+      //I do not know how argc, argv will be passed into the function createAlarm
       char* alarmargs[3];
       alarmargs[0] = strcat("Alarm: ", returnCurrentTime());
       alarmargs[1] = "1";
       alarmargs[2] = "1";
       CreatePCB(4,alarmargs,createAlarm); //FOR R4, creates comhand process and add it to the ready queue
-   */
-     createAlarm(argc, argv);
+      createAlarm(argc, argv);
     }
 
     else if(strcmp(argv[0], "yield") == 0) {
@@ -150,10 +151,10 @@ int comhand() {
 
     else if(strcmp(argv[0], "loadr3") == 0) {
       InsertPCB(SetupPCB("proc1", 1, 1, &proc1));
-      InsertPCB(SetupPCB("proc2", 1, 2, &proc2));
-      InsertPCB(SetupPCB("proc3", 1, 3, &proc3));
-      InsertPCB(SetupPCB("proc4", 1, 4, &proc4));
-      InsertPCB(SetupPCB("proc5", 1, 5, &proc5));
+      InsertPCB(SetupPCB("proc2", 1, 1, &proc2));
+      InsertPCB(SetupPCB("proc3", 1, 1, &proc3));
+      InsertPCB(SetupPCB("proc4", 1, 1, &proc4));
+      InsertPCB(SetupPCB("proc5", 1, 1, &proc5));
     }
     
     // Command not recognized

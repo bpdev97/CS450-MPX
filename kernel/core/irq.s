@@ -131,7 +131,7 @@ sys_call_isr:
 
 	call sys_call
 
-	mov esp, eax
+	mov eax, esp
 
 	pop gs
 	pop fs
