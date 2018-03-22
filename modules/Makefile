@@ -16,7 +16,8 @@ comhand.o \
 processcommand.o\
 polling.o\
 queue.o\
-pcb.o
+pcb.o\
+procsr3.o
 
 .c.s:
 	$(CC) $(CFLAGS) -S -o $@ $<
