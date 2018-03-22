@@ -14,6 +14,7 @@
 #include <core/interrupts.h>
 #include "modules/mpx_supt.h"
 #include "modules/queue.h"
+#include "modules/pcb.h"
 
 // Programmable Interrupt Controllers
 #define PIC1 0x20
@@ -205,40 +206,29 @@ void do_coprocessor()
 }
 
 u32int* sys_call(CONTEXT* registers){
-  // first call
-  if(COP == NULL && ready -> head == NULL){
+  // First call
+  if(COP == NULL){
       lastReg = registers;
   }
-
-  // Nothing was running, but something is ready to run
-  else if(COP == NULL){
-    lastReg = registers;
-    COP = ready -> head;
-    // only a head
-    if(ready -> count == 1) {
-      ready -> head = NULL;
-      ready -> tail = NULL;
-      ready -> count--;
-    }
-    
-    // More than one pcb there
-    else {
-      
-      ready -> head = ready -> head -> nextPcb;
-      ready -> count--;
-    }
+  // IDLE the process
+  if(params.op_code == IDLE){
+    COP -> context = lastReg;
+    COP -> stackTop = (unsigned char*) lastReg -> esp;
+    COP -> stackBase = (unsigned char*) lastReg -> ebp;
+    // Insert the COP back into the ready queue
+    InsertPCB(COP);
   }
-
+  else if(params.op_code == EXIT){
+    sys_free_mem(COP);
+  }
+  // Switch to next ready pcb if there is one
+  if(ready -> head != NULL){
+    COP = ready -> head;
+    RemovePCB(COP);
+  }
+  // ready queue empty, return control to the first calling process
   else{
-      if(params.op_code == IDLE){
-          COP -> context = lastReg;
-          COP -> stackTop = (unsigned char*) lastReg -> esp;
-          COP -> stackBase = (unsigned char*) lastReg -> ebp;
-          lastReg = registers;
-      }
-      else if(params.op_code == EXIT){
-          sys_free_mem(COP);
-      }
+    return (u32int*) lastReg;
   }
   return (u32int*) COP -> context;
 }
