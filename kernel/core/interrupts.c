@@ -205,23 +205,39 @@ void do_coprocessor()
 }
 
 u32int* sys_call(CONTEXT* registers){
-    if(COP == NULL && ready -> head == NULL){
-        lastReg = registers;
-    }
+  // first call
+  if(COP == NULL && ready -> head == NULL){
+      lastReg = registers;
+  }
 
-    else if(COP == NULL){
-      
+  // Nothing was running, but something is ready to run
+  else if(COP == NULL){
+    lastReg = registers;
+    COP = ready -> head;
+    // only a head
+    if(ready -> count == 1) {
+      ready -> head = NULL;
+      ready -> tail = NULL;
+      ready -> count--;
     }
+    
+    // More than one pcb there
+    else {
+      ready -> head = ready -> head -> nextPcb;
+      ready -> count--;
+    }
+  }
 
-    else{
-        if(params.op_code == IDLE){
-            COP -> context = registers;
-            COP -> stackTop = (unsigned char*) registers -> esp;
-            COP -> stackBase = (unsigned char*) registers -> ebp;
-        }
-        else if(params.op_code == EXIT){
-            sys_free_mem(COP);
-        }
-    }
-    return NULL;
+  else{
+      if(params.op_code == IDLE){
+          COP -> context = lastReg;
+          COP -> stackTop = (unsigned char*) lastReg -> esp;
+          COP -> stackBase = (unsigned char*) lastReg -> ebp;
+          lastReg = registers;
+      }
+      else if(params.op_code == EXIT){
+          sys_free_mem(COP);
+      }
+  }
+  return COP -> context;
 }
