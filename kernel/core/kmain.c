@@ -27,44 +27,44 @@
 
 void kmain(void)
 {
-   extern uint32_t magic;
-   // Uncomment if you want to access the multiboot header
-   // extern void *mbd;
-   // char *boot_loader_name = (char*)((long*)mbd)[16];
+  extern uint32_t magic;
+  // Uncomment if you want to access the multiboot header
+  // extern void *mbd;
+  // char *boot_loader_name = (char*)((long*)mbd)[16];
 
-   //idt_set_gate(60, (u32int)sys_call_isr, 0x08, 0x8e);
-   //adding sys_call_isr to the interrupt table
+  //idt_set_gate(60, (u32int)sys_call_isr, 0x08, 0x8e);
+  //adding sys_call_isr to the interrupt table
 
+
+  klogv("Starting MPX boot sequence...");
+  // 0) Initialize Serial I/O and call mpx_init
+  init_serial(COM1);    // init COM1
+  set_serial_in(COM1); // set COM1 as input
+  set_serial_out(COM1); // set COM1 as output
+  mpx_init(MODULE_R2);  // init module R2 
+
+  klogv("Initialized serial I/O on COM1 device...");
+
+  // 1) Initialize the support software by identifying the current
+  //     MPX Module.  This will change with each module.
+
+  // 2) Check that the boot was successful and correct when using grub
+  // Comment this when booting the kernel directly using QEMU, etc.
+  if ( magic != 0x2BADB002 ){
+    //kpanic("Boot was not error free. Halting.");
+  }
   
-   klogv("Starting MPX boot sequence...");
-   // 0) Initialize Serial I/O and call mpx_init
-   init_serial(COM1);    // init COM1
-   set_serial_in(COM1); // set COM1 as input
-   set_serial_out(COM1); // set COM1 as output
-   mpx_init(MODULE_R2);  // init module R2 
- 
-   klogv("Initialized serial I/O on COM1 device...");
+  // 3) Descriptor Tables
+  klogv("Initializing descriptor tables...");
+  init_gdt(); // init Global Descriptor Table
+  init_idt(); // init Interupt Descriptor Table
 
-   // 1) Initialize the support software by identifying the current
-   //     MPX Module.  This will change with each module.
- 	
-   // 2) Check that the boot was successful and correct when using grub
-   // Comment this when booting the kernel directly using QEMU, etc.
-   if ( magic != 0x2BADB002 ){
-     //kpanic("Boot was not error free. Halting.");
-   }
-   
-   // 3) Descriptor Tables
-   klogv("Initializing descriptor tables...");
-   init_gdt(); // init Global Descriptor Table
-   init_idt(); // init Interupt Descriptor Table
-
-   // 4) Virtual Memory
-   klogv("Initializing virtual memory...");
-   init_pic();    // init programmable interrupt controllers
-   init_irq();    // install initial interupt handlers for first 32 irq lines 
-   sti();         // turn on interrupts
-   init_paging(); // init paging
+  // 4) Virtual Memory
+  klogv("Initializing virtual memory...");
+  init_pic();    // init programmable interrupt controllers
+  init_irq();    // install initial interupt handlers for first 32 irq lines 
+  sti();         // turn on interrupts
+  init_paging(); // init paging
 
   // 4.5) PCB Queues
   klogv("Initializing PCB queues...");
