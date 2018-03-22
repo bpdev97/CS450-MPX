@@ -177,11 +177,12 @@ showAll has no return value.
 The CreatePCB function creates a PCB with the user input name, class, and priority.
 
 *Declaration:*  
-void CreatePCB(int argc, char *argv[]);
+void CreatePCB(int argc, char *argv[], void* function);
 
 *Parameters:*  
 argc - represents the number of arguments passed from the command line.  
 argv - an array of character pointers containing the arguments from the command line.
+function - initializes instruction pointer
 
 *Return Value:*  
 CreatePCB has no return value.
@@ -268,6 +269,20 @@ argv - an array of character pointers containing the arguments from the command 
 
 *Return Value:*
 Returns an integer representing the success or failure of the function. Returns 1 for success, 0 for failure.
+
+### createAlarm()
+*Description:*  
+Sets an alarm with a message that is displayed when the alarm time and date has passed or is equal to the current time and date
+
+*Declaration:*  
+void createAlarm(int argc, char *argv[])
+
+*Parameters:*  
+argc - represents the number of arguments passed from the command line
+argv - an array of character pointers containing the arguments from the command line.
+
+*Return Value:*  
+No return value
 
 Functions - polling.c
 ---------------------
@@ -472,10 +487,10 @@ Returns an integer when it is successful and when it is not.
 Sets the PCB state to ready.
 
 *Declaration:*  
-PCB* SetupPCB(char* name, int classNum, int priority);
+PCB* SetupPCB(char* name, int classNum, int priority, void* function);
 
 *Parameters:*  
-Process Name, Process Class, and Process Priority
+Process Name, Process Class, Process Priority, and Function
 
 *Return Value:*  
 Returns a PCB Pointer when successful and NULL when not. 
@@ -518,3 +533,5 @@ PCB to be removed pointer
 
 *Return Value:*  
 Returns 0 when successful and -1 when it fails to remove the given PCB.
+
+

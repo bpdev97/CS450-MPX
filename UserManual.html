@@ -1,142 +1,66 @@
-<h1 id="usermanual">User Manual</h1>
-
+<h1 id="user-manual">User Manual</h1>
 <p>The purpose of this manual is to give users a summary of the commands that can be used in this operating system.</p>
-
 <h2 id="commands">Commands</h2>
-
-<p>Currently there are nineteen commands including the help command that can be executed in this operating system.</p>
-
-<ol>
+<p>Currently there are twenty commands including the help command that can be executed in this operating system.</p>
+<ol style="list-style-type: decimal">
 <li>help</li>
-
 <li>shutdown</li>
-
 <li>clear</li>
-
 <li>setdate</li>
-
 <li>getdate</li>
-
 <li>settime</li>
-
 <li>gettime</li>
-
 <li>version</li>
-
 <li>showPCB</li>
-
 <li>showReady</li>
-
 <li>showBlocked</li>
-
 <li>showAll</li>
-
 <li>createPCB</li>
-
 <li>deletePCB</li>
-
 <li>block</li>
-
 <li>unblock</li>
-
 <li>suspend</li>
-
 <li>resume</li>
-
 <li>setPriority</li>
+<li>createAlarm</li>
 </ol>
-
 <h3 id="help">help</h3>
-
-<p><em>Usage:</em> <br />
-Help is used by typing <em>help</em> followed by the command that you would like help with. A brief explanation of the usage and result of the command will be given. For example: <em>help setdate</em> will give information about the setdate command.</p>
-
+<p><em>Usage:</em><br />Help is used by typing <em>help</em> followed by the command that you would like help with. A brief explanation of the usage and result of the command will be given. For example: <em>help setdate</em> will give information about the setdate command.</p>
 <h3 id="shutdown">shutdown</h3>
-
-<p><em>Usage:</em> <br />
-The shutdown command shuts down the operating system. Shutdown takes no arguments and will prompt the user to enter "Y" or "N" to choose whether to really shutdown or not.</p>
-
+<p><em>Usage:</em><br />The shutdown command shuts down the operating system. Shutdown takes no arguments and will prompt the user to enter &quot;Y&quot; or &quot;N&quot; to choose whether to really shutdown or not.</p>
 <h3 id="clear">clear</h3>
-
-<p><em>Usage:</em> <br />
-The clear command effectively clears the terminal display. The clear command prints out many new line characters to move past outputs off the screen. Clear takes no arguments.</p>
-
+<p><em>Usage:</em><br />The clear command effectively clears the terminal display. The clear command prints out many new line characters to move past outputs off the screen. Clear takes no arguments.</p>
 <h3 id="setdate">setdate</h3>
-
-<p><em>Usage:</em> <br />
-The setdate command allows the user to input and set the system date. The setdate command follows American <em>Month/Day/Year</em> format. For example, today is the first of February so the input would look like: <em>setdate 2/1/18</em> or <em>setdate 02/01/18</em>.</p>
-
+<p><em>Usage:</em><br />The setdate command allows the user to input and set the system date. The setdate command follows American <em>Month/Day/Year</em> format. For example, today is the first of February so the input would look like: <em>setdate 2/1/18</em> or <em>setdate 02/01/18</em>.</p>
 <h3 id="getdate">getdate</h3>
-
-<p><em>Usage:</em> <br />
-The getdate command will print out the current date. The getdate command can be used by simply typing <em>getdate</em>.</p>
-
+<p><em>Usage:</em><br />The getdate command will print out the current date. The getdate command can be used by simply typing <em>getdate</em>.</p>
 <h3 id="settime">settime</h3>
-
-<p><em>Usage:</em> <br />
-The settime command allows the user to input and set the system time. Settime only works with 24 hour time and the hour, minute, and second must all be entered for the input to be valid. For example: <em>settime 20:24:28</em> will set the time to the equivalent of 8:24:28 PM.</p>
-
+<p><em>Usage:</em><br />The settime command allows the user to input and set the system time. Settime only works with 24 hour time and the hour, minute, and second must all be entered for the input to be valid. For example: <em>settime 20:24:28</em> will set the time to the equivalent of 8:24:28 PM.</p>
 <h3 id="gettime">gettime</h3>
-
-<p><em>Usage:</em> <br />
-The gettime command will retrieve and print out the current system time in 24 hour format. The gettime command can be used by typing <em>gettime</em>.</p>
-
+<p><em>Usage:</em><br />The gettime command will retrieve and print out the current system time in 24 hour format. The gettime command can be used by typing <em>gettime</em>.</p>
 <h3 id="version">version</h3>
-
-<p><em>Usage:</em> <br />
-The version command displays the current version of MPX and the completion date. The version command can be used by typing <em>version</em>.</p>
-
+<p><em>Usage:</em><br />The version command displays the current version of MPX and the completion date. The version command can be used by typing <em>version</em>.</p>
 <h3 id="showpcb">showPCB</h3>
-
-<p><em>Usage:</em> <br />
-The showPCB checks to see if the PCB name exists in the in the ready queue, readySuspended queue, blocked queue, or blockedSuspended queue.  If the PCB exists then the name, class, ready state, blocked state, and priority of the PCB is displayed. The showPCB command can be used by typing <em>showPCB</em> followed by the name of the PCB. For example <em>showPCB testName</em> will search the queues for a PCB with the name <em>testName</em>.</p>
-
+<p><em>Usage:</em><br />The showPCB checks to see if the PCB name exists in the in the ready queue, readySuspended queue, blocked queue, or blockedSuspended queue. If the PCB exists then the name, class, ready state, blocked state, and priority of the PCB is displayed. The showPCB command can be used by typing <em>showPCB</em> followed by the name of the PCB. For example <em>showPCB testName</em> will search the queues for a PCB with the name <em>testName</em>.</p>
 <h3 id="showready">showReady</h3>
-
-<p><em>Usage:</em> <br />
-The showReady command displays the name, class, ready state, blocked state, and priority for all PCBs in the ready queue and readySuspended queue. The showReady command can be used by typing <em>showReady</em>.</p>
-
+<p><em>Usage:</em><br />The showReady command displays the name, class, ready state, blocked state, and priority for all PCBs in the ready queue and readySuspended queue. The showReady command can be used by typing <em>showReady</em>.</p>
 <h3 id="showblocked">showBlocked</h3>
-
-<p><em>Usage:</em> <br />
-The showBlocked command displays the name, class, ready state, blocked state, and priority for all PCBs in the blocked queue and blockedSuspended queue. The showBlocked command can be used by typing <em>showBlocked</em>.</p>
-
+<p><em>Usage:</em><br />The showBlocked command displays the name, class, ready state, blocked state, and priority for all PCBs in the blocked queue and blockedSuspended queue. The showBlocked command can be used by typing <em>showBlocked</em>.</p>
 <h3 id="showall">showAll</h3>
-
-<p><em>Usage:</em> <br />
-The showAll command displays the name, class, ready state, blocked state, and priority for all PCBs in the ready queue, readySuspended queue, blocked queue, and blockedSuspended queue. The showAll command can be used by typing <em>showAll</em>.</p>
-
+<p><em>Usage:</em><br />The showAll command displays the name, class, ready state, blocked state, and priority for all PCBs in the ready queue, readySuspended queue, blocked queue, and blockedSuspended queue. The showAll command can be used by typing <em>showAll</em>.</p>
 <h3 id="createpcb">createPCB</h3>
-
-<p><em>Usage:</em> 
-The createPCB function creates a PCB with the user input name, class, and priority. The createPCB command can be used by typing createPCB.</p>
-
+<p><em>Usage:</em> The createPCB function creates a PCB with the user input name, class, and priority. The createPCB command can be used by typing createPCB.</p>
 <h3 id="deletepcb">deletePCB</h3>
-
-<p><em>Usage:</em> 
-The deletePCB function deletes a PCB with the user input name. The deletePCB command can be used by typing deletePCB.</p>
-
+<p><em>Usage:</em> The deletePCB function deletes a PCB with the user input name. The deletePCB command can be used by typing deletePCB.</p>
 <h3 id="block">block</h3>
-
-<p><em>Usage:</em>
-The block command can accept one argument, that being the name of a process. Block will find a process and change its state to blocked.</p>
-
+<p><em>Usage:</em> The block command can accept one argument, that being the name of a process. Block will find a process and change its state to blocked.</p>
 <h3 id="unblock">unblock</h3>
-
-<p><em>Usage:</em>
-The unblock command can accept one argument, that being the name of a process. Unblock will find a process and change its state to unblocked.</p>
-
+<p><em>Usage:</em> The unblock command can accept one argument, that being the name of a process. Unblock will find a process and change its state to unblocked.</p>
 <h3 id="suspend">suspend</h3>
-
-<p><em>Usage:</em>
-The suspend command can accept one argument, that being the name of a process. Suspend will find a process and change its state to suspended.</p>
-
+<p><em>Usage:</em> The suspend command can accept one argument, that being the name of a process. Suspend will find a process and change its state to suspended.</p>
 <h3 id="resume">resume</h3>
-
-<p><em>Usage:</em>
-The resume command can accept one argument, that being the name of a process. Resume will find a process and change its state to resumed.</p>
-
+<p><em>Usage:</em> The resume command can accept one argument, that being the name of a process. Resume will find a process and change its state to resumed.</p>
 <h3 id="setpriority">setPriority</h3>
-
-<p><em>Usage:</em>
-The setPriority command can accept two arguments. The name of a process, and a priority to set in the process. The priority can be an integer between 0 and 9. SetPriority will find the process and then set the priority.</p>
+<p><em>Usage:</em> The setPriority command can accept two arguments. The name of a process, and a priority to set in the process. The priority can be an integer between 0 and 9. SetPriority will find the process and then set the priority.</p>
+<h3 id="createalarm">createAlarm</h3>
+<p><em>Usage:</em> The createAlarm command takes in 3 arguments. The message to be displayed, the time of the alarm (24 hour format, 00:00:00), and the date of the alarm (mm/dd/yy). For example 'createAlarm exampleMessage 23:59:59 09/31/18' will print 'exampleMessage' at 11:59:59pm on September 31st 2018.</p>
