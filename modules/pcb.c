@@ -12,7 +12,7 @@ PCB* AllocatePCB(){
     PCB* pointpcb = sys_alloc_mem(sizeof(PCB));
 
     pointpcb -> stackBase = sys_alloc_mem(1024);
-    pointpcb -> stackTop = pointpcb -> stackBase + 1024;
+    pointpcb -> stackTop = pointpcb -> stackBase - sizeof(CONTEXT) + 1024;
 
     return pointpcb;
 }
@@ -48,9 +48,7 @@ PCB* SetupPCB(char* name, int classNum, int priority, void* function){
     else{
         return NULL;
     }
-
-    //Accounting for size of context on the stack
-    pointpcb -> stackTop = pointpcb -> stackBase - sizeof(CONTEXT);
+    
 
     //initializing context values
     pointpcb -> context -> fs = 0x10;
@@ -124,15 +122,27 @@ void InsertPCB(PCB *p){
         }
         // new head
         if(p -> priority <= currentPCB -> priority){
-            p -> nextPcb = currentPCB;
-            ready -> head = p;
+            if(p -> priority == currentPCB -> priority){
+                p -> nextPcb = currentPCB -> nextPcb;
+                currentPCB -> nextPcb = currentPCB;
+            }
+            else {
+                p -> nextPcb = currentPCB;
+                ready -> head = p;
+            }
             ready -> count++;
             return;
         }
         // new tail
         if(p -> priority >= ready -> tail -> priority){
-            ready -> tail -> nextPcb = p;
-            ready -> tail = p;
+            if(p -> priority == currentPCB -> priority){
+                p -> nextPcb = currentPCB -> nextPcb;
+                currentPCB -> nextPcb = currentPCB;
+            }
+            else {
+                ready -> tail -> nextPcb = p;
+                ready -> tail = p;
+            }
             ready -> count++;
             return;
         }
@@ -162,15 +172,27 @@ void InsertPCB(PCB *p){
         currentPCB = readySuspended -> head;
         // new head
         if(p -> priority <= currentPCB -> priority){
-            p -> nextPcb = currentPCB;
-            readySuspended -> head = p;
+            if(p -> priority == currentPCB -> priority){
+                p -> nextPcb = currentPCB -> nextPcb;
+                currentPCB -> nextPcb = currentPCB;
+            }
+            else {
+                p -> nextPcb = currentPCB;
+                readySuspended -> head = p;
+            }
             readySuspended -> count++;
             return;
         }
         // new tail
         if(p -> priority >= readySuspended -> tail -> priority){
-            readySuspended -> tail -> nextPcb = p;
-            readySuspended -> tail = p;
+            if(p -> priority == currentPCB -> priority){
+                p -> nextPcb = currentPCB -> nextPcb;
+                currentPCB -> nextPcb = currentPCB;
+            }
+            else {
+                readySuspended -> tail -> nextPcb = p;
+                readySuspended -> tail = p;
+            }
             readySuspended -> count++;
             return;
         }
@@ -338,11 +360,8 @@ int RemovePCB(PCB *p){
     return -1;
 }
 
-/*
-u32int* sys_call(CONTEXT* registers){
 
-}
-*/
+
 
 
 

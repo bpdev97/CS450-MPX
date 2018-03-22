@@ -12,6 +12,8 @@
 #include <core/serial.h>
 #include <core/tables.h>
 #include <core/interrupts.h>
+#include "modules/mpx_supt.h"
+#include "modules/queue.h"
 
 // Programmable Interrupt Controllers
 #define PIC1 0x20
@@ -46,9 +48,13 @@ extern void page_fault();
 extern void reserved();
 extern void coprocessor();
 extern void rtc_isr();
+extern void sys_call_isr();
 extern u32int* sys_call(CONTEXT* registers);
 
 extern idt_entry idt_entries[256];
+
+PCB* COP = NULL;
+CONTEXT* lastReg = NULL;
 
 //Current serial handler
 extern void isr0();
@@ -97,6 +103,7 @@ void init_irq(void)
   }
   // Ignore interrupts from the real time clock
   idt_set_gate(0x08, (u32int)rtc_isr, 0x08, 0x8e);
+  idt_set_gate(60, (u32int)sys_call_isr, 0x08, 0x8e);
 }
 
 /*
@@ -197,7 +204,41 @@ void do_coprocessor()
   kpanic("Coprocessor error");
 }
 
-u32int* do_sys_call(CONTEXT* registers){
-  registers = NULL;
-  return (u32int*) registers;
+u32int* sys_call(CONTEXT* registers){
+  // first call
+  if(COP == NULL && ready -> head == NULL){
+      lastReg = registers;
+  }
+
+  // Nothing was running, but something is ready to run
+  else if(COP == NULL){
+    lastReg = registers;
+    COP = ready -> head;
+    // only a head
+    if(ready -> count == 1) {
+      ready -> head = NULL;
+      ready -> tail = NULL;
+      ready -> count--;
+    }
+    
+    // More than one pcb there
+    else {
+      
+      ready -> head = ready -> head -> nextPcb;
+      ready -> count--;
+    }
+  }
+
+  else{
+      if(params.op_code == IDLE){
+          COP -> context = lastReg;
+          COP -> stackTop = (unsigned char*) lastReg -> esp;
+          COP -> stackBase = (unsigned char*) lastReg -> ebp;
+          lastReg = registers;
+      }
+      else if(params.op_code == EXIT){
+          sys_free_mem(COP);
+      }
+  }
+  return (u32int*) COP -> context;
 }

@@ -9,6 +9,11 @@ void settime (int argc, char* argv[]);
 void setdate (int argc, char* argv[]);
 void getdate ();
 void gettime ();
+char* returnCurrentTime();
+char* returnCurrentYear();
+char* returnCurrentMonth();
+char* returnCurrentDay();
+char* returnBCDString (int bcd);
 int tobcd (int binary);
 //int frombcd (int bcd);
 void printbcd (int bcd);
@@ -23,5 +28,6 @@ int unblockPCB(int argc, char *argv[]);
 int suspendPCB(int argc, char *argv[]);
 int resumePCB(int argc, char *argv[]);
 int setPriority(int argc, char *argv[]);
+void createAlarm(int argc, char *argv[]);
 
 #endif //MPX_SPRING2018_ABOVE_C_LEVEL_PROCESSCOMMAND_H

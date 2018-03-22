@@ -100,7 +100,7 @@ void help (int argc, char* argv[]) {
 }
 
 void version () {
-    println("Version: R2.");
+    println("Version: R3/R4");
 }
 
 //allows user to set the time
@@ -250,7 +250,75 @@ void gettime () {
     // Second
     outb(0x70, 0x00);
     printbcd(inb(0x71));
+   
     println(" ");
+}
+
+char* returnCurrentYear() {
+    char currentYear[3];
+    char* array;
+    
+    // Year
+    outb(0x70, 0x09);
+    array = returnBCDString (inb(0x71));
+    currentYear[0]= array[0];
+    currentYear[1]= array[1];
+    currentYear[2] = '\0';
+
+   return currentYear;
+}
+char* returnCurrentMonth() {
+    char currentMonth[3];
+    char* array;
+    
+    // month
+    outb(0x70, 0x08);
+    array = returnBCDString (inb(0x71));
+    currentMonth[0]= array[0];
+    currentMonth[1]= array[1];
+    currentMonth[2] = '\0';
+
+   return currentMonth;
+}
+char* returnCurrentDay() {
+    char currentDay[3];
+    char* array;
+    
+    // day
+    outb(0x70, 0x07);
+    array = returnBCDString (inb(0x71));
+    currentDay[0]= array[0];
+    currentDay[1]= array[1];
+    currentDay[2] = '\0';
+
+   return currentDay;
+}
+
+char* returnCurrentTime() {
+ char currentTime[9];
+ char* array;
+    // Hour
+    outb(0x70, 0x04);
+    array = returnBCDString(inb(0x71));
+    currentTime[0]= array[0];
+    currentTime[1]= array[1];
+    currentTime[2] = ':';
+
+    // Minute
+    outb(0x70, 0x02);
+    array =  returnBCDString (inb(0x71));
+    currentTime[3]= array[0];
+    currentTime[4]= array[1];
+    currentTime[5] = ':';
+
+    // Second
+    outb(0x70, 0x00);
+    array = returnBCDString (inb(0x71));
+    currentTime[6]= array[0];
+    currentTime[7]= array[1];
+    currentTime[8] = '\0';
+    
+   return currentTime;
 }
 
 // function to convert from binary to BCD
@@ -608,6 +676,15 @@ void printbcd (int bcd){
     print(array);
 }
 
+char* returnBCDString (int bcd){
+    int firstdigit = bcd >> 4;
+    int seconddigit = bcd & 15;
+    char ascii = firstdigit + 48;
+    char asciii = seconddigit + 48;
+    char array[2] = {ascii , asciii};
+    return array;
+}
+
 //Creates PCB
 void CreatePCB(int argc, char *argv[], void* function){
     //Checks if argc is the appropriate value
@@ -669,4 +746,74 @@ void DeletePCB(int argc, char *argv[]){
     PCB* pcb =  FindPCB(name);
     RemovePCB(pcb);
     FreePCB(pcb);
+}
+
+
+void createAlarm(int argc, char *argv[])
+{
+   if(argc == 4)
+   {
+	char* message = argv[1];
+        char* alarmTime = argv[2];
+        char* alarmDate = argv[3];
+        char alarmMonth[3];
+        char alarmDay[3];
+        char alarmYear[3];
+
+        alarmMonth[0] = alarmDate[0];
+        alarmMonth[1] = alarmDate[1];
+        alarmMonth[2] = '\0';
+        alarmDay[0] = alarmDate[3];
+        alarmDay[1] = alarmDate[4];
+        alarmDay[2] = '\0';
+        alarmYear[0] = alarmDate[6];
+        alarmYear[1] = alarmDate[7];
+        alarmYear[2] = '\0';
+
+
+        if(strcmp(alarmYear,returnCurrentYear()) < 0)//year already passed 
+        {
+           println(message); 
+        }
+        else if((strcmp(alarmYear,returnCurrentYear()) == 0) && (strcmp(alarmMonth,returnCurrentMonth()) < 0))//same year, month already passed
+        {
+          println(message); 
+        }
+        else if((strcmp(alarmYear,returnCurrentYear()) == 0) && (strcmp(alarmMonth,returnCurrentMonth()) == 0)  && (strcmp(alarmDay,returnCurrentDay())< 0))//same year, same month, day already passed
+        {
+           println(message); 
+        }
+        
+        else //date has not passed
+        {
+           while(strcmp(alarmYear, returnCurrentYear()) > 0)//current year is less than alarm year
+           {
+       	       //R4
+               //sys_req(IDLE,0,0,NULL);
+           }
+           while(strcmp(alarmMonth, returnCurrentMonth()) > 0)//current month is less than alarm month
+           {
+       	       //R4
+               //sys_req(IDLE,0,0,NULL);
+           }
+           while(strcmp(alarmDay, returnCurrentDay()) > 0)//current day is less than alarm day
+           {
+       	       //R4
+               //sys_req(IDLE,0,0,NULL);
+           }
+           while((strcmp(alarmTime, returnCurrentTime()) > 0))//current time is before alarm time
+           {
+               //R4
+              //sys_req(IDLE,0,0,NULL);
+           }
+           println(message); 
+        } 
+   }
+   else
+   {
+        println("Wrong format. Example format is 'createAlarm exampleMessage 23:59:59 09/31/18");
+   }
+   //R4
+   //sys_req(EXIT,0,0,NULL);
+
 }
