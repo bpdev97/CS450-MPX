@@ -13,7 +13,7 @@ PCB* AllocatePCB(){
 
     pointpcb -> stackBase = sys_alloc_mem(1024);
     pointpcb -> stackTop = pointpcb -> stackBase - sizeof(CONTEXT) + 1024;
-    pointpcb -> context = (*CONTEXT) pointpcb -> stackTop;
+    pointpcb -> context = (CONTEXT*) pointpcb -> stackTop;
     return pointpcb;
 }
 
