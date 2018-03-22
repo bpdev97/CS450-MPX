@@ -12,7 +12,7 @@ PCB* AllocatePCB(){
     PCB* pointpcb = sys_alloc_mem(sizeof(PCB));
 
     pointpcb -> stackBase = sys_alloc_mem(1024);
-    pointpcb -> stackTop = pointpcb -> stackBase + 1024;
+    pointpcb -> stackTop = pointpcb -> stackBase - sizeof(CONTEXT) + 1024;
 
     return pointpcb;
 }
@@ -48,9 +48,7 @@ PCB* SetupPCB(char* name, int classNum, int priority, void* function){
     else{
         return NULL;
     }
-
-    //Accounting for size of context on the stack
-    pointpcb -> stackTop = pointpcb -> stackBase - sizeof(CONTEXT);
+    
 
     //initializing context values
     pointpcb -> context -> fs = 0x10;

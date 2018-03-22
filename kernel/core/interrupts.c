@@ -223,6 +223,7 @@ u32int* sys_call(CONTEXT* registers){
     
     // More than one pcb there
     else {
+      
       ready -> head = ready -> head -> nextPcb;
       ready -> count--;
     }
@@ -239,5 +240,5 @@ u32int* sys_call(CONTEXT* registers){
           sys_free_mem(COP);
       }
   }
-  return COP -> context;
+  return (u32int*) COP -> context;
 }
