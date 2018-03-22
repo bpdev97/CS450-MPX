@@ -341,11 +341,12 @@ int RemovePCB(PCB *p){
     return -1;
 }
 
-/*
-u32int* sys_call(CONTEXT* registers){
 
+u32int* sys_call(CONTEXT* registers){
+    registers = registers;
+    return NULL;
 }
-*/
+
 
 
 
