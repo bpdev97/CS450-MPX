@@ -88,6 +88,9 @@ void help (int argc, char* argv[]) {
         else if (strcmp(argv[1], "setPriority") == 0){
             println("The setPriority command can accept two arguments. The name of a process, and a priority to set in the process. The priority can be an integer between 0 and 9. SetPriority will find the process and then set the priority.");
         }
+    else if (strcmp(argv[1], "createAlarm") == 0){
+            println("The createAlarm command takes in 3 arguments. The message to be displayed, the time of the alarm (24 hour format, 00:00:00), and the date of the alarm (mm/dd/yy). For example  'createAlarm exampleMessage 23:59:59 09/31/18' will print 'exampleMessage' at 11:59:59pm on September 31st 2018.");
+        }
 
      //error checking
         else{
@@ -788,32 +791,32 @@ void createAlarm(int argc, char *argv[])
         {
            while(strcmp(alarmYear, returnCurrentYear()) > 0)//current year is less than alarm year
            {
-       	       //R4
-               //sys_req(IDLE,0,0,NULL);
+       	       
+             sys_req(IDLE, DEFAULT_DEVICE, NULL, NULL);
            }
            while(strcmp(alarmMonth, returnCurrentMonth()) > 0)//current month is less than alarm month
            {
-       	       //R4
-               //sys_req(IDLE,0,0,NULL);
+       	  
+              sys_req(IDLE, DEFAULT_DEVICE, NULL, NULL);
            }
            while(strcmp(alarmDay, returnCurrentDay()) > 0)//current day is less than alarm day
            {
-       	       //R4
-               //sys_req(IDLE,0,0,NULL);
+       	       
+              sys_req(IDLE, DEFAULT_DEVICE, NULL, NULL);
            }
            while((strcmp(alarmTime, returnCurrentTime()) > 0))//current time is before alarm time
            {
-               //R4
-              //sys_req(IDLE,0,0,NULL);
+               
+              sys_req(IDLE, DEFAULT_DEVICE, NULL, NULL);
            }
            println(message); 
         } 
    }
    else
    {
-        println("Wrong format. Example format is 'createAlarm exampleMessage 23:59:59 09/31/18");
+        println("Wrong format. Example format is 'createAlarm exampleMessage 23:59:59 09/31/18'");
    }
-   //R4
-   //sys_req(EXIT,0,0,NULL);
+  
+    sys_req(EXIT, DEFAULT_DEVICE, NULL, NULL);
 
 }

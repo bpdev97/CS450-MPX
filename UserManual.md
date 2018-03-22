@@ -4,7 +4,7 @@ The purpose of this manual is to give users a summary of the commands that can b
 
 Commands
 ---------
-Currently there are nineteen commands including the help command that can be executed in this operating system.
+Currently there are twenty commands including the help command that can be executed in this operating system.
 
 1. help
 2. shutdown
@@ -25,6 +25,7 @@ Currently there are nineteen commands including the help command that can be exe
 17. suspend
 18. resume
 19. setPriority
+20. createAlarm
 
 
 ### help
@@ -102,3 +103,7 @@ The resume command can accept one argument, that being the name of a process. Re
 ### setPriority
 *Usage:*
 The setPriority command can accept two arguments. The name of a process, and a priority to set in the process. The priority can be an integer between 0 and 9. SetPriority will find the process and then set the priority.
+
+### createAlarm
+*Usage:*
+The createAlarm command takes in 3 arguments. The message to be displayed, the time of the alarm (24 hour format, 00:00:00), and the date of the alarm (mm/dd/yy).  For example  'createAlarm exampleMessage 23:59:59 09/31/18' will print 'exampleMessage' at 11:59:59pm on September 31st 2018.

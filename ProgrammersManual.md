@@ -269,6 +269,20 @@ argv - an array of character pointers containing the arguments from the command 
 *Return Value:*
 Returns an integer representing the success or failure of the function. Returns 1 for success, 0 for failure.
 
+### createAlarm()
+*Description:*  
+Sets an alarm with a message that is displayed when the alarm time and date has passed or is equal to the current time and date
+
+*Declaration:*  
+void createAlarm(int argc, char *argv[])
+
+*Parameters:*  
+argc - represents the number of arguments passed from the command line
+argv - an array of character pointers containing the arguments from the command line.
+
+*Return Value:*  
+No return value
+
 Functions - polling.c
 ---------------------
 polling.c contains the functions necessary to poll user input from the com port.
@@ -518,3 +532,5 @@ PCB to be removed pointer
 
 *Return Value:*  
 Returns 0 when successful and -1 when it fails to remove the given PCB.
+
+
