@@ -4,6 +4,8 @@
 #include "mpx_supt.h"
 #include "polling.h"
 #include "processcommand.h"
+#include "procsr3.h"
+#include "pcb.h"
 #include "comhand.h"
 
 /*
@@ -144,6 +146,14 @@ int comhand() {
 
     else if(strcmp(argv[0], "yield") == 0) {
       sys_req(IDLE, DEFAULT_DEVICE, NULL, NULL);
+    }
+
+    else if(strcmp(argv[0], "loadr3") == 0) {
+      InsertPCB(SetupPCB("proc1", 1, 1, &proc1));
+      InsertPCB(SetupPCB("proc2", 1, 2, &proc2));
+      InsertPCB(SetupPCB("proc3", 1, 3, &proc3));
+      InsertPCB(SetupPCB("proc4", 1, 4, &proc4));
+      InsertPCB(SetupPCB("proc5", 1, 5, &proc5));
     }
     
     // Command not recognized
