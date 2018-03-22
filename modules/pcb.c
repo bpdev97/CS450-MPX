@@ -9,7 +9,7 @@
 
 
 PCB* COP = NULL;
-
+CONTEXT* lastReg = NULL;
 
 PCB* AllocatePCB(){
     PCB* pointpcb = sys_alloc_mem(sizeof(PCB));
@@ -366,10 +366,6 @@ int RemovePCB(PCB *p){
 }
 
 
-u32int* sys_call(CONTEXT* registers){
-    registers = registers;
-    return NULL;
-}
 
 
 

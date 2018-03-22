@@ -200,6 +200,19 @@ void do_coprocessor()
 }
 
 u32int* do_sys_call(CONTEXT* registers){
-  registers = NULL;
-  return (u32int*) registers;
+    if(COP == NULL){
+        lastReg = registers;
+    }
+
+    else{
+        if(params.op_code == IDLE){
+            COP -> context = registers;
+            COP -> stackTop = registers -> esp;
+            COP -> stackBase = registers -> ebp;
+        }
+        else if(params.op_code == EXIT){
+            sys_free_mem(COP);
+        }
+    }
+    return NULL;
 }
