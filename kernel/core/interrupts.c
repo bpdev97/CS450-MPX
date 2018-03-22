@@ -12,6 +12,8 @@
 #include <core/serial.h>
 #include <core/tables.h>
 #include <core/interrupts.h>
+#include "modules/mpx_supt.h"
+#include "modules/queue.h"
 
 // Programmable Interrupt Controllers
 #define PIC1 0x20
@@ -50,6 +52,9 @@ extern void sys_call_isr();
 extern u32int* sys_call(CONTEXT* registers);
 
 extern idt_entry idt_entries[256];
+
+PCB* COP = NULL;
+CONTEXT* lastReg = NULL;
 
 //Current serial handler
 extern void isr0();
@@ -199,16 +204,20 @@ void do_coprocessor()
   kpanic("Coprocessor error");
 }
 
-u32int* do_sys_call(CONTEXT* registers){
-    if(COP == NULL){
+u32int* sys_call(CONTEXT* registers){
+    if(COP == NULL && ready -> head == NULL){
         lastReg = registers;
+    }
+
+    else if(COP == NULL){
+      
     }
 
     else{
         if(params.op_code == IDLE){
             COP -> context = registers;
-            COP -> stackTop = registers -> esp;
-            COP -> stackBase = registers -> ebp;
+            COP -> stackTop = (unsigned char*) registers -> esp;
+            COP -> stackBase = (unsigned char*) registers -> ebp;
         }
         else if(params.op_code == EXIT){
             sys_free_mem(COP);
