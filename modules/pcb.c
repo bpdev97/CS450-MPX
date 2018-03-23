@@ -65,7 +65,7 @@ PCB* SetupPCB(char* name, int classNum, int priority, void* function){
     pointpcb -> context -> eax = 0x0;
     pointpcb -> context -> ebp = (u32int) pointpcb -> stackBase;
     pointpcb -> context -> esp = (u32int) pointpcb -> stackTop;
-    pointpcb -> context -> eip = (u32int) &function;
+    pointpcb -> context -> eip = (u32int) function;
     pointpcb -> context -> eflags = 0x202;
 
     return pointpcb;
