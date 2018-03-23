@@ -88,9 +88,15 @@ void help (int argc, char* argv[]) {
         else if (strcmp(argv[1], "setPriority") == 0){
             println("The setPriority command can accept two arguments. The name of a process, and a priority to set in the process. The priority can be an integer between 0 and 9. SetPriority will find the process and then set the priority.");
         }
-    else if (strcmp(argv[1], "createAlarm") == 0){
-            println("The createAlarm command takes in 3 arguments. The message to be displayed, the time of the alarm (24 hour format, 00:00:00), and the date of the alarm (mm/dd/yy). For example  'createAlarm exampleMessage 23:59:59 09/31/18' will print 'exampleMessage' at 11:59:59pm on September 31st 2018.");
-        }
+        else if (strcmp(argv[1], "createAlarm") == 0){
+                println("The createAlarm command takes in 3 arguments. The message to be displayed, the time of the alarm (24 hour format, 00:00:00), and the date of the alarm (mm/dd/yy). For example  'createAlarm exampleMessage 23:59:59 09/31/18' will print 'exampleMessage' at 11:59:59pm on September 31st 2018.");
+            }
+        else if (strcmp(argv[1], "yield") == 0){
+                println("This a temporary command that was removed as of R4. It would call sys_req(IDLE) to allow comhand to let other processes run if there were any in the queue. Usage 'yield'");
+            }
+        else if (strcmp(argv[1], "loadr3") == 0){
+                println("This a temporary command that was removed as of R4. It would create 5 processes and add them to the ready queue. Usage: 'loadr3'");
+            }
 
      //error checking
         else{
@@ -711,7 +717,7 @@ void DeletePCB(int argc, char *argv[]){
     FreePCB(pcb);
 }
 
-void createAlarm(char* ptime)
+void createAlarm()
 {
     while((strcmp(ptime, getCurrentTime()) > 0)){
         sys_req(IDLE, DEFAULT_DEVICE, NULL, NULL);
