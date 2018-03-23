@@ -79,7 +79,9 @@ void kmain(void)
 
   // 5) Call YOUR command handler -  interface method
   klogv("Transferring control to commhand...");
-  comhand(); // Call command handler
+  InsertPCB(SetupPCB("comhand", 0, 8, &comhand));
+  sys_req(IDLE, DEFAULT_DEVICE, NULL, NULL);
+
 
   // 6) System Shutdown on return from your command handler
   klogv("Starting system shutdown procedure...");
