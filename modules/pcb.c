@@ -15,7 +15,7 @@ PCB* AllocatePCB(){
     //memset(pointpcb, 0, 1024);
     pointpcb -> stackTop = pointpcb -> stackBase - sizeof(CONTEXT) - sizeof(ARGUMENTS) + 1024;
     pointpcb -> context = (CONTEXT*) pointpcb -> stackTop;
-    pointpcb -> args = (ARGUMENTS*) (pointpcb -> stackTop + sizeof(CONTEXT) + 4);
+    pointpcb -> args = (ARGUMENTS*) (pointpcb -> stackTop + sizeof(CONTEXT));
     return pointpcb;
 }
 
