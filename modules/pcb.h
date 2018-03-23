@@ -15,6 +15,7 @@ unsigned char* stackBase;
 unsigned char* stackTop;
 struct context* context;
 struct pcb* nextPcb;
+struct arguements args;
 } PCB;
 
 typedef struct context{
@@ -23,6 +24,10 @@ typedef struct context{
   u32int eip, cs, eflags;
 } CONTEXT;
 
+typedef struct arguments{
+  int argc; 
+  char* argv;
+} ARGUMENTS;
 
 PCB *AllocatePCB();
 PCB *SetupPCB(char*, int, int, void*);
