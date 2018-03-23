@@ -75,7 +75,7 @@ void kmain(void)
   
   // 4.6) Create the idle process and add it to the ready queue
   klogv("Initializing the idle process");
-  InsertPCB(SetupPCB("idle", 0, 9, &idle));
+  //InsertPCB(SetupPCB("idle", 0, 9, &idle)); uncomment for R4
 
   // 5) Call YOUR command handler -  interface method
   klogv("Transferring control to commhand...");
