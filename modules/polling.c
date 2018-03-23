@@ -141,12 +141,11 @@ int poll(char * buffer, int* count) {
 				}
 			}
 		}
-		//FOR R4 Idle
-		//sys_req(IDLE,0,0,NULL);
+		sys_req(IDLE, DEFAULT_DEVICE, NULL, NULL);
 	}
 	
 	// Enter pressed
- 	count = &counter;  
+ 	count = &counter;
 	return 0;
 }
 
