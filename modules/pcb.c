@@ -12,6 +12,7 @@ PCB* AllocatePCB(){
     PCB* pointpcb = sys_alloc_mem(sizeof(PCB));
 
     pointpcb -> stackBase = sys_alloc_mem(1024);
+    //memset(pointpcb, 0, 1024);
     pointpcb -> stackTop = pointpcb -> stackBase - sizeof(CONTEXT) + 1024;
     pointpcb -> context = (CONTEXT*) pointpcb -> stackTop;
     return pointpcb;
@@ -56,6 +57,12 @@ PCB* SetupPCB(char* name, int classNum, int priority, void* function){
     pointpcb -> context -> ds = 0x10;
     pointpcb -> context -> es = 0x10;
     pointpcb -> context -> cs = 0x8;
+    pointpcb -> context -> edi = 0x0;
+    pointpcb -> context -> esi = 0x0;
+    pointpcb -> context -> ebx = 0x0;
+    pointpcb -> context -> edx = 0x0;
+    pointpcb -> context -> ecx = 0x0;
+    pointpcb -> context -> eax = 0x0;
     pointpcb -> context -> ebp = (u32int) pointpcb -> stackBase;
     pointpcb -> context -> esp = (u32int) pointpcb -> stackTop;
     pointpcb -> context -> eip = (u32int) &function;
