@@ -219,7 +219,7 @@ u32int* sys_call(CONTEXT* registers){
     InsertPCB(COP);
   }
   else if(params.op_code == EXIT){
-    sys_free_mem(COP);
+    FreePCB(COP);
   }
   // Switch to next ready pcb if there is one
   if(ready -> head != NULL){
@@ -228,6 +228,8 @@ u32int* sys_call(CONTEXT* registers){
   }
   // ready queue empty, return control to the first calling process
   else{
+    FreePCB(COP);
+    COP = NULL;
     return (u32int*) lastReg;
   }
   return (u32int*) COP -> context;
