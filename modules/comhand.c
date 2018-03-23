@@ -135,15 +135,7 @@ int comhand() {
     }
    
     else if(strcmp(argv[0], "createAlarm") == 0) {
-      void (*createAlarm_ptr) (int, char) = &createAlarm;
-
-      //I do not know how argc, argv will be passed into the function createAlarm
-      char* alarmargs[3];
-      alarmargs[0] = strcat("Alarm: ", returnCurrentTime());
-      alarmargs[1] = "1";
-      alarmargs[2] = "1";
-      CreatePCB(4,alarmargs,createAlarm); //FOR R4, creates comhand process and add it to the ready queue
-      createAlarm(argc, argv);
+      InsertPCB(SetupPCB("alarm", 1, 8, &createAlarm));
     }
 
     else if(strcmp(argv[0], "yield") == 0) {
