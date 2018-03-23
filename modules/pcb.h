@@ -15,7 +15,7 @@ unsigned char* stackBase;
 unsigned char* stackTop;
 struct context* context;
 struct pcb* nextPcb;
-struct arguments* args;
+struct arguements args;
 } PCB;
 
 typedef struct context{
@@ -30,7 +30,7 @@ typedef struct arguments{
 } ARGUMENTS;
 
 PCB *AllocatePCB();
-PCB *SetupPCB(char*, int, int, void*, ARGUMENTS*);
+PCB *SetupPCB(char*, int, int, void*);
 
 PCB *FindPCB(const char *name);
 void InsertPCB(PCB *p);

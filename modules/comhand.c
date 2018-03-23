@@ -106,6 +106,14 @@ int comhand() {
       showAll();
     }
 
+    else if(strcmp(argv[0], "createPCB") == 0){
+      //CreatePCB(argc, argv);
+    }
+
+    else if(strcmp(argv[0], "deletePCB") == 0){
+      DeletePCB(argc, argv);
+    }
+
     else if(strcmp(argv[0], "block") == 0) {
       blockPCB(argc, argv);
     }
@@ -127,10 +135,15 @@ int comhand() {
     }
    
     else if(strcmp(argv[0], "createAlarm") == 0) {
-      ARGUMENTS* args;
-      args -> argc = argc;
-      args -> argv = argv;
-      InsertPCB(SetupPCB("alarm", 1, 1, &createAlarm, args));
+      void (*createAlarm_ptr) (int, char) = &createAlarm;
+
+      //I do not know how argc, argv will be passed into the function createAlarm
+      char* alarmargs[3];
+      alarmargs[0] = strcat("Alarm: ", returnCurrentTime());
+      alarmargs[1] = "1";
+      alarmargs[2] = "1";
+      CreatePCB(4,alarmargs,createAlarm); //FOR R4, creates comhand process and add it to the ready queue
+      createAlarm(argc, argv);
     }
 
     else if(strcmp(argv[0], "yield") == 0) {
@@ -138,11 +151,11 @@ int comhand() {
     }
 
     else if(strcmp(argv[0], "loadr3") == 0) {
-      InsertPCB(SetupPCB("proc1", 1, 1, &proc1, NULL));
-      InsertPCB(SetupPCB("proc2", 1, 1, &proc2, NULL));
-      InsertPCB(SetupPCB("proc3", 1, 1, &proc3, NULL));
-      InsertPCB(SetupPCB("proc4", 1, 1, &proc4, NULL));
-      InsertPCB(SetupPCB("proc5", 1, 1, &proc5, NULL));
+      InsertPCB(SetupPCB("proc1", 1, 1, &proc1));
+      InsertPCB(SetupPCB("proc2", 1, 1, &proc2));
+      InsertPCB(SetupPCB("proc3", 1, 1, &proc3));
+      InsertPCB(SetupPCB("proc4", 1, 1, &proc4));
+      InsertPCB(SetupPCB("proc5", 1, 1, &proc5));
     }
     
     // Command not recognized
