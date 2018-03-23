@@ -88,9 +88,6 @@ void help (int argc, char* argv[]) {
         else if (strcmp(argv[1], "setPriority") == 0){
             println("The setPriority command can accept two arguments. The name of a process, and a priority to set in the process. The priority can be an integer between 0 and 9. SetPriority will find the process and then set the priority.");
         }
-        else if (strcmp(argv[1], "createAlarm") == 0){
-                println("The createAlarm command takes in 3 arguments. The message to be displayed, the time of the alarm (24 hour format, 00:00:00), and the date of the alarm (mm/dd/yy). For example  'createAlarm exampleMessage 23:59:59 09/31/18' will print 'exampleMessage' at 11:59:59pm on September 31st 2018.");
-            }
         else if (strcmp(argv[1], "yield") == 0){
                 println("This a temporary command that was removed as of R4. It would call sys_req(IDLE) to allow comhand to let other processes run if there were any in the queue. Usage 'yield'");
             }
@@ -261,33 +258,6 @@ void gettime () {
     printbcd(inb(0x71));
    
     println(" ");
-}
-
-char* getCurrentTime() {
-    char currentTime[9];
-    char* array;
-    // Hour
-    outb(0x70, 0x04);
-    array = returnBCDString(inb(0x71));
-    currentTime[0]= array[0];
-    currentTime[1]= array[1];
-    currentTime[2] = ':';
-
-    // Minute
-    outb(0x70, 0x02);
-    array =  returnBCDString (inb(0x71));
-    currentTime[3]= array[0];
-    currentTime[4]= array[1];
-    currentTime[5] = ':';
-
-    // Second
-    outb(0x70, 0x00);
-    array = returnBCDString (inb(0x71));
-    currentTime[6]= array[0];
-    currentTime[7]= array[1];
-    currentTime[8] = '\0';
-
-    return currentTime;
 }
 
 // function to convert from binary to BCD
@@ -645,52 +615,6 @@ void printbcd (int bcd){
     print(array);
 }
 
-char* returnBCDString (int bcd){
-    int firstdigit = bcd >> 4;
-    int seconddigit = bcd & 15;
-    char ascii = firstdigit + 48;
-    char asciii = seconddigit + 48;
-    char array[2] = {ascii , asciii};
-    return array;
-}
-
-//Creates PCB
-void CreatePCB(int argc, char *argv[], void* function){
-    //Checks if argc is the appropriate value
-    if(argc != 4){
-        println("Error, not in range.");
-        return;
-    }
-    //Sets parameters to argv
-    char* name = argv[1];
-    int class = atoi(argv[2]);
-    int priority = atoi(argv[3]);
-
-    //Error checking the name length, priority, and class
-    if(FindPCB(name) != NULL){
-        println("Error, name must be unique and valid.");
-        return;
-    }
-
-    if(strlen(name) < 8){
-        println("Error, name has to be AT LEAST 8 characters.");
-        return;
-    }
-
-    if(class != 0 && class != 1){
-        println("Error, Class must be between 0 and 1.");
-        return;
-    }
-
-    if(priority < 0 || priority > 9){
-        println("Error, Priority must be between 0 and 9.");
-        return;
-    }
-    //Inserts PCB
-    PCB* pcb = SetupPCB(name, class, priority, function);
-    InsertPCB(pcb);
-}
-
 //Deletes the PCB
 void DeletePCB(int argc, char *argv[]){
     //Checks if argc is the appropriate value
@@ -715,14 +639,4 @@ void DeletePCB(int argc, char *argv[]){
     PCB* pcb =  FindPCB(name);
     RemovePCB(pcb);
     FreePCB(pcb);
-}
-
-void createAlarm()
-{
-    while((strcmp(ptime, getCurrentTime()) > 0)){
-        sys_req(IDLE, DEFAULT_DEVICE, NULL, NULL);
-    }
-    print("BEEP BEEP BEEP!");
-    
-    sys_req(EXIT, DEFAULT_DEVICE, NULL, NULL);
 }

@@ -9,8 +9,6 @@ void settime (int argc, char* argv[]);
 void setdate (int argc, char* argv[]);
 void getdate ();
 void gettime ();
-char* getCurrentTime();
-char* returnBCDString (int bcd);
 int tobcd (int binary);
 //int frombcd (int bcd);
 void printbcd (int bcd);
@@ -25,6 +23,5 @@ int unblockPCB(int argc, char *argv[]);
 int suspendPCB(int argc, char *argv[]);
 int resumePCB(int argc, char *argv[]);
 int setPriority(int argc, char *argv[]);
-void createAlarm(char* ptime);
 
 #endif //MPX_SPRING2018_ABOVE_C_LEVEL_PROCESSCOMMAND_H

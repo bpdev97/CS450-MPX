@@ -133,10 +133,6 @@ int comhand() {
     else if(strcmp(argv[0], "setPriority") == 0) {
       setPriority(argc, argv);
     }
-   
-    else if(strcmp(argv[0], "createAlarm") == 0) {
-      InsertPCB(SetupPCB("alarm", 1, 8, &createAlarm));
-    }
 
     else if(strcmp(argv[0], "yield") == 0) {
       sys_req(IDLE, DEFAULT_DEVICE, NULL, NULL);
