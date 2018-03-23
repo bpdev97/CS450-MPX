@@ -534,4 +534,18 @@ PCB to be removed pointer
 *Return Value:*  
 Returns 0 when successful and -1 when it fails to remove the given PCB.
 
+### sys_call()
+*Description:*  
+Responsible for updating old PCB on sys_req IDLE. Old PCB goes back in the ready queue. Responsible for deleting the old PCB on sys_req EXIT.
+
+*Declaration:*  
+u32int* sys_call(CONTEXT* registers)
+
+*Parameters:*  
+The previous CONTEXT*
+
+*Return Value:*  
+Returns a pointer to the next context
+
+
 
