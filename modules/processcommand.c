@@ -13,7 +13,7 @@ void help (int argc, char* argv[]) {
     //checking array size and setting up the Help menu
     if (argc == 1) {
         println("To use the help command type 'help' followed by the command you would like to use.");
-        println("The commands you can use include: clear, shutdown, setdate, getdate, settime, gettime, version, showPCB, showReady, showBlocked, showAll, createPCB, deletePCB, block, unblock, suspend, resume, and setPriority.");
+        println("The commands you can use include: clear, shutdown, setdate, getdate, settime, gettime, version, showPCB, showReady, showBlocked, showAll, block, unblock, suspend, resume, and setPriority.");
     }
     //listing each command and what they do
     else if (argc == 2) {
@@ -59,14 +59,6 @@ void help (int argc, char* argv[]) {
 
         else if (strcmp(argv[1], "showAll") == 0) {
             println("The showAll command displays the name, class, ready state, blocked state, and priority for all PCBs in the ready queue, readySuspended queue, blocked queue, and blockedSuspended queue. The showAll command can be used by typing showAll.");
-        }
-
-        else if (strcmp(argv[1], "createPCB") == 0) {
-            println("The createPCB function creates a PCB with the user input name, class, and priority. The createPCB command can be used by typing createPCB.");
-        }
-
-        else if (strcmp(argv[1], "deletePCB") == 0) {
-            println("The deletePCB function deletes a PCB with the user input name. The deletePCB command can be used by typing deletePCB.");
         }
 
         else if (strcmp(argv[1], "block") == 0){
@@ -688,43 +680,6 @@ char* returnBCDString (int bcd){
     return array;
 }
 
-//Creates PCB
-void CreatePCB(int argc, char *argv[], void* function){
-    //Checks if argc is the appropriate value
-    if(argc != 4){
-        println("Error, not in range.");
-        return;
-    }
-    //Sets parameters to argv
-    char* name = argv[1];
-    int class = atoi(argv[2]);
-    int priority = atoi(argv[3]);
-
-    //Error checking the name length, priority, and class
-    if(FindPCB(name) != NULL){
-        println("Error, name must be unique and valid.");
-        return;
-    }
-
-    if(strlen(name) < 8){
-        println("Error, name has to be AT LEAST 8 characters.");
-        return;
-    }
-
-    if(class != 0 && class != 1){
-        println("Error, Class must be between 0 and 1.");
-        return;
-    }
-
-    if(priority < 0 || priority > 9){
-        println("Error, Priority must be between 0 and 9.");
-        return;
-    }
-    //Inserts PCB
-    PCB* pcb = SetupPCB(name, class, priority, function);
-    InsertPCB(pcb);
-}
-
 //Deletes the PCB
 void DeletePCB(int argc, char *argv[]){
     //Checks if argc is the appropriate value
@@ -752,11 +707,10 @@ void DeletePCB(int argc, char *argv[]){
 }
 
 
-void createAlarm(int argc, char *argv[])
-{
-   if(argc == 4)
-   {
-	char* message = argv[1];
+void createAlarm(int argc, char *argv[]){
+
+    if(argc == 4){
+        char* message = argv[1];
         char* alarmTime = argv[2];
         char* alarmDate = argv[3];
         char alarmMonth[3];
@@ -774,49 +728,44 @@ void createAlarm(int argc, char *argv[])
         alarmYear[2] = '\0';
 
 
-        if(strcmp(alarmYear,returnCurrentYear()) < 0)//year already passed 
-        {
-           println(message); 
+        if(strcmp(alarmYear,returnCurrentYear()) < 0){ //year already passed
+            println(message); 
         }
-        else if((strcmp(alarmYear,returnCurrentYear()) == 0) && (strcmp(alarmMonth,returnCurrentMonth()) < 0))//same year, month already passed
-        {
-          println(message); 
+
+        else if((strcmp(alarmYear,returnCurrentYear()) == 0) && (strcmp(alarmMonth,returnCurrentMonth()) < 0)){//same year, month already passed
+            println(message); 
         }
-        else if((strcmp(alarmYear,returnCurrentYear()) == 0) && (strcmp(alarmMonth,returnCurrentMonth()) == 0)  && (strcmp(alarmDay,returnCurrentDay())< 0))//same year, same month, day already passed
-        {
-           println(message); 
+
+        else if((strcmp(alarmYear,returnCurrentYear()) == 0) && (strcmp(alarmMonth,returnCurrentMonth()) == 0)  && (strcmp(alarmDay,returnCurrentDay())< 0)){//same year, same month, day already passed
+            println(message); 
         }
         
-        else //date has not passed
-        {
-           while(strcmp(alarmYear, returnCurrentYear()) > 0)//current year is less than alarm year
-           {
-       	       
-             sys_req(IDLE, DEFAULT_DEVICE, NULL, NULL);
-           }
-           while(strcmp(alarmMonth, returnCurrentMonth()) > 0)//current month is less than alarm month
-           {
-       	  
-              sys_req(IDLE, DEFAULT_DEVICE, NULL, NULL);
-           }
-           while(strcmp(alarmDay, returnCurrentDay()) > 0)//current day is less than alarm day
-           {
-       	       
-              sys_req(IDLE, DEFAULT_DEVICE, NULL, NULL);
-           }
-           while((strcmp(alarmTime, returnCurrentTime()) > 0))//current time is before alarm time
-           {
-               
-              sys_req(IDLE, DEFAULT_DEVICE, NULL, NULL);
-           }
-           println(message); 
+        else{ //date has not passed
+
+            while(strcmp(alarmYear, returnCurrentYear()) > 0){//current year is less than alarm year
+                
+                sys_req(IDLE, DEFAULT_DEVICE, NULL, NULL);
+            }
+            while(strcmp(alarmMonth, returnCurrentMonth()) > 0){//current month is less than alarm month
+        
+                sys_req(IDLE, DEFAULT_DEVICE, NULL, NULL);
+            }
+            while(strcmp(alarmDay, returnCurrentDay()) > 0){//current day is less than alarm day
+                
+                sys_req(IDLE, DEFAULT_DEVICE, NULL, NULL);
+            }
+            while((strcmp(alarmTime, returnCurrentTime()) > 0)){//current time is before alarm time
+                
+                sys_req(IDLE, DEFAULT_DEVICE, NULL, NULL);
+            }
+            println(message); 
         } 
-   }
-   else
-   {
+    }
+    else{
+
         println("Wrong format. Example format is 'createAlarm exampleMessage 23:59:59 09/31/18'");
-   }
-  
+    }
+
     sys_req(EXIT, DEFAULT_DEVICE, NULL, NULL);
 
 }
