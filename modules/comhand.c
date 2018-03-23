@@ -59,9 +59,10 @@ int comhand() {
       strcmp(array, "N");
 
       if(strcmp(array, "Y") == 0) {
-        quit = 1;
-        //FOR R4 Exit command removes comhand from ready queue
-        //sys_req(EXIT,0,0,NULL);
+        // MURDER!!!!! the idle process
+        RemovePCB(FindPCB("idle"));
+        // Kill the comhand process
+        sys_req(EXIT, DEFAULT_DEVICE, NULL, NULL);
       }
     }
 

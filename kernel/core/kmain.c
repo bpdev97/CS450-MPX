@@ -82,12 +82,10 @@ void kmain(void)
   InsertPCB(SetupPCB("comhand", 0, 8, &comhand));
   sys_req(IDLE, DEFAULT_DEVICE, NULL, NULL);
 
-
   // 6) System Shutdown on return from your command handler
   klogv("Starting system shutdown procedure...");
   
   /* Shutdown Procedure */
   klogv("Shutdown complete. You may now turn off the machine. (QEMU: C-a x)");
   hlt();
-
 }
