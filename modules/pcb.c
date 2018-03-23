@@ -15,7 +15,7 @@ PCB* AllocatePCB(){
     //memset(pointpcb, 0, 1024);
     pointpcb -> stackTop = pointpcb -> stackBase - sizeof(CONTEXT) - sizeof(ARGUMENTS) + 1024;
     pointpcb -> context = (CONTEXT*) pointpcb -> stackTop;
-    pointpcb -> args = (ARGUMENTS*) (pointpcb -> stackTop + sizeof(CONTEXT) + 4);
+    pointpcb -> arguments = (ARGUMENTS*) (pointpcb -> stackTop + sizeof(CONTEXT) + 4);
     return pointpcb;
 }
 
@@ -69,8 +69,8 @@ PCB* SetupPCB(char* name, int classNum, int priority, void* function, ARGUMENTS*
     pointpcb -> context -> eip = (u32int) function;
     pointpcb -> context -> eflags = 0x202;
 
-    pointpcb -> args -> argc = args -> argc;
-    pointpcb -> args -> argv = args -> argv;
+    pointpcb -> arguments -> argc = args -> argc;
+    pointpcb -> arguments -> argv = args -> argv;
 
     return pointpcb;
 }
