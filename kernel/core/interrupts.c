@@ -215,8 +215,6 @@ u32int* sys_call(CONTEXT* registers){
     COP -> stackTop = (unsigned char*) registers -> esp;
     COP -> stackBase = (unsigned char*) registers -> ebp;
     COP -> context = registers;
-    COP -> arguments -> argc = (int) COP -> context + sizeof(CONTEXT) + 4;
-    COP -> arguments -> argv = (char*) COP -> context + sizeof(CONTEXT) + 8; 
     // Insert the COP back into the ready queue
     InsertPCB(COP);
   }

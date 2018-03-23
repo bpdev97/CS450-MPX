@@ -15,7 +15,7 @@ unsigned char* stackBase;
 unsigned char* stackTop;
 struct context* context;
 struct pcb* nextPcb;
-struct arguments* arguments;
+struct arguments* args;
 } PCB;
 
 typedef struct context{
