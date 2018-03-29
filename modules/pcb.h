@@ -1,6 +1,6 @@
 
-#ifndef _PCB_H
-#define _PCB_H
+#ifndef PCB_H
+#define PCB_H
 
 typedef struct pcb{
 char* name;
