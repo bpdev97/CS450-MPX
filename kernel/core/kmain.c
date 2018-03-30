@@ -24,6 +24,7 @@
 #include "modules/polling.h"
 #include "modules/queue.h"
 #include "modules/pcb.h"
+#include "modules/mcb.h"
 
 void kmain(void)
 {
@@ -41,7 +42,7 @@ void kmain(void)
   init_serial(COM1);    // init COM1
   set_serial_in(COM1); // set COM1 as input
   set_serial_out(COM1); // set COM1 as output
-  mpx_init(MODULE_R2);  // init module R2 
+  mpx_init(MODULE_R2);  // memory management module
 
   klogv("Initialized serial I/O on COM1 device...");
 
@@ -65,6 +66,10 @@ void kmain(void)
   init_irq();    // install initial interupt handlers for first 32 irq lines 
   sti();         // turn on interrupts
   init_paging(); // init paging
+
+  /*initializeHeap(50000); //intialize heap
+  sys_set_malloc(&allocMem); //override the default kmalloc and kfree
+  sys_set_free(&freeMem); //override the default kmalloc and kfree*/
 
   // 4.5) PCB Queues
   klogv("Initializing PCB queues...");
