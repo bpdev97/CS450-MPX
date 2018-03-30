@@ -5,14 +5,15 @@
 #include <system.h>
 
 typedef struct cmcb{
+    //0 for free
+    //1 for allocated
     int type;
-
     //beginning address of the block
     void* beginning;
 
     //number of bytes in the block
     int size;
-    
+
     char* processName;
     struct cmcb* next;
     struct cmcb* previous;
