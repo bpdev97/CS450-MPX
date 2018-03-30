@@ -1,7 +1,5 @@
-#ifndef _COMHAND_H
-#define _COMHAND_H
-
-#include <system.h>
+#ifndef COMHAND_H
+#define COMHAND_H
 
 /*
   Procedure..: comhand

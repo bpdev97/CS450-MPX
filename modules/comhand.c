@@ -7,6 +7,7 @@
 #include "procsr3.h"
 #include "pcb.h"
 #include "comhand.h"
+#include "mcb.h"
 
 /*
   Procedure..: comhand
@@ -145,14 +146,21 @@ int comhand() {
       InsertPCB(SetupPCB("proc4", 1, 1, &proc4));
       InsertPCB(SetupPCB("proc5", 1, 1, &proc5));
     }
+
     else if(strcmp(argv[0], "isEmpty") == 0) {
       isEmpty();
     }
+
     else if(strcmp(argv[0], "showAllocatedMemory") == 0) {
       showAllocatedMemory();
     }
-     else if(strcmp(argv[0], "showFreeMemory") == 0) {
+
+    else if(strcmp(argv[0], "showFreeMemory") == 0) {
       showFreeMemory();
+    }
+
+    else if(strcmp(argv[0], "initializeHeap") == 0) {
+      initializeHeap(2000);
     }
     // Command not recognized
     else {

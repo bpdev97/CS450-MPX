@@ -6,8 +6,13 @@
 
 typedef struct cmcb{
     int type;
-    int* beginning;
+
+    //beginning address of the block
+    void* beginning;
+
+    //number of bytes in the block
     int size;
+    
     char* processName;
     struct cmcb* next;
     struct cmcb* previous;
