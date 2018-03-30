@@ -23,5 +23,8 @@ int unblockPCB(int argc, char *argv[]);
 int suspendPCB(int argc, char *argv[]);
 int resumePCB(int argc, char *argv[]);
 int setPriority(int argc, char *argv[]);
+void isEmpty();
+void showFreeMemory();
+void showAllocatedMemory();
 
 #endif //MPX_SPRING2018_ABOVE_C_LEVEL_PROCESSCOMMAND_H

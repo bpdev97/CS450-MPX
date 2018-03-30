@@ -7,6 +7,7 @@
 #include "processcommand.h"
 #include "pcb.h"
 #include "queue.h"
+#include "mcb.h"
 
 void help (int argc, char* argv[]) {
 
@@ -639,4 +640,41 @@ void DeletePCB(int argc, char *argv[]){
     PCB* pcb =  FindPCB(name);
     RemovePCB(pcb);
     FreePCB(pcb);
+}
+void isEmpty(){
+   /* uncomment when lists are created
+   if(allocatedMemory == NULL){
+      println("True");
+   }
+   println("False");
+   */
+
+}
+void showFreeMemory(){
+CMCB* memoryBlock;
+//CMCB* memoryBlock = freeMemory;
+while (memoryBlock != NULL){
+  char address[20];
+  char size[10];
+  itoa(*(memoryBlock->beginning),address, 10);
+  itoa((memoryBlock->size),size, 10);
+  println(address);
+  println(size);
+  println(" ");
+  memoryBlock = memoryBlock->next;
+  } 
+}
+void showAllocatedMemory(){
+CMCB* memoryBlock;
+//CMCB* memoryBlock = allocatedMemory;
+while (memoryBlock != NULL){
+  char address[20];
+  char size[10];
+  itoa(*(memoryBlock->beginning),address, 10);
+  itoa((memoryBlock->size),size, 10);
+  println(address);
+  println(size);
+  println(" ");
+  memoryBlock = memoryBlock->next;
+  } 
 }

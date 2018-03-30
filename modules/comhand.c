@@ -145,7 +145,15 @@ int comhand() {
       InsertPCB(SetupPCB("proc4", 1, 1, &proc4));
       InsertPCB(SetupPCB("proc5", 1, 1, &proc5));
     }
-    
+    else if(strcmp(argv[0], "isEmpty") == 0) {
+      isEmpty();
+    }
+    else if(strcmp(argv[0], "showAllocatedMemory") == 0) {
+      showAllocatedMemory();
+    }
+     else if(strcmp(argv[0], "showFreeMemory") == 0) {
+      showFreeMemory();
+    }
     // Command not recognized
     else {
       print("Command not found: ");
