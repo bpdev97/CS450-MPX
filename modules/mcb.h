@@ -14,6 +14,7 @@ typedef struct cmcb{
     //number of bytes in the block
     int size;
 
+    //How will this struct ever get passed a name?
     char* processName;
     struct cmcb* next;
     struct cmcb* previous;
@@ -25,7 +26,9 @@ typedef struct lmcb{
 } LMCB;
 
 int initializeHeap(int bytes);
-void* allocMem(u32int size);
+void* allocMem(int size);
 int freeMem(void* ptr);
+
+void insertMCB(CMCB* mcb);
 
 #endif
