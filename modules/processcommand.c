@@ -95,6 +95,15 @@ void help (int argc, char* argv[]) {
         else if (strcmp(argv[1], "loadr3") == 0){
                 println("This a temporary command that was removed as of R4. It would create 5 processes and add them to the ready queue. Usage: 'loadr3'");
             }
+ else if (strcmp(argv[1], "isEmpty") == 0){
+                println("The isEmpty command takes in no arguments. It displays true if there is no allocated memory, false otherwise");
+            }
+ else if (strcmp(argv[1], "showAllocatedMemory") == 0){
+                println("The showAllocatedMemory command takes in no arguments. It displays the starting address and size of all the blocks of allocated memory.");
+            }
+ else if (strcmp(argv[1], "showFreeMemory") == 0){
+                println("The showFreeMemory command takes in no arguments. It displays the starting address and size of all the blocks of free memory");
+            }
 
      //error checking
         else{
@@ -656,7 +665,8 @@ CMCB* memoryBlock;
 while (memoryBlock != NULL){
   char address[20];
   char size[10];
-  itoa(*(memoryBlock->beginning),address, 10);
+  int* beginning = (int*)memoryBlock->beginning;
+  itoa(*beginning,address, 10);
   itoa((memoryBlock->size),size, 10);
   println(address);
   println(size);
@@ -670,7 +680,8 @@ CMCB* memoryBlock;
 while (memoryBlock != NULL){
   char address[20];
   char size[10];
-  itoa(*(memoryBlock->beginning),address, 10);
+  int* beginning = (int*)memoryBlock->beginning;
+  itoa(*beginning,address, 10);
   itoa((memoryBlock->size),size, 10);
   println(address);
   println(size);

@@ -25,7 +25,9 @@ Currently there are twenty commands including the help command that can be execu
 17. suspend
 18. resume
 19. setPriority
-20. createAlarm
+20. isEmpty
+21. showFreeMemory
+22. showAllocatedMemory
 
 
 ### help
@@ -111,3 +113,15 @@ The yield command takes in no arguments. It will make the command handler IDLE s
 ### loadr3
 *Usage:*
 The loadr3 command takes in no arguments. It creates five processes and adds them to the ready queue to be executed.
+
+### isEmpty
+*Usage:*
+The isEmpty command takes in no arguments. It displays true if there is no allocated memory, false otherwise
+
+### showFreeMemory
+*Usage:*
+The showFreeMemory command takes in no arguments. It displays the starting address and size of all the blocks of free memory
+
+### showAllocatedMemory
+*Usage:*
+The showAllocatedMemory command takes in no arguments. It displays the starting address and size of all the blocks of allocated memory.

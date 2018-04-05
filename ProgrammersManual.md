@@ -284,6 +284,45 @@ argv - an array of character pointers containing the arguments from the command 
 *Return Value:*  
 No return value
 
+### showAllocatedMemory()
+*Description:*  
+The showAllocatedMemory function prints the begining address and size of a block of allocated memory.
+
+*Declaration:*  
+void showAllocatedMemory();
+
+*Parameters:*  
+No parameters
+
+*Return Value:*  
+no return value.
+
+### showAllocatedMemory()
+*Description:*  
+The showAllocatedMemory function prints the begining address and size of a block of free memory.
+
+*Declaration:*  
+void showFreeMemory();
+
+*Parameters:*  
+No parameters
+
+*Return Value:*  
+no return value.
+
+### isEmpty()
+*Description:*  
+The isEmpty function prints true if there is no allocated blocks of memory or prints false if there is allocated blocks of memory
+
+*Declaration:*  
+void isEmpty();
+
+*Parameters:*  
+No parameters
+
+*Return Value:*  
+no return value.
+
 Functions - polling.c
 ---------------------
 polling.c contains the functions necessary to poll user input from the com port.
