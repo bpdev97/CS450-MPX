@@ -116,11 +116,55 @@ void* allocMem(int size){
 }
 
 int freeMem(void* ptr){
-    ptr = ptr;
+    // Search allocated list for AMCB representing block to be freed
+    CMCB* current = AMCB;
+    while(current != NULL && current -> beginning != ptr) {
+        current = current -> next;
+    }
+
+    // Couldn't find the AMCB - return -1
+    if(current == NULL) {
+        return -1;
+    }
+
+    // Unlink the AMCB
+    unlinkMCB(current);
+
+    // Not finished just pushing to add unlinkMCB for Addison
+
     return 0;
 }
 
-//Funtion for handling insertion logic
+// Funtion for handling unlinking logic
+void unlinkMCB(CMCB* mcb){
+    // mcb is a FMCB and only item in the list
+    if(mcb -> type == 0 && mcb -> next == NULL && mcb -> previous == NULL){
+        FMCB = NULL;
+        return;
+    }
+
+    // mcb is a AMCB and only item in the list
+    else if (mcb -> type == 1 && mcb -> next == NULL && mcb -> previous == NULL){
+        AMCB = NULL;
+        return;
+    }
+        
+    // last item in the list
+    if(mcb -> next == NULL){
+        mcb -> previous -> next = NULL;
+        mcb -> previous = NULL;
+        return;
+    }
+
+    // somewhere inbetween
+    mcb -> next -> previous = mcb -> previous;
+    mcb -> previous -> next = mcb -> next;
+    mcb -> next = NULL;
+    mcb -> previous = NULL;
+    return;
+}
+
+// Funtion for handling insertion logic
 void insertMCB(CMCB* mcb){
     //Check what type of mcb is being inserted
     CMCB* list = NULL;

@@ -30,5 +30,6 @@ void* allocMem(int size);
 int freeMem(void* ptr);
 
 void insertMCB(CMCB* mcb);
+void unlinkMCB(CMCB* mcb);
 
 #endif
