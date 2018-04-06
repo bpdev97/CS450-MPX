@@ -238,9 +238,7 @@ void unlinkMCB(CMCB* mcb){
     return;
 }
 
-// Funtion for handling insertion logic
 void insertMCB(CMCB* mcb){
-    //Check what type of mcb is being inserted
     CMCB* list = NULL;
     if(mcb -> type == 0){
         list = FMCB;
@@ -249,81 +247,76 @@ void insertMCB(CMCB* mcb){
         list = AMCB;
     }
 
-    //If the list is empty just set it to the head
-    if(list == NULL){
-        mcb -> next = NULL;
-        mcb -> previous = NULL;
+    if (list == NULL || (int) list > (int) mcb){
         if(mcb -> type == 0){
+            mcb -> next = FMCB;
             FMCB = mcb;
         }
         else{
+            mcb -> next = AMCB;
             AMCB = mcb;
         }
-        return;
     }
-
-    // Traverse the list 
-    CMCB* current = list;
-    
-    // New head
-    if((int) mcb < (int) current){
-        mcb -> next = current;
-        mcb -> previous = NULL;
-        mcb -> next -> previous = mcb;
-        if (mcb -> type == 0 ){
-            FMCB = mcb;
+    else {
+        CMCB* current = list;
+        while (current -> next != NULL && ((int) current -> next) < (int) mcb) {
+            current = current->next;
         }
-        else{
-            AMCB = mcb;
+        mcb -> next = current -> next;
+        if(current -> next != NULL){
+            current -> next -> previous = mcb;
+            current -> next = mcb;
         }
-        return;
-    }
-
-    // New end
-    while((int) mcb > (int) current && current -> next != NULL){
-        current = current -> next;
-    }
-
-    // New tail
-    if(current -> next == NULL){
-        current -> next = mcb;
         mcb -> previous = current;
-        mcb -> next = NULL;
-        return;
     }
-
-    current -> next -> previous = mcb;
-    mcb -> next = current -> next;
-    mcb -> previous = current;
-    current -> next = mcb;
     return;
 
-    
-    // //Traverse the list until current -> next is a higher address than mcb
-    // CMCB* current = list;
-    // while(current -> next < mcb && current -> next){
-    //     current = current -> next;
+    // //If the list is empty just set it to the head
+    // if(list == NULL){
+    //     mcb -> next = NULL;
+    //     mcb -> previous = NULL;
+    //     if(mcb -> type == 0){
+    //         FMCB = mcb;
+    //     }
+    //     else{
+    //         AMCB = mcb;
+    //     }
+    //     return;
     // }
 
-    // if(current == list){
+    // // Traverse the list 
+    // CMCB* current = list;
+    
+    // // New head
+    // if((int) mcb < (int) current){
     //     mcb -> next = current;
     //     mcb -> previous = NULL;
     //     mcb -> next -> previous = mcb;
-    //     list = mcb;
+    //     if (mcb -> type == 0 ){
+    //         FMCB = mcb;
+    //     }
+    //     else{
+    //         AMCB = mcb;
+    //     }
     //     return;
     // }
-    // /*
-    //     * Link mcb -> next to what current pointed to
-    //     * Link mcb -> previous to current
-    //     * Link the mcb after mcb to point back to mcb
-    //     * Link current to point forward to mcb
-    // */
+
+    // // New end
+    // while((int) mcb > (int) current && current -> next != NULL){
+    //     current = current -> next;
+    // }
+
+    // // New tail
+    // if(current -> next == NULL){
+    //     current -> next = mcb;
+    //     mcb -> previous = current;
+    //     mcb -> next = NULL;
+    //     return;
+    // }
+
+    // current -> next -> previous = mcb;
     // mcb -> next = current -> next;
     // mcb -> previous = current;
-    // if(mcb -> next){
-    //     mcb -> next -> previous = mcb;
-    // }
     // current -> next = mcb;
-
     // return;
 }
