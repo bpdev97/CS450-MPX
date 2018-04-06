@@ -650,42 +650,42 @@ void DeletePCB(int argc, char *argv[]){
     RemovePCB(pcb);
     FreePCB(pcb);
 }
-void isEmpty(){
-   /* uncomment when lists are created
-   if(allocatedMemory == NULL){
-      println("True");
-   }
-   println("False");
-   */
 
+void isEmpty(){
+    if(AMCB == NULL){
+        println("True");
+    }
+    println("False");
 }
+
 void showFreeMemory(){
-CMCB* memoryBlock;
-//CMCB* memoryBlock = freeMemory;
-while (memoryBlock != NULL){
-  char address[20];
-  char size[10];
-  int* beginning = (int*)memoryBlock->beginning;
-  itoa(*beginning,address, 10);
-  itoa((memoryBlock->size),size, 10);
-  println(address);
-  println(size);
-  println(" ");
-  memoryBlock = memoryBlock->next;
-  } 
+    CMCB* memoryBlock;
+    CMCB* memoryBlock = FMCB;
+    while (memoryBlock != NULL){
+        char address[20];
+        char size[10];
+        int* beginning = (int*)memoryBlock->beginning;
+        itoa(*beginning,address, 10);
+        itoa((memoryBlock->size),size, 10);
+        println(address);
+        println(size);
+        println(" ");
+        memoryBlock = memoryBlock->next;
+    } 
 }
+
 void showAllocatedMemory(){
-CMCB* memoryBlock;
-//CMCB* memoryBlock = allocatedMemory;
-while (memoryBlock != NULL){
-  char address[20];
-  char size[10];
-  int* beginning = (int*)memoryBlock->beginning;
-  itoa(*beginning,address, 10);
-  itoa((memoryBlock->size),size, 10);
-  println(address);
-  println(size);
-  println(" ");
-  memoryBlock = memoryBlock->next;
-  } 
+    CMCB* memoryBlock;
+    CMCB* memoryBlock = AMCB;
+    while (memoryBlock != NULL){
+        char address[20];
+        char size[10];
+        int* beginning = (int*)memoryBlock->beginning;
+        itoa(*beginning,address, 10);
+        itoa((memoryBlock->size),size, 10);
+        println(address);
+        println(size);
+        println(" ");
+        memoryBlock = memoryBlock->next;
+    } 
 }
