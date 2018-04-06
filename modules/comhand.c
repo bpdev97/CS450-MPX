@@ -162,6 +162,24 @@ int comhand() {
     else if(strcmp(argv[0], "initializeHeap") == 0) {
       initializeHeap(2000);
     }
+
+    else if(strcmp(argv[0], "testR5") == 0) {
+      println("Initializing the Heap...");
+      initializeHeap(30000);
+      showFreeMemory();
+      println("Allocating Memory blocks...");
+      int i = 0;
+      for (; i < 5; i++){
+        allocMem(1024 + 8*i);
+      }
+      showAllocatedMemory();
+      
+      i = 0;
+      for (; i < 5; i++){
+        freeMem(AMCB -> beginning);
+      }
+    }
+
     // Command not recognized
     else {
       print("Command not found: ");

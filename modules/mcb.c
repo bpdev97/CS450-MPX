@@ -7,7 +7,8 @@
 CMCB* AMCB = NULL;
 CMCB* FMCB = NULL;
 LMCB* END = NULL;
-void* start;
+void* startMem = NULL;
+void* HEAP = NULL;
 
 int MIN_FREE_SIZE = 128;
 
@@ -18,9 +19,9 @@ int initializeHeap(int bytes){
         bytes = bytes + (4 - mod);
     }
     //Beginning of the entire heap
-    start = (void*) kmalloc(bytes + sizeof(CMCB) + sizeof(LMCB));
+    startMem = (void*) kmalloc(bytes + sizeof(CMCB) + sizeof(LMCB));
 
-    if(start == NULL){
+    if(startMem == NULL){
         return -1; //Error code
     }
 
@@ -29,16 +30,18 @@ int initializeHeap(int bytes){
 
     //Free list head initialized
     FMCB -> type = 0;
-    FMCB = start;
+    FMCB = startMem;
     FMCB -> size = bytes - sizeof(CMCB) - sizeof(LMCB);
-    FMCB -> beginning = FMCB + sizeof(CMCB);
+    FMCB -> beginning = (void*) ((int) FMCB + sizeof(CMCB));
     FMCB -> previous = NULL;
     FMCB -> next = NULL;
 
-    END = start + bytes + sizeof(CMCB);
+    HEAP = FMCB;
+
+    END = (LMCB*) ((int) startMem + bytes + sizeof(CMCB));
     END -> type = 0;
     END -> size = FMCB -> size;
-
+    
     return bytes;
 }
 
@@ -77,7 +80,7 @@ void* allocMem(int size){
         current -> type = 1;
 
         //Get a pointer for the LMCB at the end of the block and change its type to 1 (allocated)
-        LMCB* endCap = (LMCB*) current -> beginning + size;
+        LMCB* endCap = (LMCB*) (((int) current -> beginning) + size);
         endCap -> type = 1;
         
         insertMCB(current);
@@ -91,14 +94,15 @@ void* allocMem(int size){
         current -> type = 1;
 
         //Create new LMCB for the allocated block
-        LMCB* endCap = current -> beginning + size;
+        LMCB* endCap = (LMCB*) ((int) (current -> beginning) + size);
         endCap -> type = 1;
         endCap -> size = size;
 
         //Create new FMCB
-        CMCB* newFree = (CMCB*) endCap + sizeof(LMCB);
+        CMCB* newFree = (CMCB*) ((int) (endCap) + sizeof(LMCB));
         newFree -> type = 0;
         newFree -> size = current -> size - size - sizeof(CMCB) - sizeof(LMCB);
+        newFree -> beginning = (void*) ((int) newFree + sizeof(CMCB));
 
         //Update the very end of the heap to reflect the change in memory
         END -> size = END -> size - size - sizeof(CMCB) - sizeof(LMCB);
@@ -128,19 +132,19 @@ int freeMem(void* ptr){
     unlinkMCB(current);
 
     // Get currents LMCB
-    LMCB* endCap = (LMCB*) current -> beginning + current -> size;
+    LMCB* endCap = (LMCB*) (((int) current -> beginning) + current -> size);
 
     // Look for adjacent free block after
-    CMCB* fABlockAfter = (CMCB*) endCap + sizeof(LMCB);
+    CMCB* fABlockAfter = (CMCB*) ((int) endCap + sizeof(LMCB));
     CMCB* fABlockCurrentAfter = AMCB;
-    LMCB* endCapAfter = (LMCB*) fABlockAfter -> beginning + fABlockAfter -> size;
+    LMCB* endCapAfter = (LMCB*) (((int) fABlockAfter -> beginning) + fABlockAfter -> size);
     
     while(fABlockCurrentAfter != NULL && fABlockCurrentAfter != fABlockAfter){
         fABlockCurrentAfter = fABlockCurrentAfter -> next;
     }
 
     // Look for adjacent free block before
-    CMCB* fABlockBefore = (CMCB*) endCap + sizeof(LMCB);
+    CMCB* fABlockBefore = (CMCB*) ((int) endCap + sizeof(LMCB));
     CMCB* fABlockCurrentBefore = AMCB;
     
     while(fABlockCurrentBefore != NULL && fABlockCurrentBefore != fABlockBefore){
