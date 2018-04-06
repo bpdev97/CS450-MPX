@@ -659,7 +659,6 @@ void isEmpty(){
 }
 
 void showFreeMemory(){
-    CMCB* memoryBlock;
     CMCB* memoryBlock = FMCB;
     while (memoryBlock != NULL){
         char address[20];
@@ -675,7 +674,6 @@ void showFreeMemory(){
 }
 
 void showAllocatedMemory(){
-    CMCB* memoryBlock;
     CMCB* memoryBlock = AMCB;
     while (memoryBlock != NULL){
         char address[20];
