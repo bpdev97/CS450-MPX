@@ -136,7 +136,7 @@ int freeMem(void* ptr){
 
     // Look for adjacent free block after
     CMCB* fABlockAfter = (CMCB*) ((int) endCap + sizeof(LMCB));
-    CMCB* fABlockCurrentAfter = AMCB;
+    CMCB* fABlockCurrentAfter = FMCB;
     LMCB* endCapAfter = (LMCB*) (((int) fABlockAfter -> beginning) + fABlockAfter -> size);
     
     while(fABlockCurrentAfter != NULL && fABlockCurrentAfter != fABlockAfter){
@@ -144,8 +144,9 @@ int freeMem(void* ptr){
     }
 
     // Look for adjacent free block before
-    CMCB* fABlockBefore = (CMCB*) ((int) endCap + sizeof(LMCB));
-    CMCB* fABlockCurrentBefore = AMCB;
+    LMCB* endCapBefore = (LMCB*) ((int) current - sizeof(LMCB));
+    CMCB* fABlockBefore = (CMCB*) ((int) endCapBefore - endCapBefore -> size - sizeof(CMCB));
+    CMCB* fABlockCurrentBefore = FMCB;
     
     while(fABlockCurrentBefore != NULL && fABlockCurrentBefore != fABlockBefore){
         fABlockCurrentBefore = fABlockCurrentBefore -> next;
@@ -201,11 +202,13 @@ void unlinkMCB(CMCB* mcb){
         FMCB = mcb -> next;
         mcb -> next = NULL;
         FMCB -> previous = NULL;
+        return;
     }
     else if(mcb == AMCB){
         AMCB = mcb -> next;
         mcb -> next = NULL;
         AMCB -> previous = NULL;
+        return;
     }
 
     // mcb is a FMCB and only item in the list
