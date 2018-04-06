@@ -116,7 +116,7 @@ void help (int argc, char* argv[]) {
 }
 
 void version () {
-    println("Version: R3/R4");
+    println("Version: R5");
 }
 
 //allows user to set the time

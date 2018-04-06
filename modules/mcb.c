@@ -45,7 +45,7 @@ int initializeHeap(int bytes){
     return bytes;
 }
 
-void* allocMem(int size){
+u32int allocMem(u32int size){
     //Make size a mulitple of 4 bytes (word)
     int mod = size%4;
     if(mod > 0){
@@ -113,7 +113,7 @@ void* allocMem(int size){
         insertMCB(newFree);
     }
     
-    return current -> beginning;
+    return (u32int) current -> beginning;
 }
 
 int freeMem(void* ptr){
