@@ -4,9 +4,9 @@
 #include "mem/heap.h"
 #include <system.h>
 
-CMCB* AMCB;
-CMCB* FMCB;
-LMCB* END;
+CMCB* AMCB = NULL;
+CMCB* FMCB = NULL;
+LMCB* END = NULL;
 void* start;
 
 int MIN_FREE_SIZE = 128;
@@ -30,14 +30,14 @@ int initializeHeap(int bytes){
     //Free list head initialized
     FMCB -> type = 0;
     FMCB = start;
-    FMCB -> size = bytes;
+    FMCB -> size = bytes - sizeof(CMCB) - sizeof(LMCB);
     FMCB -> beginning = FMCB + sizeof(CMCB);
     FMCB -> previous = NULL;
     FMCB -> next = NULL;
 
     END = start + bytes + sizeof(CMCB);
     END -> type = 0;
-    END -> size = bytes;
+    END -> size = FMCB -> size;
 
     return bytes;
 }

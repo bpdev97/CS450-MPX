@@ -25,6 +25,10 @@ typedef struct lmcb{
     int size;
 } LMCB;
 
+extern CMCB* AMCB;
+extern CMCB* FMCB;
+extern LMCB* END;
+
 int initializeHeap(int bytes);
 void* allocMem(int size);
 int freeMem(void* ptr);
