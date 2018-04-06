@@ -173,11 +173,13 @@ int comhand() {
         allocMem(1024 + 8*i);
       }
       showAllocatedMemory();
-      
+      println("Allocating Memory blocks...");
       i = 0;
       for (; i < 5; i++){
         freeMem(AMCB -> beginning);
       }
+      showFreeMemory();
+      showAllocatedMemory();
     }
 
     // Command not recognized

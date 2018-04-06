@@ -196,6 +196,18 @@ int freeMem(void* ptr){
 
 // Funtion for handling unlinking logic
 void unlinkMCB(CMCB* mcb){
+    // unlinking head
+    if(mcb == FMCB){
+        FMCB = mcb -> next;
+        mcb -> next = NULL;
+        FMCB -> previous = NULL;
+    }
+    else if(mcb == AMCB){
+        AMCB = mcb -> next;
+        mcb -> next = NULL;
+        AMCB -> previous = NULL;
+    }
+
     // mcb is a FMCB and only item in the list
     if(mcb -> type == 0 && mcb -> next == NULL && mcb -> previous == NULL){
         FMCB = NULL;
@@ -246,26 +258,69 @@ void insertMCB(CMCB* mcb){
         }
         return;
     }
-    
-    //Traverse the list until current -> next is a higher address than mcb
+
+    // Traverse the list 
     CMCB* current = list;
-    while(current -> next < mcb && current -> next){
+    
+    // New head
+    if((int) mcb < (int) current){
+        mcb -> next = current;
+        mcb -> previous = NULL;
+        mcb -> next -> previous = mcb;
+        if (mcb -> type == 0 ){
+            FMCB = mcb;
+        }
+        else{
+            AMCB = mcb;
+        }
+        return;
+    }
+
+    // New end
+    while((int) mcb > (int) current && current -> next != NULL){
         current = current -> next;
     }
 
-    /*
-        * Link mcb -> next to what current pointed to
-        * Link mcb -> previous to current
-        * Link the mcb after mcb to point back to mcb
-        * Link current to point forward to mcb
-    */
+    // New tail
+    if(current -> next == NULL){
+        current -> next = mcb;
+        mcb -> previous = current;
+        mcb -> next = NULL;
+        return;
+    }
+
+    current -> next -> previous = mcb;
     mcb -> next = current -> next;
     mcb -> previous = current;
-    if(mcb -> next){
-        mcb -> next -> previous = mcb;
-    }
     current -> next = mcb;
-
     return;
-}
 
+    
+    // //Traverse the list until current -> next is a higher address than mcb
+    // CMCB* current = list;
+    // while(current -> next < mcb && current -> next){
+    //     current = current -> next;
+    // }
+
+    // if(current == list){
+    //     mcb -> next = current;
+    //     mcb -> previous = NULL;
+    //     mcb -> next -> previous = mcb;
+    //     list = mcb;
+    //     return;
+    // }
+    // /*
+    //     * Link mcb -> next to what current pointed to
+    //     * Link mcb -> previous to current
+    //     * Link the mcb after mcb to point back to mcb
+    //     * Link current to point forward to mcb
+    // */
+    // mcb -> next = current -> next;
+    // mcb -> previous = current;
+    // if(mcb -> next){
+    //     mcb -> next -> previous = mcb;
+    // }
+    // current -> next = mcb;
+
+    // return;
+}
