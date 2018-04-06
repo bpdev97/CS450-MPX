@@ -61,10 +61,7 @@ void* allocMem(int size){
 
     //First unlink the FMCB (current)
     //I think it should be fine if any of these things are NULL but we should check that
-    current -> previous -> next = current -> next;
-    current -> next -> previous = current -> previous;
-    current -> next = NULL;
-    current -> previous = NULL;
+    unlinkMCB(current);
 
     /*
      * Write a CMCB (allocated) at the beginning of the block created and an LMCB at the end
@@ -202,7 +199,9 @@ void insertMCB(CMCB* mcb){
     */
     mcb -> next = current -> next;
     mcb -> previous = current;
-    mcb -> next -> previous = mcb;
+    if(mcb -> next){
+        mcb -> next -> previous = mcb;
+    }
     current -> next = mcb;
 
     return;
