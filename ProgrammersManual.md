@@ -586,5 +586,71 @@ The previous CONTEXT*
 *Return Value:*  
 Returns a pointer to the next context
 
+### initializeHeap()
+*Description:*  
+Allocate all the memory available for the MPX.
+
+*Declaration:*  
+int initializeHeap(int bytes)
+
+*Parameters:*  
+Number of bytes to allocate.
+
+*Return Value:* 
+Number of bytes allocated.
+
+### allocMem()
+*Description:*  
+Allocate memory from the heap.
+
+*Declaration:*  
+void* allocMem(int size);
+
+*Parameters:*  
+Number of bytes to allocate.
+
+*Return Value:* 
+Void* pointer to the memory allocated.
+
+### freeMem()
+*Description:*  
+Free a block of memory that was previously allocated.
+
+*Declaration:*  
+int freeMem(void* ptr)
+
+*Parameters:*  
+Pointer to memory block to free.
+
+*Return Value:* 
+Integer. 0 represents freed. -1 represents did not free.
+
+### insertMCB()
+*Description:*  
+Inserts MCB into the linked list.
+
+*Declaration:*  
+void insertMCB(CMCB* mcb)
+
+*Parameters:*  
+Pointer to MCB to insert
+
+*Return Value:* 
+void
+
+### unlinkMCB()
+*Description:*  
+Unlinks MCB from the linked list.
+
+*Declaration:*  
+void unlinkMCB(CMCB* mcb)
+
+*Parameters:*  
+mcb to unlink
+
+*Return Value:* 
+void
+
+
 
 

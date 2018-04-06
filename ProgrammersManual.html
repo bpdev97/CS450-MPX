@@ -218,3 +218,28 @@
 <p><em>Declaration:</em><br />u32int* sys_call(CONTEXT* registers)</p>
 <p><em>Parameters:</em><br />The previous CONTEXT*</p>
 <p><em>Return Value:</em><br />Returns a pointer to the next context</p>
+<h3 id="initializeheap">initializeHeap()</h3>
+<p><em>Description:</em><br />Allocate all the memory available for the MPX.</p>
+<p><em>Declaration:</em><br />int initializeHeap(int bytes)</p>
+<p><em>Parameters:</em><br />Number of bytes to allocate.</p>
+<p><em>Return Value:</em> Number of bytes allocated.</p>
+<h3 id="allocmem">allocMem()</h3>
+<p><em>Description:</em><br />Allocate memory from the heap.</p>
+<p><em>Declaration:</em><br />void* allocMem(int size);</p>
+<p><em>Parameters:</em><br />Number of bytes to allocate.</p>
+<p><em>Return Value:</em> Void* pointer to the memory allocated.</p>
+<h3 id="freemem">freeMem()</h3>
+<p><em>Description:</em><br />Free a block of memory that was previously allocated.</p>
+<p><em>Declaration:</em><br />int freeMem(void* ptr)</p>
+<p><em>Parameters:</em><br />Pointer to memory block to free.</p>
+<p><em>Return Value:</em> Integer. 0 represents freed. -1 represents did not free.</p>
+<h3 id="insertmcb">insertMCB()</h3>
+<p><em>Description:</em><br />Inserts MCB into the linked list.</p>
+<p><em>Declaration:</em><br />void insertMCB(CMCB* mcb)</p>
+<p><em>Parameters:</em><br />Pointer to MCB to insert</p>
+<p><em>Return Value:</em> void</p>
+<h3 id="unlinkmcb">unlinkMCB()</h3>
+<p><em>Description:</em><br />Unlinks MCB from the linked list.</p>
+<p><em>Declaration:</em><br />void unlinkMCB(CMCB* mcb)</p>
+<p><em>Parameters:</em><br />mcb to unlink</p>
+<p><em>Return Value:</em> void</p>
