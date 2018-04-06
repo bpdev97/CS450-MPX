@@ -4,6 +4,10 @@
 
 #include <system.h>
 
+extern CMCB* AMCB;
+extern CMCB* FMCB;
+extern LMCB* END;
+
 typedef struct cmcb{
     //0 for free
     //1 for allocated
