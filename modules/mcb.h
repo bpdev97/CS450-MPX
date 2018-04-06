@@ -4,10 +4,6 @@
 
 #include <system.h>
 
-extern CMCB* AMCB;
-extern CMCB* FMCB;
-extern LMCB* END;
-
 typedef struct cmcb{
     //0 for free
     //1 for allocated
@@ -28,6 +24,10 @@ typedef struct lmcb{
     int type;
     int size;
 } LMCB;
+
+extern CMCB* AMCB;
+extern CMCB* FMCB;
+extern LMCB* END;
 
 int initializeHeap(int bytes);
 void* allocMem(int size);
