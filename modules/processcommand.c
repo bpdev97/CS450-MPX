@@ -625,17 +625,17 @@ void printbcd (int bcd){
     print(array);
 }
 
-//Deletes the PCB
+// Deletes the PCB
 void DeletePCB(int argc, char *argv[]){
-    //Checks if argc is the appropriate value
+    // Checks if argc is the appropriate value
     if(argc != 2){
         println("Error, not in range.");
         return;
     }
-    //Sets parameter to argv
+    // Sets parameter to argv
     char* name = argv[1];
 
-    //Error checks name
+    // Error checks name
     if(strlen(name) < 8){
         println("Error, name has to be AT LEAST 8 characters.");
         return;
@@ -655,35 +655,60 @@ void isEmpty(){
     if(AMCB == NULL){
         println("True");
     }
-    println("False");
+    else {
+        println("False");
+    }
+    return;
 }
 
 void showFreeMemory(){
-    CMCB* memoryBlock = FMCB;
+    CMCB* memoryBlock = FMCB;       
+    char string[10];
+    int i = 0;
+    int offset = 0;
+    println("UNALLOCATED MEMORY");
+    println("--------------");
     while (memoryBlock != NULL){
-        char address[20];
-        char size[10];
-        int* beginning = (int*)memoryBlock->beginning;
-        itoa(*beginning,address, 10);
-        itoa((memoryBlock->size),size, 10);
-        println(address);
-        println(size);
+        offset = (int) memoryBlock - (int) HEAP;
+        print("Memory Block: ");
+        println(itoa(i, string, 10));
+        println("--------------");
+        memset(string, 0, 10);
+        print("Offset: ");
+        println(itoa(offset, string, 10));
+        memset(string, 0, 10);
+        print("Size: ");
+        println(itoa(memoryBlock -> size, string, 10));
+        memset(string, 0, 10);
         println(" ");
-        memoryBlock = memoryBlock->next;
-    } 
+        memoryBlock = memoryBlock -> next;
+        i++;
+    }
+    return;
 }
 
 void showAllocatedMemory(){
-    CMCB* memoryBlock = AMCB;
+    CMCB* memoryBlock = AMCB;       
+    char string[10];
+    int i = 0;
+    int offset = 0;
+    println("ALLOCATED MEMORY");
+    println("--------------");
     while (memoryBlock != NULL){
-        char address[20];
-        char size[10];
-        int* beginning = (int*)memoryBlock->beginning;
-        itoa(*beginning,address, 10);
-        itoa((memoryBlock->size),size, 10);
-        println(address);
-        println(size);
+        offset = (int) memoryBlock - (int) HEAP;
+        print("Memory Block: ");
+        println(itoa(i, string, 10));
+        println("--------------");
+        memset(string, 0, 10);
+        print("Offset: ");
+        println(itoa(offset, string, 10));
+        memset(string, 0, 10);
+        print("Size: ");
+        println(itoa(memoryBlock -> size, string, 10));
+        memset(string, 0, 10);
         println(" ");
-        memoryBlock = memoryBlock->next;
-    } 
+        memoryBlock = memoryBlock -> next;
+        i++;
+    }
+    return;
 }
