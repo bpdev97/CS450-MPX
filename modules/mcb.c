@@ -119,7 +119,7 @@ int freeMem(void* ptr){
         current = current -> next;
     }
 
-    // Couldn't find the AMCB - return -1
+    // Couldn't find the AMCB or it wasn't already allocated - return -1
     if(current == NULL) {
         return -1;
     }
@@ -127,9 +127,67 @@ int freeMem(void* ptr){
     // Unlink the AMCB
     unlinkMCB(current);
 
-    // Not finished just pushing to add unlinkMCB for Addison
+    // Get currents LMCB
+    LMCB* endCap = (LMCB*) current -> beginning + current -> size;
 
-    return 0;
+    // Look for adjacent free block after
+    CMCB* fABlockAfter = (CMCB*) endCap + sizeof(LMCB);
+    CMCB* fABlockCurrentAfter = AMCB;
+    LMCB* endCapAfter = (LMCB*) fABlockAfter -> beginning + fABlockAfter -> size;
+    
+    while(fABlockCurrentAfter != NULL && fABlockCurrentAfter != fABlockAfter){
+        fABlockCurrentAfter = fABlockCurrentAfter -> next;
+    }
+
+    // Look for adjacent free block before
+    CMCB* fABlockBefore = (CMCB*) endCap + sizeof(LMCB);
+    CMCB* fABlockCurrentBefore = AMCB;
+    
+    while(fABlockCurrentBefore != NULL && fABlockCurrentBefore != fABlockBefore){
+        fABlockCurrentBefore = fABlockCurrentBefore -> next;
+    }
+
+    // No adjacent blocks
+    if(fABlockCurrentAfter == NULL && fABlockCurrentBefore == NULL){
+        current -> type = 0;
+        endCap -> type = 0;
+        insertMCB(current);
+        return 0;
+    }
+
+    // adjacent after
+    if(fABlockCurrentAfter != NULL && fABlockCurrentBefore == NULL){
+        current -> type = 0;
+        unlinkMCB(fABlockAfter);
+        current -> size = current -> size + sizeof(LMCB) + sizeof(CMCB) + fABlockAfter -> size;
+        endCapAfter -> size = current -> size;
+        endCapAfter -> type = 0;
+        insertMCB(current);
+        return 0;
+    }
+
+    // adjacent before
+    else if(fABlockCurrentAfter == NULL && fABlockCurrentBefore != NULL){
+        unlinkMCB(fABlockBefore);
+        fABlockBefore -> type = 0;
+        fABlockBefore -> size = fABlockBefore -> size + sizeof(LMCB) + sizeof(CMCB) + current -> size;
+        endCap -> size = fABlockBefore -> size;
+        endCap -> type = 0;
+        insertMCB(fABlockBefore);
+        return 0;
+    }
+
+    // adjacent before and after
+    else {
+        unlinkMCB(fABlockBefore);
+        unlinkMCB(fABlockAfter);
+        fABlockBefore -> type = 0;
+        fABlockBefore -> size = fABlockBefore -> size + (2 * sizeof(LMCB)) + (2 * sizeof(CMCB)) + fABlockAfter -> size + current -> size;
+        endCapAfter -> type = 0;
+        endCapAfter -> size = fABlockBefore -> size;
+        insertMCB(fABlockBefore);
+        return 0;
+    }
 }
 
 // Funtion for handling unlinking logic
