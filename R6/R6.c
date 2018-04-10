@@ -1,7 +1,25 @@
 #include <stdio.h>
+#include <string.h>
 #include "R6.h"
 
 
+int main (int argc, char *argv[]) 
+{
+if(argc == 2)
+{
+  printf("Please enter a number \n");
+  printf("1) Print Boot Sector \n");
+}
+else if(argc == 3)
+{
+//print file
+}
+else
+{
+printf("Argument error \n");
+}
+ 
+}
 //Little-endian style
 int BytetoNumber(unsigned char *array, int length) {
     int value = 0;
