@@ -31,7 +31,7 @@ extern LMCB* END;
 extern void* HEAP;
 
 int initializeHeap(int bytes);
-u32int allocMem(u32int size);
+void* allocMem(int size);
 int freeMem(void* ptr);
 
 void insertMCB(CMCB* mcb);

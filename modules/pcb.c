@@ -21,7 +21,6 @@ PCB* AllocatePCB(){
 int FreePCB(PCB* freepcb){
     int success = sys_free_mem(freepcb -> stackBase);
     sys_free_mem(freepcb -> name);
-    sys_free_mem(freepcb);
     int error = sys_free_mem(freepcb);
     
     if(success == 1 && error == 1){

@@ -9,24 +9,23 @@
 #include <mem/heap.h>
 #include <string.h>
 #include <core/serial.h>
-#include "mcb.h"
 
 // global variable containing parameter used when making 
 // system calls via sys_req
 param params;   
 
 // global for the current module
-int current_module = 5;  
+int current_module = -1;  
 static int io_module_active = 0;
-static int mem_module_active = 1;
+static int mem_module_active = 0;
 
 // If a student created heap manager is implemented this
 // is a pointer to the student's "malloc" operation.
-u32int (*student_malloc)(u32int) = &allocMem;
+u32int (*student_malloc)(u32int);
 
 // if a student created heap manager is implemented this
 // is a pointer to the student's "free" operation.
-int (*student_free)(void *) = &freeMem;
+int (*student_free)(void *);
 
 int (*student_read)(char *buffer, int *count);
 
