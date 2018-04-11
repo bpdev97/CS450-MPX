@@ -10,7 +10,7 @@ void returnTime(int time);
 void returnDate(int date);
 void listDirectory(char* disk);
 void changeDirectory(char* disk);
-void loadFAT(char* disk);
+void loadFAT(const char* disk);
 
 
 
