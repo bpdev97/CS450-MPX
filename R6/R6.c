@@ -136,48 +136,62 @@ void BootSector(char* disk){
     fseek(file, 11, SEEK_CUR);
     fread(array, 2, 1, file);
     printf("Bytes per Sector: %d\n",BytetoNumber(array, 2));
+    memset(array, 0, sizeof array);
 
     fread(array, 1, 1, file);
     printf("Sectors per Cluster: %d\n",BytetoNumber(array, 1));
+    memset(array, 0, sizeof array);
 
     fread(array, 2, 1, file);
     printf("Number of Reserved Sectors: %d\n",BytetoNumber(array, 2));
+    memset(array, 0, sizeof array);
 
     fread(array, 1, 1, file);
     printf("Number of FAT Copies: %d\n",BytetoNumber(array, 1));
+    memset(array, 0, sizeof array);
 
     fread(array, 2, 1, file);
     printf("Max Number of Root Directory Entries: %d\n",BytetoNumber(array, 2));
+    memset(array, 0, sizeof array);
 
     fread(array, 2, 1, file);
     printf("Total # of Sectors in the File System: %d\n",BytetoNumber(array, 2));
+    memset(array, 0, sizeof array);
 
     fseek(file, 1, SEEK_CUR);
     fread(array, 2, 1, file);
     printf("Number of Sectors per FAT: %d\n",BytetoNumber(array, 2));
+    memset(array, 0, sizeof array);
 
     fread(array, 2, 1, file);
     printf("Sectors per Track: %d\n",BytetoNumber(array, 2));
+    memset(array, 0, sizeof array);
 
     fread(array, 2, 1, file);
     printf("Number of Heads: %d\n",BytetoNumber(array, 2));
+    memset(array, 0, sizeof array);
 
     fread(array, 4, 1, file);
     fread(array, 4, 1, file);
     printf("Total Sector Count for FAT32: %d\n",BytetoNumber(array, 4));
+    memset(array, 0, sizeof array);
 
     fseek(file, 2, SEEK_CUR);
     fread(array, 1, 1, file);
     printf("Boot Signature: %x\n",BytetoNumber(array, 1));
+    memset(array, 0, sizeof array);
 
     fread(array, 4, 1, file);
     printf("Volume ID: %d\n",BytetoNumber(array, 4));
+    memset(array, 0, sizeof array);
 
     fread(array, 11, 1, file);
     printf("Volume Label: %s\n",array);
+    memset(array, 0, sizeof array);
 
     fread(array, 8, 1, file);
     printf("File System Type: %s\n",array);
+    memset(array, 0, sizeof array);
 
 }
 void rootDirectory(char* disk){
