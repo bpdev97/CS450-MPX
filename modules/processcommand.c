@@ -712,3 +712,38 @@ void showAllocatedMemory(){
     }
     return;
 }
+
+void* allocateMemory(int size){
+    if(size <= 0)
+    {
+        println("Allocation failed: size too small");
+        return;
+    }
+    void* mem = allocMem(size);
+    if(!mem){
+        println("Allocation Failed.");
+    }
+    else{
+        char string[10];
+        println("Allocation Succeeded.");
+        print("Offset Address: ");
+        println(itoa((int) mem - (int) HEAP - sizeof(CMCB), string, 10));
+        print("Actual Address (decimal): ");
+        println(itoa((int) mem, string, 10));
+    }
+    return mem;
+}
+
+void freeMemory(int address){
+    int error = freeMem((void*) address);
+    char string[10];
+    if(error == -1){
+        println("Free memory failed.");
+    }
+    else{
+        println("Free memeory succeeded.");
+    }
+    print("Offset Address: ");
+    println( itoa(address - (int) HEAP - sizeof(CMCB), string, 10));
+    return;
+}

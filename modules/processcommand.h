@@ -26,5 +26,7 @@ int setPriority(int argc, char *argv[]);
 void isEmpty();
 void showFreeMemory();
 void showAllocatedMemory();
+void* allocateMemory(int size);
+void freeMemory(int address);
 
 #endif //MPX_SPRING2018_ABOVE_C_LEVEL_PROCESSCOMMAND_H

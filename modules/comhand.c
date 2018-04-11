@@ -163,6 +163,14 @@ int comhand() {
       initializeHeap(2000);
     }
 
+    else if(strcmp(argv[0], "allocateMemory") == 0) {
+      allocateMemory(atoi(argv[1]));
+    }
+
+    else if(strcmp(argv[0], "freeMemory") == 0) {
+      freeMemory((int) atoi(argv[1]));
+    }
+
     else if(strcmp(argv[0], "testR5") == 0) {
       println("Initializing the Heap...");
       initializeHeap(30000);
@@ -173,7 +181,7 @@ int comhand() {
         allocMem(1024 + 8*i);
       }
       showAllocatedMemory();
-      println("Allocating Memory blocks...");
+      println("Freeing 3 Memory blocks...");
       i = 0;
       for (; i < 3; i++){
         freeMem(AMCB -> beginning);
