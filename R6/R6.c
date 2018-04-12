@@ -3,17 +3,17 @@
 #include <stdlib.h>
 #include "R6.h"
 
-int currentDir = (19*512);
-int prevDir[30];
+
 int sectorsPerFat;
 int bytesPerSector;
 int* FAT;
+DIRECTORY* currentDirectory; 
 
 int main (int argc, char *argv[])
 {
-    char diskName[128];
-    strcpy(diskName, argv[1]);
+    currentDirectory = malloc(sizeof(DIRECTORY));
     loadFAT(argv[1]);
+    loadInitialDirectory(argv[1]);
     while(1)
     {
         printf("\n");
@@ -33,15 +33,15 @@ int main (int argc, char *argv[])
             }
             else if (chosenOption[0] == '2')
             {
-                rootDirectory(argv[1]);
+               rootDirectory(argv[1]);
             }
             else if (chosenOption[0] == '3')
             {
-
+               changeDirectory(argv[1]);
             }
             else if (chosenOption[0] == '4')
             {
-                listDirectory(argv[1]);
+               listDirectory(argv[1]);
             }
             else if (chosenOption[0] == '9')
             {
@@ -72,6 +72,68 @@ void NumbertoByte(int number, unsigned char *array, int length) {
         array[i] = (number & (255 << (i * 8))) >> (i * 8);
     }
 }
+void loadInitialDirectory(char* disk)
+{
+    FILE* file = fopen(disk, "r");
+    unsigned char filename[9];
+    unsigned char extension[4];
+    unsigned char filesize[5];
+    unsigned char firstCluster[2];
+    int validName = 1;
+    int currentDirectoryEntry = 0;
+
+     for(int i = 19; i <33; i++)
+    {
+        for(int j =0; j<16; j++)
+        {
+            memset(filename, 0, sizeof filename);
+            validName = 1;
+            fseek(file,(i*512)+(j*32), SEEK_SET);
+            fread(filename, 8, 1, file);
+            if(filename[0] == 0x00)
+            {
+                break;
+            }
+            for(int x =0; x<8;x++)
+	    {
+              if(filename[x] != ' ' && (filename[x] <= '0' || filename[x] >= 'Z'))
+               {
+                 validName = 0;
+               }
+               if(filename[x] == ' ')
+               {
+                  filename[x] = '\0';     
+               }
+            }
+            if(validName)
+            {
+	        memset(extension, 0, sizeof extension);
+	        fread(extension, 3, 1, file);
+		fseek(file, 15, SEEK_CUR);
+                fread(firstCluster, 2, 1, file);
+		fread(filesize, 4, 1, file);
+		filename[8] = '\0';
+	        extension[3] = '\0';
+		if(BytetoNumber(filesize, 4) != -1  && BytetoNumber(firstCluster, 2) >32)
+		 {
+		    strcpy(currentDirectory->fileNames[currentDirectoryEntry], filename);
+                    strcpy(currentDirectory->fileExtension[currentDirectoryEntry], extension);
+                    currentDirectory->fileSize[currentDirectoryEntry] = BytetoNumber(filesize, 4);
+ 		    currentDirectory->firstCluster[currentDirectoryEntry] =  BytetoNumber(firstCluster,2);
+                    currentDirectoryEntry++;
+                    currentDirectory->numberOfEntries = currentDirectoryEntry;
+		 }
+            }
+       }
+        if(filename[0] == 0x00)
+         {
+              break;
+          }
+    }
+    currentDirectory->previousDir = NULL;
+    fclose(file);
+
+}
 void loadFAT(const char* disk){
     FILE* file = fopen(disk, "r");
     unsigned char array[16];
@@ -101,7 +163,7 @@ void loadFAT(const char* disk){
     fseek(file, 1, SEEK_CUR);
     fread(array, 2, 1, file);
     sectorsPerFat = BytetoNumber(array, 2);
-    //printf("Number of Sectors per FAT: %d\n",BytetoNumber(array, 2));
+    //printf("Number of Sectors per Fmalloc(sizeof *x)AT: %d\n",BytetoNumber(array, 2));
 
     float numberOfEntriesFloat = sectorsPerFat *bytesPerSector *((float)8/12);
     int numberOfEntries = (int) numberOfEntriesFloat;
@@ -178,6 +240,7 @@ void BootSector(char* disk){
     fread(array, 4, 1, file);
     printf("Volume ID: %d\n",BytetoNumber(array, 4));
 
+    memset(array, 0, 16);
     fread(array, 11, 1, file);
     printf("Volume Label: %s\n",array);
     memset(array, 0, 16);
@@ -198,7 +261,7 @@ void rootDirectory(char* disk)
     unsigned char firstCluster[2];
     int validName = 1;
 
-    for(int i = 19; i <33; i++)
+     for(int i = 19; i <33; i++)
     {
         for(int j =0; j<16; j++)
         {
@@ -214,8 +277,11 @@ void rootDirectory(char* disk)
 	    {
               if(filename[x] != ' ' && (filename[x] <= '0' || filename[x] >= 'Z'))
                {
-             
                  validName = 0;
+               }
+               if(filename[x] == ' ')
+               {
+                  filename[x] = '\0';     
                }
             }
             if(validName)
@@ -227,10 +293,10 @@ void rootDirectory(char* disk)
 		fread(filesize, 4, 1, file);
 		filename[8] = '\0';
 	        extension[3] = '\0';
-		if(BytetoNumber(filesize, 4) != -1  && BytetoNumber(firstCluster, 2) >0)
+		if(BytetoNumber(filesize, 4) != -1  && BytetoNumber(firstCluster, 2) >32)
 		 {
 		    printf("FileName: %s",filename);
-		    printf(". %s %d %d\n",extension,i,j);
+		    printf(".%s\n",extension);
 		 }
             }
        }
@@ -245,6 +311,19 @@ void changeDirectory(char* disk)
 {
 }
 void listDirectory(char* disk)
+{
+//ask them to specify what they want listed 
+     for(int i =0; i<currentDirectory->numberOfEntries; i++)
+     {
+      printf("FileName: %s",currentDirectory->fileNames[i]);
+      printf(".%s",currentDirectory->fileExtension[i]);
+      printf(" FileSize: %d",currentDirectory->fileSize[i]);
+      printf(" FirstCluster:%d\n\n",currentDirectory->firstCluster[i]);
+     }
+    
+}
+
+void testFileAttributes(char* disk)
 {
     FILE* file = fopen(disk, "r");
     unsigned char array[8];
@@ -318,6 +397,7 @@ void listDirectory(char* disk)
 
     fclose(file);
 }
+
 
 void returnDate(int date)
 {
