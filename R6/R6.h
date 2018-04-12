@@ -19,7 +19,7 @@ void BootSector(char* disk);
 void rootDirectory(char* disk);
 void returnTime(int time);
 void returnDate(int date);
-void listDirectory(char* disk);
+void listDirectory();
 void changeDirectory(char* disk);
 void loadFAT(const char* disk);
 void loadInitialDirectory(char* disk);

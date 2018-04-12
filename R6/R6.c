@@ -324,8 +324,147 @@ void rootDirectory(char* disk)
 }
 void changeDirectory(char* disk)
 {
+  char input[13];
+  int nextDirectoryCluster =0;
+  printf("Enter DIRECTORYNAME.DIR or . to go back to previous directory\n");
+  scanf("%s", input);
+  if(input[0] == '.'  && input[1] == '\0')
+   {
+       if(currentDirectory->previousDir == NULL)
+        {
+            printf("Already in root Directory\n");
+        }
+        else
+        {
+            currentDirectory = currentDirectory->previousDir;
+            printf("Previous Directory Loaded\n");
+        }
+   }
+   else if(input[0] >= 'A' && input[0] <= 'Z'  || input[0] >= '1' && input[0] <= '9' )
+     {
+         int directoryFound =0;
+         char filename[9];
+         char extension[4];
+            for(int j =0; j<8; j++)
+            {
+              if(input[j] == '.')
+              {
+                 filename[j] = '\0';
+                 break;
+              }
+             else
+              {
+                 filename[j] = input[j];
+              }
+            }
+            int dotFound = 0;
+            for(int j =0; j<13; j++)
+            {
+              if(input[j] == '.')
+              {
+                 dotFound = 1;
+              }
+              if(dotFound)
+               {
+                  extension[0] = input[j+1];
+                  extension[1] = input[j+2];
+                  extension[2] = input[j+3];
+                  extension[3] = '\0';
+                  break;
+               }
+            }
+                 
+            for(int i =0; i<currentDirectory->numberOfEntries; i++)
+	     {
+               if(strcmp(filename, currentDirectory->fileNames[i]) == 0 && strcmp(extension, currentDirectory->fileExtension[i]) == 0 && strcmp(extension, "DIR") == 0)
+                {
+                  directoryFound =1;
+                  nextDirectoryCluster = currentDirectory->firstCluster[i];
+		 // printf("SubDirectory Cluster: %d\n",nextDirectoryCluster); 
+	        }
+            } 
+           if(!directoryFound)
+            {
+               printf("Subdirectory not found\n");
+            }
+     } 
+    else
+    {
+      printf("Invalid Entry \n");
+    }
+ 
+   if(nextDirectoryCluster !=0)
+    {
+     FILE* file = fopen(disk, "r");
+    DIRECTORY* subDirectory = malloc(sizeof(DIRECTORY));
+    subDirectory->previousDir = currentDirectory;
+    unsigned char filename[9];
+    unsigned char extension[4];
+    unsigned char filesize[5];
+    unsigned char firstCluster[2];
+    int validName = 1;
+    int currentDirectoryEntry = 0;
+    for(int j =0; j<16; j++)
+        {
+            memset(filename, 0, sizeof filename);
+            validName = 1;
+            fseek(file,((nextDirectoryCluster+31)*512)+(j*32), SEEK_SET);
+            fread(filename, 8, 1, file);
+
+            if(filename[0] == 0x00)
+            {
+                break;
+            }
+            for(int x =0; x<8;x++)
+	    {
+              if(filename[x] != ' ' && (filename[x] <= '0' || filename[x] >= 'Z'))
+               {
+                 validName = 0;
+               }
+               if(filename[x] == ' ')
+               {
+                  filename[x] = '\0';     
+               }
+            }
+            if(validName)
+            {
+	        memset(extension, 0, sizeof extension);
+	        fread(extension, 3, 1, file);
+		fseek(file, 15, SEEK_CUR);
+                fread(firstCluster, 2, 1, file);
+		fread(filesize, 4, 1, file);
+		filename[8] = '\0';
+	        extension[3] = '\0';
+		if(BytetoNumber(filesize, 4) != -1  && BytetoNumber(firstCluster, 2) >32)
+		 {
+		    strcpy(subDirectory->fileNames[currentDirectoryEntry], filename);
+                    if(extension[0] == ' ')
+                     {
+			strcpy(subDirectory->fileExtension[currentDirectoryEntry], "DIR");
+                     }
+                    else
+                     {
+                        strcpy(subDirectory->fileExtension[currentDirectoryEntry], extension);
+                     }
+                    
+                    subDirectory->fileSize[currentDirectoryEntry] = BytetoNumber(filesize, 4);
+ 		    subDirectory->firstCluster[currentDirectoryEntry] =  BytetoNumber(firstCluster,2);
+                    currentDirectoryEntry++;
+                    subDirectory->numberOfEntries = currentDirectoryEntry;
+		 }
+            }
+        
+        if(filename[0] == 0x00)
+         {
+              break;
+          }
+    }
+     currentDirectory = subDirectory;
+   
+    fclose(file);
+    }
 }
-void listDirectory(char* disk)
+void listDirectory()
 {
       char input[13];
       printf("Enter * to list all files, FILENAME.EXT for specific file, or *.EXT for files of a certain type \n");
@@ -363,7 +502,7 @@ void listDirectory(char* disk)
                printf("No Files Found with that extension \n");
             }
      } 
-     else if(input[0] >= 'A' && input[0] <= 'Z')
+     else if(input[0] >= 'A' && input[0] <= 'Z'  || input[0] >= '1' && input[0] <= '9' )
      {
             int filesFound =0;
             char filename[9];
@@ -423,10 +562,13 @@ void testFileAttributes(char* disk)
 {
     FILE* file = fopen(disk, "r");
     unsigned char array[8];
-
-    fseek(file,(20*512) + (7*32), SEEK_SET);
+ 
+    fseek(file,(12*512)), SEEK_SET);
     fread(array, 8, 1, file);
+
+    printf("%d %d \n", i,j);
     printf("FileName: %s",array);
+
     memset(array, 0, sizeof array);
     fread(array, 3, 1, file);
     printf(". %s \n",array);
@@ -531,3 +673,4 @@ void returnTime(int time)
     printf("%s%s", secondStr, "\n");
 }
 */
+
