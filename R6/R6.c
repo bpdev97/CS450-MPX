@@ -29,11 +29,11 @@ int main (int argc, char *argv[])
             scanf("%s", chosenOption);
             if(chosenOption[0] == '1')
             {
-                BootSector(diskName);
+                BootSector(argv[1]);
             }
             else if (chosenOption[0] == '2')
             {
-                rootDirectory(diskName);
+                rootDirectory(argv[1]);
             }
             else if (chosenOption[0] == '3')
             {
@@ -41,7 +41,7 @@ int main (int argc, char *argv[])
             }
             else if (chosenOption[0] == '4')
             {
-                listDirectory(diskName);
+                listDirectory(argv[1]);
             }
             else if (chosenOption[0] == '9')
             {
@@ -79,6 +79,7 @@ void loadFAT(const char* disk){
 
     fseek(file, 11, SEEK_SET);
     fread(array, 2, 1, file);
+
     bytesPerSector = BytetoNumber(array, 2);
     //printf("Bytes per Sector: %d\n",);
 
@@ -135,8 +136,10 @@ void BootSector(char* disk){
     FILE* file = fopen(disk, "r");
     unsigned char array[16];
 
-    fseek(file, 11, SEEK_CUR);
+    fseek(file, 11, SEEK_SET);
     fread(array, 2, 1, file);
+    array[10] = '\0';
+
     printf("Bytes per Sector: %d\n",BytetoNumber(array, 2));
 
     fread(array, 1, 1, file);
@@ -182,17 +185,17 @@ void BootSector(char* disk){
     fread(array, 8, 1, file);
     printf("File System Type: %s\n",array);
     memset(array, 0, 16);
-
     fclose(file);
+
 
 }
 void rootDirectory(char* disk)
 {
     FILE* file = fopen(disk, "r");
-    unsigned char array[8];
-    unsigned char filename[8];
+    unsigned char filename[9];
     unsigned char extension[4];
-    unsigned char attributes[1];
+    unsigned char filesize[5];
+    unsigned char firstCluster[2];
     int validName = 1;
 
     for(int i = 19; i <33; i++)
@@ -207,32 +210,34 @@ void rootDirectory(char* disk)
             {
                 break;
             }
-            for(int i=0; i<8; i++)
-            {
-                if(filename[i] == 0x2E || filename[i] == 0x7E || filename[i] == 0x22 || filename[i] == 0x2A|| filename[i] == 0x2B || filename[i] == 0x2C || filename[i] == 0x2E || filename[i] == 0x2F || filename[i] == 0x3A || filename[i] == 0x3B|| filename[i] == 0x3C || filename[i] == 0x3D || filename[i] == 0x3E || filename[i] == 0x3F || filename[i] == 0x5B || filename[i] == 0x5C || filename[i] == 0x5D || filename[i] == 0x7C || filename[i] == 0xE5)
-                {
-                    validName = 0;
-                }
+            for(int x =0; x<8;x++)
+	    {
+              if(filename[x] != ' ' && (filename[x] <= '0' || filename[x] >= 'Z'))
+               {
+             
+                 validName = 0;
+               }
             }
             if(validName)
             {
-                memset(extension, 0, sizeof extension);
-                fread(extension, 3, 1, file);
-                memset(attributes, 0, sizeof attributes);
-                fread(attributes, 1, 1, file);
-
-                if(extension[0] != ' ' && ((BytetoNumber(attributes, 1) & 0x02) == 0x00))//checks if hidden
-                {
-                    extension[3] = 0;
-                    printf("FileName: %s",filename);
-                    printf(". %s %d %d\n",extension,i,j);
-                }
+	        memset(extension, 0, sizeof extension);
+	        fread(extension, 3, 1, file);
+		fseek(file, 15, SEEK_CUR);
+                fread(firstCluster, 2, 1, file);
+		fread(filesize, 4, 1, file);
+		filename[8] = '\0';
+	        extension[3] = '\0';
+		if(BytetoNumber(filesize, 4) != -1  && BytetoNumber(firstCluster, 2) >0)
+		 {
+		    printf("FileName: %s",filename);
+		    printf(". %s %d %d\n",extension,i,j);
+		 }
             }
-        }
-        if(array[0] == 0x00)
-        {
-            break;
-        }
+       }
+        if(filename[0] == 0x00)
+         {
+              break;
+          }
     }
     fclose(file);
 }
@@ -244,7 +249,7 @@ void listDirectory(char* disk)
     FILE* file = fopen(disk, "r");
     unsigned char array[8];
 
-    fseek(file,(20*512) + (6*32), SEEK_SET);
+    fseek(file,(20*512) + (7*32), SEEK_SET);
     fread(array, 8, 1, file);
     printf("FileName: %s",array);
     memset(array, 0, sizeof array);
