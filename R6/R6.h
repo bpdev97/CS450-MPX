@@ -24,6 +24,8 @@ void changeDirectory(char* disk);
 void loadFAT(const char* disk);
 void loadInitialDirectory(char* disk);
 void testFileAttributes(char* disk);
+int startingCluster(char* disk, char* filename);
+int fileSize(char* disk, char* filename);
 
 
 
