@@ -13,24 +13,28 @@ void* HEAP = NULL;
 int MIN_FREE_SIZE = 128;
 
 int initializeHeap(int bytes){
-    //All memory blocks are rounded up to next full word (4 bytes)
+    // All memory blocks are rounded up to next full word (4 bytes)
     int mod = bytes%4;
     if(mod > 0){
         bytes = bytes + (4 - mod);
     }
-    //Beginning of the entire heap
+    
+    // Beginning of the entire heap
     startMem = (void*) kmalloc(bytes + sizeof(CMCB) + sizeof(LMCB));
 
+    // ERROR: kmalloc failed to allocate memory
     if(startMem == NULL){
-        return -1; //Error code
+        return -1;
     }
 
-    //Allocated list head initialized
+    // Initialize head of Allocated MCB list
     AMCB = NULL;
 
-    //Free list head initialized
+    // Initialize head of Free MCB list
     FMCB -> type = 0;
+    // WAIT WHAT?
     FMCB = startMem;
+    // 
     FMCB -> size = bytes - sizeof(CMCB) - sizeof(LMCB);
     FMCB -> beginning = (void*) ((int) FMCB + sizeof(CMCB));
     FMCB -> previous = NULL;
@@ -46,24 +50,24 @@ int initializeHeap(int bytes){
 }
 
 void* allocMem(int size){
-    //Make size a mulitple of 4 bytes (word)
+    // Make size a mulitple of 4 bytes (word)
     int mod = size%4;
     if(mod > 0){
         size = size + (4 - mod);
     }
     
-    //Traverse free list until a block of large enough size is found
-    //If no suitable block is found, do nothing and return NULL
+    // Traverse free list until a block of large enough size is found
     CMCB* current = FMCB;
     while(current -> size < (int) (size + sizeof(CMCB) + sizeof(LMCB))){
+        // ERROR: no suitable block found - return NULL
         if(current -> next == NULL){
             return NULL;
         }
         current = current -> next;
     }
 
-    //First unlink the FMCB (current)
-    //I think it should be fine if any of these things are NULL but we should check that
+    // First unlink the FMCB (current)
+    // I think it should be fine if any of these things are NULL but we should check that
     unlinkMCB(current);
 
     /*
@@ -73,38 +77,38 @@ void* allocMem(int size){
      * and don't create a remainder
     */
 
-    //No remainder case
-    //Insert into FMCB list in order of increasing address
+    // No remainder case
+    // Insert into FMCB list in order of increasing address
     if((int) (current -> size - size - sizeof(CMCB) - sizeof(LMCB)) < MIN_FREE_SIZE){
         size = current -> size;
         current -> type = 1;
 
-        //Get a pointer for the LMCB at the end of the block and change its type to 1 (allocated)
+        // Get a pointer for the LMCB at the end of the block and change its type to 1 (allocated)
         LMCB* endCap = (LMCB*) (((int) current -> beginning) + size);
         endCap -> type = 1;
         
         insertMCB(current);
     }
     
-    //Remainder case
-    //Create remainder block. CMCB (free) at beginning and LMCB at the end
-    //Insert into FMCB list in order of increasing address
+    // Remainder case
+    // Create remainder block. CMCB (free) at beginning and LMCB at the end
+    // Insert into FMCB list in order of increasing address
     else{
-        //Change type to allocated
+        // Change type to allocated
         current -> type = 1;
 
-        //Create new LMCB for the allocated block
+        // Create new LMCB for the allocated block
         LMCB* endCap = (LMCB*) ((int) (current -> beginning) + size);
         endCap -> type = 1;
         endCap -> size = size;
 
-        //Create new FMCB
+        // Create new FMCB
         CMCB* newFree = (CMCB*) ((int) (endCap) + sizeof(LMCB));
         newFree -> type = 0;
         newFree -> size = current -> size - size - sizeof(CMCB) - sizeof(LMCB);
         newFree -> beginning = (void*) ((int) newFree + sizeof(CMCB));
 
-        //Update the very end of the heap to reflect the change in memory
+        // Update the very end of the heap to reflect the change in memory
         END -> size = END -> size - size - sizeof(CMCB) - sizeof(LMCB);
         
         current -> size = size;
@@ -240,7 +244,7 @@ void unlinkMCB(CMCB* mcb){
 
 // Funtion for handling insertion logic
 void insertMCB(CMCB* mcb){
-    //Check what type of mcb is being inserted
+    // Check what type of mcb is being inserted
     CMCB* list = NULL;
     if(mcb -> type == 0){
         list = FMCB;
@@ -249,7 +253,7 @@ void insertMCB(CMCB* mcb){
         list = AMCB;
     }
 
-    //If the list is empty just set it to the head
+    // If the list is empty just set it to the head
     if(list == NULL){
         mcb -> next = NULL;
         mcb -> previous = NULL;
@@ -299,7 +303,7 @@ void insertMCB(CMCB* mcb){
     return;
 
     
-    // //Traverse the list until current -> next is a higher address than mcb
+    // Traverse the list until current -> next is a higher address than mcb
     // CMCB* current = list;
     // while(current -> next < mcb && current -> next){
     //     current = current -> next;

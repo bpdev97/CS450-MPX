@@ -72,7 +72,7 @@ void* allocateMemory(int size){
     // ERROR size cannot be <= 0 - return (void*) -1
     if(size <= 0){
         println("Allocation failed: size too small");
-        return (void*) -1;
+        return NULL;
     }
 
     void* mem = allocMem(size);
