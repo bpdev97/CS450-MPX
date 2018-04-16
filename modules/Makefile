@@ -13,11 +13,12 @@ ASFLAGS = -f elf -g
 OBJFILES =\
 mpx_supt.o \
 comhand.o \
-processcommand.o\
-polling.o\
-queue.o\
-pcb.o\
-procsr3.o\
+r1.o \
+processcommand.o \
+polling.o \
+queue.o \
+pcb.o \
+procsr3.o \
 mcb.o
 
 .c.s:
