@@ -16,12 +16,13 @@
 #include <core/interrupts.h>
 #include <mem/heap.h>
 #include <mem/paging.h>
-#include <modules/processcommand.h>
-
 
 #include "modules/mpx_supt.h"
 #include "modules/comhand.h"
 #include "modules/polling.h"
+#include "modules/r1.h"
+#include "modules/r2.h"
+#include "modules/r5.h"
 #include "modules/queue.h"
 #include "modules/pcb.h"
 #include "modules/mcb.h"

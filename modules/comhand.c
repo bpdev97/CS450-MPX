@@ -5,18 +5,17 @@
 #include "polling.h"
 #include "r1.h"
 #include "r2.h"
-#include "processcommand.h"
+#include "r5.h"
 #include "procsr3.h"
 #include "pcb.h"
-#include "comhand.h"
 #include "mcb.h"
+#include "comhand.h"
 
 /*
   Procedure..: comhand
   Description..: Process/execute user input gathered from polling 
   Params..: void
 */
-
 int comhand() {
   // setup polling function
   int (*polling) (char * buffer, int* count);

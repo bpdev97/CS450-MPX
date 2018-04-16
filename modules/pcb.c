@@ -3,7 +3,7 @@
 #include <string.h>
 #include "mpx_supt.h"
 #include "polling.h"
-#include "processcommand.h"
+#include "r2.h"
 #include "queue.h"
 #include "pcb.h"
 
@@ -50,7 +50,6 @@ PCB* SetupPCB(char* name, int classNum, int priority, void* function){
         return NULL;
     }
     
-
     //initializing context values
     pointpcb -> context -> fs = 0x10;
     pointpcb -> context -> gs = 0x10;
