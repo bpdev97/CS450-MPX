@@ -14,6 +14,7 @@ OBJFILES =\
 mpx_supt.o \
 comhand.o \
 r1.o \
+r2.o \
 processcommand.o \
 polling.o \
 queue.o \

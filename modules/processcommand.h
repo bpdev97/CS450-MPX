@@ -2,17 +2,6 @@
 #ifndef MPX_SPRING2018_ABOVE_C_LEVEL_PROCESSCOMMAND_H
 #define MPX_SPRING2018_ABOVE_C_LEVEL_PROCESSCOMMAND_H
 
-void showPCB(int argc, char* argv[]);
-void showReady();
-void showBlocked();
-void showAll();
-void CreatePCB(int argc, char *argv[], void* function);
-void DeletePCB(int argc, char *argv[]);
-int blockPCB(int argc, char *argv[]);
-int unblockPCB(int argc, char *argv[]);
-int suspendPCB(int argc, char *argv[]);
-int resumePCB(int argc, char *argv[]);
-int setPriority(int argc, char *argv[]);
 void isEmpty();
 void showFreeMemory();
 void showAllocatedMemory();
