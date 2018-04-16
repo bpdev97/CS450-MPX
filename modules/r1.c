@@ -121,7 +121,7 @@ void help (int argc, char* argv[]) {
 
 // Displays the current version of the MPX project
 void version () {
-    println("Version: Final");
+    println("Version: Release 1.0");
 }
 
 //allows user to set the time
