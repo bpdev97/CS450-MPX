@@ -75,7 +75,7 @@ void* allocateMemory(int size){
         return NULL;
     }
 
-    void* mem = allocMem(size);
+    void* mem = (void*) allocMem(size);
     if(!mem){
         println("Allocation Failed.");
     }

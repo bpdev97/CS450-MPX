@@ -68,9 +68,9 @@ void kmain(void)
   sti();         // turn on interrupts
   init_paging(); // init paging
 
-  /*initializeHeap(50000); //intialize heap
+  initializeHeap(50000); //intialize heap
   sys_set_malloc(&allocMem); //override the default kmalloc and kfree
-  sys_set_free(&freeMem); //override the default kmalloc and kfree*/
+  sys_set_free(&freeMem); //override the default kmalloc and kfree
 
   // 4.5) PCB Queues
   klogv("Initializing PCB queues...");
