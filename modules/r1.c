@@ -178,7 +178,6 @@ void settime (int argc, char* argv[]) {
     outb(0x71, tobcd(atoi(second)));
 
     sti();
-
 }
 
 // sets the date

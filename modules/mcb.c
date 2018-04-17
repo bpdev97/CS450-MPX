@@ -1,4 +1,3 @@
-
 #include "mcb.h"
 #include "mpx_supt.h"
 #include "mem/heap.h"
@@ -31,17 +30,17 @@ int initializeHeap(int bytes){
     AMCB = NULL;
 
     // Initialize head of Free MCB list
-    FMCB -> type = 0;
-    // WAIT WHAT?
     FMCB = startMem;
-    // 
-    FMCB -> size = bytes - sizeof(CMCB) - sizeof(LMCB);
+    FMCB -> type = 0;
+    FMCB -> size = bytes;
     FMCB -> beginning = (void*) ((int) FMCB + sizeof(CMCB));
     FMCB -> previous = NULL;
     FMCB -> next = NULL;
 
+    // Set HEAP to first Free MCB
     HEAP = FMCB;
 
+    // Initialize END of heap
     END = (LMCB*) ((int) startMem + bytes + sizeof(CMCB));
     END -> type = 0;
     END -> size = FMCB -> size;
@@ -58,7 +57,7 @@ void* allocMem(int size){
     
     // Traverse free list until a block of large enough size is found
     CMCB* current = FMCB;
-    while(current -> size < (int) (size + sizeof(CMCB) + sizeof(LMCB))){
+    while(current -> size < (int) size){
         // ERROR: no suitable block found - return NULL
         if(current -> next == NULL){
             return NULL;
@@ -66,8 +65,7 @@ void* allocMem(int size){
         current = current -> next;
     }
 
-    // First unlink the FMCB (current)
-    // I think it should be fine if any of these things are NULL but we should check that
+    // Unlink the FMCB (current)
     unlinkMCB(current);
 
     /*
@@ -77,7 +75,7 @@ void* allocMem(int size){
      * and don't create a remainder
     */
 
-    // No remainder case
+    // No remainder case (More space is given than requested)
     // Insert into FMCB list in order of increasing address
     if((int) (current -> size - size - sizeof(CMCB) - sizeof(LMCB)) < MIN_FREE_SIZE){
         size = current -> size;
@@ -86,12 +84,15 @@ void* allocMem(int size){
         // Get a pointer for the LMCB at the end of the block and change its type to 1 (allocated)
         LMCB* endCap = (LMCB*) (((int) current -> beginning) + size);
         endCap -> type = 1;
+
+        // Update the very end of the free area of the heap to reflect the change in memory
+        END -> size = END -> size - size - sizeof(CMCB) - sizeof(LMCB);
         
         insertMCB(current);
     }
     
     // Remainder case
-    // Create remainder block. CMCB (free) at beginning and LMCB at the end
+    // Create remainder block. Free CMCB at beginning and LMCB at the end
     // Insert into FMCB list in order of increasing address
     else{
         // Change type to allocated
@@ -108,8 +109,8 @@ void* allocMem(int size){
         newFree -> size = current -> size - size - sizeof(CMCB) - sizeof(LMCB);
         newFree -> beginning = (void*) ((int) newFree + sizeof(CMCB));
 
-        // Update the very end of the heap to reflect the change in memory
-        END -> size = END -> size - size - sizeof(CMCB) - sizeof(LMCB);
+        // Update the very end of the free area of the heap to reflect the change in memory
+        END -> size = END -> size - size;
         
         current -> size = size;
 
@@ -205,23 +206,26 @@ void unlinkMCB(CMCB* mcb){
     if(mcb == FMCB){
         FMCB = mcb -> next;
         mcb -> next = NULL;
+        mcb -> previous = NULL;
         FMCB -> previous = NULL;
         return;
     }
+
     else if(mcb == AMCB){
         AMCB = mcb -> next;
         mcb -> next = NULL;
+        mcb -> previous = NULL;
         AMCB -> previous = NULL;
         return;
     }
 
-    // mcb is a FMCB and only item in the list
+    // mcb is a Free and the only item in the list then set FMCB to NULL
     if(mcb -> type == 0 && mcb -> next == NULL && mcb -> previous == NULL){
         FMCB = NULL;
         return;
     }
 
-    // mcb is a AMCB and only item in the list
+    // mcb is a Allocated and only item in the list then set AMCB to NULL
     else if (mcb -> type == 1 && mcb -> next == NULL && mcb -> previous == NULL){
         AMCB = NULL;
         return;
@@ -234,7 +238,7 @@ void unlinkMCB(CMCB* mcb){
         return;
     }
 
-    // somewhere inbetween
+    // somewhere in between
     mcb -> next -> previous = mcb -> previous;
     mcb -> previous -> next = mcb -> next;
     mcb -> next = NULL;
@@ -255,8 +259,6 @@ void insertMCB(CMCB* mcb){
 
     // If the list is empty just set it to the head
     if(list == NULL){
-        mcb -> next = NULL;
-        mcb -> previous = NULL;
         if(mcb -> type == 0){
             FMCB = mcb;
         }
@@ -272,9 +274,8 @@ void insertMCB(CMCB* mcb){
     // New head
     if((int) mcb < (int) current){
         mcb -> next = current;
-        mcb -> previous = NULL;
         mcb -> next -> previous = mcb;
-        if (mcb -> type == 0 ){
+        if (mcb -> type == 0){
             FMCB = mcb;
         }
         else{
@@ -283,7 +284,7 @@ void insertMCB(CMCB* mcb){
         return;
     }
 
-    // New end
+    // Traverse the list
     while((int) mcb > (int) current && current -> next != NULL){
         current = current -> next;
     }
@@ -292,42 +293,13 @@ void insertMCB(CMCB* mcb){
     if(current -> next == NULL){
         current -> next = mcb;
         mcb -> previous = current;
-        mcb -> next = NULL;
         return;
     }
 
-    current -> next -> previous = mcb;
-    mcb -> next = current -> next;
-    mcb -> previous = current;
-    current -> next = mcb;
+    // in between - mcb < current
+    mcb -> next = current;
+    mcb -> previous = current -> previous;
+    current -> previous -> next = mcb;
+    current -> previous = mcb;
     return;
-
-    
-    // Traverse the list until current -> next is a higher address than mcb
-    // CMCB* current = list;
-    // while(current -> next < mcb && current -> next){
-    //     current = current -> next;
-    // }
-
-    // if(current == list){
-    //     mcb -> next = current;
-    //     mcb -> previous = NULL;
-    //     mcb -> next -> previous = mcb;
-    //     list = mcb;
-    //     return;
-    // }
-    // /*
-    //     * Link mcb -> next to what current pointed to
-    //     * Link mcb -> previous to current
-    //     * Link the mcb after mcb to point back to mcb
-    //     * Link current to point forward to mcb
-    // */
-    // mcb -> next = current -> next;
-    // mcb -> previous = current;
-    // if(mcb -> next){
-    //     mcb -> next -> previous = mcb;
-    // }
-    // current -> next = mcb;
-
-    // return;
 }
