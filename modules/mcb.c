@@ -73,6 +73,7 @@ u32int allocMem(u32int size){
      * Insert into AMCB list in order of increasing address
      * If the remainder block would be less than MIN_FREE_SIZE, upgrade size to use the full block
      * and don't create a remainder
+     *  This is fine - Alex
     */
 
     // No remainder case (More space is given than requested)
@@ -291,7 +292,7 @@ void insertMCB(CMCB* mcb){
     }
 
     // New tail
-    if(current -> next == NULL){
+    if(current -> next == NULL && (int) mcb > (int) current){
         current -> next = mcb;
         mcb -> previous = current;
         return;
