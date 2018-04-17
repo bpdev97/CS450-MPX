@@ -128,7 +128,7 @@ int freeMem(void* ptr){
         current = current -> next;
     }
 
-    // Couldn't find the AMCB or it wasn't already allocated - return -1
+    // ERROR: Couldn't find the AMCB or it wasn't already allocated - return -1
     if(current == NULL) {
         return -1;
     }
@@ -140,25 +140,25 @@ int freeMem(void* ptr){
     LMCB* endCap = (LMCB*) (((int) current -> beginning) + current -> size);
 
     // Look for adjacent free block after
-    CMCB* fABlockAfter = (CMCB*) ((int) endCap + sizeof(LMCB));
-    CMCB* fABlockCurrentAfter = FMCB;
-    LMCB* endCapAfter = (LMCB*) (((int) fABlockAfter -> beginning) + fABlockAfter -> size);
+    CMCB* blockAfter = (CMCB*) ((int) endCap + sizeof(LMCB));
+    // LMCB* endCapAfter = (LMCB*) (((int) blockAfter -> beginning) + blockAfter -> size);
+    CMCB* currentAfter = FMCB;
     
-    while(fABlockCurrentAfter != NULL && fABlockCurrentAfter != fABlockAfter){
-        fABlockCurrentAfter = fABlockCurrentAfter -> next;
+    while(currentAfter != NULL && currentAfter != blockAfter){
+        currentAfter = currentAfter -> next;
     }
 
     // Look for adjacent free block before
     LMCB* endCapBefore = (LMCB*) ((int) current - sizeof(LMCB));
-    CMCB* fABlockBefore = (CMCB*) ((int) endCapBefore - endCapBefore -> size - sizeof(CMCB));
-    CMCB* fABlockCurrentBefore = FMCB;
+    CMCB* blockBefore = (CMCB*) ((int) endCapBefore - endCapBefore -> size - sizeof(CMCB));
+    CMCB* currentBefore = FMCB;
     
-    while(fABlockCurrentBefore != NULL && fABlockCurrentBefore != fABlockBefore){
-        fABlockCurrentBefore = fABlockCurrentBefore -> next;
+    while(currentBefore != NULL && currentBefore != blockBefore){
+        currentBefore = currentBefore -> next;
     }
 
     // No adjacent blocks
-    if(fABlockCurrentAfter == NULL && fABlockCurrentBefore == NULL){
+    if(currentAfter == NULL && currentBefore == NULL){
         current -> type = 0;
         endCap -> type = 0;
         insertMCB(current);
@@ -166,10 +166,10 @@ int freeMem(void* ptr){
     }
 
     // adjacent after
-    if(fABlockCurrentAfter != NULL && fABlockCurrentBefore == NULL){
+    if(currentAfter != NULL && currentBefore == NULL){
         current -> type = 0;
-        unlinkMCB(fABlockAfter);
-        current -> size = current -> size + sizeof(LMCB) + sizeof(CMCB) + fABlockAfter -> size;
+        unlinkMCB(blockAfter);
+        current -> size = current -> size + sizeof(LMCB) + sizeof(CMCB) + blockAfter -> size;
         endCapAfter -> size = current -> size;
         endCapAfter -> type = 0;
         insertMCB(current);
@@ -177,25 +177,25 @@ int freeMem(void* ptr){
     }
 
     // adjacent before
-    else if(fABlockCurrentAfter == NULL && fABlockCurrentBefore != NULL){
-        unlinkMCB(fABlockBefore);
-        fABlockBefore -> type = 0;
-        fABlockBefore -> size = fABlockBefore -> size + sizeof(LMCB) + sizeof(CMCB) + current -> size;
-        endCap -> size = fABlockBefore -> size;
+    else if(currentAfter == NULL && currentBefore != NULL){
+        unlinkMCB(blockBefore);
+        blockBefore -> type = 0;
+        blockBefore -> size = blockBefore -> size + sizeof(LMCB) + sizeof(CMCB) + current -> size;
+        endCap -> size = blockBefore -> size;
         endCap -> type = 0;
-        insertMCB(fABlockBefore);
+        insertMCB(blockBefore);
         return 0;
     }
 
     // adjacent before and after
     else {
-        unlinkMCB(fABlockBefore);
-        unlinkMCB(fABlockAfter);
-        fABlockBefore -> type = 0;
-        fABlockBefore -> size = fABlockBefore -> size + (2 * sizeof(LMCB)) + (2 * sizeof(CMCB)) + fABlockAfter -> size + current -> size;
+        unlinkMCB(blockBefore);
+        unlinkMCB(blockAfter);
+        blockBefore -> type = 0;
+        blockBefore -> size = blockBefore -> size + (2 * sizeof(LMCB)) + (2 * sizeof(CMCB)) + blockAfter -> size + current -> size;
         endCapAfter -> type = 0;
-        endCapAfter -> size = fABlockBefore -> size;
-        insertMCB(fABlockBefore);
+        endCapAfter -> size = blockBefore -> size;
+        insertMCB(blockBefore);
         return 0;
     }
 }
