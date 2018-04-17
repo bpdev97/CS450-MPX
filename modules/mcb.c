@@ -141,7 +141,7 @@ int freeMem(void* ptr){
 
     // Look for adjacent free block after
     CMCB* blockAfter = (CMCB*) ((int) endCap + sizeof(LMCB));
-    // LMCB* endCapAfter = (LMCB*) (((int) blockAfter -> beginning) + blockAfter -> size);
+    LMCB* endCapAfter = (LMCB*) (((int) blockAfter -> beginning) + blockAfter -> size);
     CMCB* currentAfter = FMCB;
     
     while(currentAfter != NULL && currentAfter != blockAfter){
