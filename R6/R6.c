@@ -11,9 +11,6 @@ DIRECTORY* currentDirectory;
 
 int main (int argc, char *argv[])
 {
-    int size = fileSize(argv[1], "1984");
-    printf("%d \n", size );
-
     currentDirectory = malloc(sizeof(DIRECTORY));
     loadFAT(argv[1]);
     loadInitialDirectory(argv[1]);
@@ -28,7 +25,9 @@ int main (int argc, char *argv[])
             printf("2) Print Root Directory \n");
             printf("3) Change Directory \n");
             printf("4) List Directory \n");
-            printf("9) Exit \n");
+            printf("5) Type \n");
+            printf("6) Rename \n");
+            printf("7) Exit \n");
             scanf("%s", chosenOption);
             if(chosenOption[0] == '1')
             {
@@ -46,7 +45,28 @@ int main (int argc, char *argv[])
             {
                 listDirectory(argv[1]);
             }
-            else if (chosenOption[0] == '9')
+            else if (chosenOption[0] == '5')
+            {
+                char fileName[50];
+                char fileExtension[50];
+                scanf("%s", fileName);
+                scanf("%s", fileExtension);
+                type(argv[1], fileName, fileExtension);
+            }
+            else if (chosenOption[0] == '6')
+            {
+                char originalfilename[50];
+                char originalfileextension[50];
+                char fileName[50];
+                char fileExtension[50];
+                scanf("%s", originalfileextension);
+                scanf("%s", originalfilename);
+                scanf("%s", fileName);
+                scanf("%s", fileExtension);
+
+                renameFile(argv[1], originalfileextension, originalfilename, fileName, fileExtension);
+            }
+            else if (chosenOption[0] == '7')
             {
                 break;
             }
@@ -99,7 +119,7 @@ void loadInitialDirectory(char* disk)//loads root directory to current directory
             }
             for(int x =0; x<8;x++)
             {
-                if(filename[x] != ' ' && (filename[x] <= '0' || filename[x] >= 'Z')) // filename must be only capital letters or numbers
+                if(filename[x] != ' ' && (filename[x] < '0' || filename[x] > 'Z')) // filename must be only capital letters or numbers
                 {
                     validName = 0;
                 }
@@ -286,7 +306,7 @@ void rootDirectory(char* disk)
             }
             for(int x =0; x<8;x++)
             {
-                if(filename[x] != ' ' && (filename[x] <= '0' || filename[x] >= 'Z'))// valid names have only capital letters and numbers
+                if(filename[x] != ' ' && (filename[x] < '0' || filename[x] > 'Z'))// valid names have only capital letters and numbers
                 {
                     validName = 0;
                 }
@@ -343,7 +363,7 @@ void changeDirectory(char* disk)
             printf("Previous Directory Loaded\n");
         }
     }
-    else if(input[0] >= 'A' && input[0] <= 'Z'  || input[0] >= '1' && input[0] <= '9' )//checks user input for valid subdirectory name 
+    else if(input[0] >= 'A' && input[0] <= 'Z'  || input[0] >= '0' && input[0] <= '9' )//checks user input for valid subdirectory name
     {
         int directoryFound =0;
         char filename[9];
@@ -420,7 +440,7 @@ void changeDirectory(char* disk)
             }
             for(int x =0; x<8;x++)
             {
-                if(filename[x] != ' ' && (filename[x] <= '0' || filename[x] >= 'Z'))//checks for valid file name 
+                if(filename[x] != ' ' && (filename[x] < '0' || filename[x] > 'Z'))//checks for valid file name
                 {
                     validName = 0;
                 }
@@ -505,7 +525,7 @@ void listDirectory()
             printf("No Files Found with that extension \n");
         }
     }
-    else if(input[0] >= 'A' && input[0] <= 'Z'  || input[0] >= '1' && input[0] <= '9' )// if input is "FILENAME.EXT", checks for valid name
+    else if(input[0] >= 'A' && input[0] <= 'Z'  || input[0] >= '0' && input[0] <= '9' )// if input is "FILENAME.EXT", checks for valid name
     {
         int filesFound =0;
         char filename[9];
@@ -560,27 +580,43 @@ void listDirectory()
         printf("Invalid Entry \n");
     }
 }
-int startingCluster(char* disk, char* filename){
-    FILE* file = fopen(disk, "r");
+void renameFile (char* disk, char* originalfilename, char* originalfileextension, char* filename, char* fileExtension){
+    printf("Searching for file %s.%s\n", originalfilename, originalfileextension);
+    FILE* file = fopen(disk, "r+b");
     fseek(file, 19 * 512, SEEK_SET);
-    char buffer[9];
+    char nameBuffer [9];
+    char extensionBuffer [4];
     for(int i = 0; i < (14*16) ; i++){
-        fread(buffer, 1,8 , file);
-        buffer[8] = 0;
-        if(strncmp(buffer, filename, strlen(filename)) == 0){
-            fseek(file, 18, SEEK_CUR);
-            fread(buffer, 1, 2, file);
-            int num =  BytetoNumber(buffer, 2);
+        fread(nameBuffer, 1,8 , file);
+        nameBuffer[8] = 0;
+        fread(extensionBuffer, 1,3 , file);
+        extensionBuffer[3] = 0;
+        if(strncmp(nameBuffer, originalfilename, strlen(originalfilename)) == 0 && strncmp(extensionBuffer, originalfileextension, strlen(originalfileextension)) == 0){
+            printf("Found file %s.%s\n", nameBuffer, extensionBuffer);
+            fseek(file, -11, SEEK_CUR);
+            char buffer[8];
+            memset(buffer, ' ', 8);
+            strcpy(buffer, filename);
+            buffer[strlen(buffer)] = ' ';
+            for(int j = 0; j < 8; j++){
+                printf("%X ", buffer[j]);
+            }
+            printf("\n");
+            fwrite(buffer, 1, 8, file);
+            memset(buffer, ' ', 8);
+            strcpy(buffer, fileExtension);
+            buffer[strlen(buffer)] = ' ';
+            fwrite(buffer, 1, 3, file);
             fclose(file);
-            return num;
+            loadInitialDirectory(disk);
+            return;
         }else{
-            fseek(file, 24, SEEK_CUR);
+            fseek(file, 21, SEEK_CUR);
         }
     }
     fclose(file);
-    return 0;
 }
-int fileSize(char* disk, char* filename){
+/*int fileSize(char* disk, char* filename){
     FILE* file = fopen(disk, "r");
     fseek(file, 19 * 512, SEEK_SET);
     char buffer[9];
@@ -599,6 +635,40 @@ int fileSize(char* disk, char* filename){
     }
     fclose(file);
     return 0;
+}*/
+
+void type(char* disk, char* filename, char* fileExtension){
+    int size = 0;
+    int cluster = 0;
+    for(int i = 0; i < currentDirectory->numberOfEntries; i++){
+        if(strncmp(filename, currentDirectory->fileNames[i], 8) == 0 && strncmp(fileExtension, currentDirectory->fileExtension[i], 3) == 0){
+            size = currentDirectory->fileSize[i];
+            cluster = currentDirectory->firstCluster[i];
+            break;
+        }
+    }
+    printf("%d %d\n",cluster, size);
+    char buffer[513];
+    FILE* file = fopen(disk, "r");
+    while(size > 0){
+        printf("\n(press any key to continue, q to quit)\n");
+        if(getchar() == 'q'){
+            break;
+        }
+        fseek(file, 512 * (cluster + 31), SEEK_SET);
+        fread(buffer, 1, 512, file);
+        if(size > 512){
+            buffer[512] = 0;
+        }
+        else{
+            buffer[size] = 0;
+        }
+        printf("%s", buffer);
+        size = size - 512;
+        cluster = FAT[cluster];
+    }
+    printf("\n");
+    fclose(file);
 }
 
 
