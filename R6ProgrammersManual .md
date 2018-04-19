@@ -72,3 +72,79 @@ NONE
 
 *Return Value:*  
 listDirectory() has no return value.
+
+### BytetoNumber()
+*Description:*  
+The BytetoNumber function converts a byte into a number. This was implemented to satisfy the little-endian style and to easily convert values.
+
+*Declaration:*  
+int BytetoNumber(unsigned char *array, int length)
+
+*Parameters:*  
+array-  Used to store the values.
+length- Used to keep track of the length of the byte. 
+
+*Return Value:*  
+BytetoNumber() returns the int value.
+
+### NumbertoByte()
+*Description:*  
+The NumbertoByte function converts a number into a byte. This was implemented to satisfy the little-endian style and to easily convert values.
+
+*Declaration:*  
+void NumbertoByte(int number, unsigned char *array, int length)
+
+*Parameters:*  
+number- Used to keep track of the number being converted.
+array-  Used to store the values.
+length- Used to keep track of the length of the byte.
+
+*Return Value:*  
+NumbertoByte() has no return value.
+
+### BootSector()
+*Description:*  
+The BootSector function is used to print out the bootsector table with all of the file values to the console.
+
+*Declaration:*  
+void BootSector(char* disk)
+
+*Parameters:*  
+disk- tells where the disk image file is located.
+
+*Return Value:*  
+BootSector() has no return value.
+
+### renameFile()
+*Description:*  
+The renameFile function is used to allow the user to rename the file and load it back into the directory.
+
+*Declaration:*  
+void renameFile (char* disk, char* originalfilename, char* originalfileextension, char* filename, char* fileExtension)
+
+*Parameters:*  
+disk- tells where the disk image file is located.
+originalfilename- the original name of the file.
+originalfileextension- the original extension of the file.
+filename- the new name of the file.
+fileextension- the new extension of the file.
+
+*Return Value:*  
+renameFile() has no return value.
+
+### type()
+*Description:*  
+The renameFile function is used to print the contents of any file with the extension "TXT", "BAT", or "C".
+
+*Declaration:*  
+void type(char* disk, char* filename, char* fileExtension)
+
+*Parameters:*  
+disk- tells where the disk image file is located.
+filename- the name of the file.
+fileextension- the extension of the file.
+
+*Return Value:*  
+type() has no return value.
+
+
