@@ -1,0 +1,53 @@
+<h1 id="r6-programmers-manual">R6 Programmer's Manual</h1>
+<p>The purpose of this manual is to give information on all of the functions included in R6.</p>
+<h2 id="functions">Functions</h2>
+<h3 id="loadinitialdirectory">loadInitialDirectory()</h3>
+<p><em>Description:</em><br />The loadInitalDirectory function is used to load the root directory into the current directory of the program at the start of the program.</p>
+<p><em>Declaration:</em><br />void loadInitialDirectory(char* disk)</p>
+<p><em>Parameters:</em><br />disk- the name of the FAT12 image being read.</p>
+<p><em>Return Value:</em><br />loadInitialDirectory() has no return value.</p>
+<h3 id="loadfat">loadFAT()</h3>
+<p><em>Description:</em><br />The loadFAT function is used to load the FAT table into an integer array. It reads the boot sector for the sectorsPerFat and bytesPerSector to initalize the FAT array in memory. Then it reads the FAT table in the disk image and converts the bytes using little endian style and loads the converted bytes into the FAT array.</p>
+<p><em>Declaration:</em><br />void loadFAT(const char* disk)</p>
+<p><em>Parameters:</em><br />disk- the name of the FAT12 image being read.</p>
+<p><em>Return Value:</em><br />loadFAT() has no return value.</p>
+<h3 id="rootdirectory">rootDirectory()</h3>
+<p><em>Description:</em><br />The rootDirectory function is used to print out all of the file/subdirectory names from the root directory to the console.</p>
+<p><em>Declaration:</em><br />void rootDirectory(char* disk)</p>
+<p><em>Parameters:</em><br />disk- the name of the FAT12 image being read.</p>
+<p><em>Return Value:</em><br />rootDirectory() has no return value.</p>
+<h3 id="changedirectory">changeDirectory()</h3>
+<p><em>Description:</em><br />The changeDirectory function prompts the user to enter the name of the directory that they would like to enter or &quot;.&quot; to go to the previous directory. The entered directory name is used to search through the current directory to find the first logical cluster of the subdirectory. If found, the subdirectory is loaded into the currrent directory and the previous directory is stored in the current directory struct. If &quot;.&quot; is entered then the previous directory is loaded into the current directory.</p>
+<p><em>Declaration:</em><br />void changeDirectory(char* disk)</p>
+<p><em>Parameters:</em><br />disk- the name of the FAT12 image being read.</p>
+<p><em>Return Value:</em><br />changeDirectory() has no return value.</p>
+<h3 id="listdirectory">listDirectory()</h3>
+<p><em>Description:</em><br />The listDirectory function prompts the user to enter &quot;<em>&quot; to list all the files in the current directory, &quot;</em>.EXT&quot; to list all files of a certain extension, or &quot;FILENAME.EXT&quot; to list a specific file. The selected files will display their name, extension, file size, and first logical cluster to the console.</p>
+<p><em>Declaration:</em><br />void listDirectory()</p>
+<p><em>Parameters:</em><br />NONE</p>
+<p><em>Return Value:</em><br />listDirectory() has no return value.</p>
+<h3 id="bytetonumber">BytetoNumber()</h3>
+<p><em>Description:</em><br />The BytetoNumber function converts a byte into a number. This was implemented to satisfy the little-endian style and to easily convert values.</p>
+<p><em>Declaration:</em><br />int BytetoNumber(unsigned char *array, int length)</p>
+<p><em>Parameters:</em><br />array- Used to store the values. length- Used to keep track of the length of the byte.</p>
+<p><em>Return Value:</em><br />BytetoNumber() returns the int value.</p>
+<h3 id="numbertobyte">NumbertoByte()</h3>
+<p><em>Description:</em><br />The NumbertoByte function converts a number into a byte. This was implemented to satisfy the little-endian style and to easily convert values.</p>
+<p><em>Declaration:</em><br />void NumbertoByte(int number, unsigned char *array, int length)</p>
+<p><em>Parameters:</em><br />number- Used to keep track of the number being converted. array- Used to store the values. length- Used to keep track of the length of the byte.</p>
+<p><em>Return Value:</em><br />NumbertoByte() has no return value.</p>
+<h3 id="bootsector">BootSector()</h3>
+<p><em>Description:</em><br />The BootSector function is used to print out the bootsector table with all of the file values to the console.</p>
+<p><em>Declaration:</em><br />void BootSector(char* disk)</p>
+<p><em>Parameters:</em><br />disk- tells where the disk image file is located.</p>
+<p><em>Return Value:</em><br />BootSector() has no return value.</p>
+<h3 id="renamefile">renameFile()</h3>
+<p><em>Description:</em><br />The renameFile function is used to allow the user to rename the file and load it back into the directory.</p>
+<p><em>Declaration:</em><br />void renameFile (char* disk, char* originalfilename, char* originalfileextension, char* filename, char* fileExtension)</p>
+<p><em>Parameters:</em><br />disk- tells where the disk image file is located. originalfilename- the original name of the file. originalfileextension- the original extension of the file. filename- the new name of the file. fileextension- the new extension of the file.</p>
+<p><em>Return Value:</em><br />renameFile() has no return value.</p>
+<h3 id="type">type()</h3>
+<p><em>Description:</em><br />The renameFile function is used to print the contents of any file with the extension &quot;TXT&quot;, &quot;BAT&quot;, or &quot;C&quot;.</p>
+<p><em>Declaration:</em><br />void type(char* disk, char* filename, char* fileExtension)</p>
+<p><em>Parameters:</em><br />disk- tells where the disk image file is located. filename- the name of the file. fileextension- the extension of the file.</p>
+<p><em>Return Value:</em><br />type() has no return value.</p>
