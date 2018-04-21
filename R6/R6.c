@@ -49,8 +49,10 @@ int main (int argc, char *argv[])
             {
                 char fileName[50];
                 char fileExtension[50];
+                //scans for file name and file extension
                 scanf("%s", fileName);
                 scanf("%s", fileExtension);
+                //determines user input
                 type(argv[1], fileName, fileExtension);
             }
             else if (chosenOption[0] == '6')
@@ -59,11 +61,12 @@ int main (int argc, char *argv[])
                 char originalfileextension[50];
                 char fileName[50];
                 char fileExtension[50];
+                //scans for file name and file extension
                 scanf("%s", originalfileextension);
                 scanf("%s", originalfilename);
                 scanf("%s", fileName);
                 scanf("%s", fileExtension);
-
+                //determines user input
                 renameFile(argv[1], originalfileextension, originalfilename, fileName, fileExtension);
             }
             else if (chosenOption[0] == '7')
@@ -226,6 +229,7 @@ void loadFAT(const char* disk){
 }
 
 void BootSector(char* disk){
+    //reading contents of file
     FILE* file = fopen(disk, "r");
     unsigned char array[16];
 
@@ -233,6 +237,7 @@ void BootSector(char* disk){
     fread(array, 2, 1, file);
     array[10] = '\0';
 
+    //displays file values by converting byte to number
     printf("Bytes per Sector: %d\n",BytetoNumber(array, 2));
 
     fread(array, 1, 1, file);
@@ -250,6 +255,7 @@ void BootSector(char* disk){
     fread(array, 2, 1, file);
     printf("Total # of Sectors in the File System: %d\n",BytetoNumber(array, 2));
 
+    //type IGNORE
     fseek(file, 1, SEEK_CUR);
     fread(array, 2, 1, file);
     printf("Number of Sectors per FAT: %d\n",BytetoNumber(array, 2));
@@ -260,10 +266,12 @@ void BootSector(char* disk){
     fread(array, 2, 1, file);
     printf("Number of Heads: %d\n",BytetoNumber(array, 2));
 
+    //type IGNORE
     fread(array, 4, 1, file);
     fread(array, 4, 1, file);
     printf("Total Sector Count for FAT32: %d\n",BytetoNumber(array, 4));
 
+    //type IGNORE
     fseek(file, 2, SEEK_CUR);
     fread(array, 1, 1, file);
     printf("Boot Signature: %x\n",BytetoNumber(array, 1));
@@ -271,11 +279,14 @@ void BootSector(char* disk){
     fread(array, 4, 1, file);
     printf("Volume ID: %d\n",BytetoNumber(array, 4));
 
+    //type IGNORE
     memset(array, 0, 16);
     fread(array, 11, 1, file);
     printf("Volume Label: %s\n",array);
+    //clears out array
     memset(array, 0, 16);
 
+    //type IGNORE
     fread(array, 8, 1, file);
     printf("File System Type: %s\n",array);
     memset(array, 0, 16);
@@ -582,6 +593,7 @@ void listDirectory()
 }
 void renameFile (char* disk, char* originalfilename, char* originalfileextension, char* filename, char* fileExtension){
     printf("Searching for file %s.%s\n", originalfilename, originalfileextension);
+    //opening file and initializing
     FILE* file = fopen(disk, "r+b");
     fseek(file, 19 * 512, SEEK_SET);
     char nameBuffer [9];
@@ -591,6 +603,7 @@ void renameFile (char* disk, char* originalfilename, char* originalfileextension
         nameBuffer[8] = 0;
         fread(extensionBuffer, 1,3 , file);
         extensionBuffer[3] = 0;
+        //locating file, file name can have a max of 8 characters
         if(strncmp(nameBuffer, originalfilename, strlen(originalfilename)) == 0 && strncmp(extensionBuffer, originalfileextension, strlen(originalfileextension)) == 0){
             printf("Found file %s.%s\n", nameBuffer, extensionBuffer);
             fseek(file, -11, SEEK_CUR);
@@ -640,6 +653,7 @@ void renameFile (char* disk, char* originalfilename, char* originalfileextension
 void type(char* disk, char* filename, char* fileExtension){
     int size = 0;
     int cluster = 0;
+    //search struct for filename, obtain size and cluster
     for(int i = 0; i < currentDirectory->numberOfEntries; i++){
         if(strncmp(filename, currentDirectory->fileNames[i], 8) == 0 && strncmp(fileExtension, currentDirectory->fileExtension[i], 3) == 0){
             size = currentDirectory->fileSize[i];
@@ -648,6 +662,7 @@ void type(char* disk, char* filename, char* fileExtension){
         }
     }
     printf("%d %d\n",cluster, size);
+    //set buffer to 513 (take into account NULL)
     char buffer[513];
     FILE* file = fopen(disk, "r");
     while(size > 0){
@@ -655,6 +670,7 @@ void type(char* disk, char* filename, char* fileExtension){
         if(getchar() == 'q'){
             break;
         }
+        //printing out the contents of the file, must add 31 to get physical cluster
         fseek(file, 512 * (cluster + 31), SEEK_SET);
         fread(buffer, 1, 512, file);
         if(size > 512){
@@ -665,6 +681,7 @@ void type(char* disk, char* filename, char* fileExtension){
         }
         printf("%s", buffer);
         size = size - 512;
+        //obtained from FAT table
         cluster = FAT[cluster];
     }
     printf("\n");
