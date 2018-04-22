@@ -10,101 +10,104 @@ void help (int argc, char* argv[]) {
     // Display help message for help itself
     if (argc == 1) {
         println("To use the help command type 'help' followed by the command you would like to use.");
-        println("The commands you can use include: clear, shutdown, setdate, getdate, settime, gettime, version, showPCB, showReady, showBlocked, showAll, createPCB, deletePCB, block, unblock, suspend, resume, and setPriority.");
+        println("The commands you can use include: clear, shutdown, setdate, getdate, settime, gettime, version, showPCB, showReadyPCBs, showBlockedPCBs, showAllPCBs, blockPCB, unblockPCB, suspendPCB, resumePCB, and setPCBPriority.");
     }
 
     // Display the help message for the command they specified
     else if (argc == 2) {
         if (strcmp(argv[1], "shutdown") == 0) {
-            println("The shutdown command shuts down the operating system. Shutdown takes no arguments and will prompt the user to enter 'Y' or 'N' to choose whether to really shutdown or not. The shutdown command can be used by typing shutdown.");
+            println("The shutdown command shuts down the operating system. Shutdown takes no arguments and will prompt the user to enter 'Y' or 'N' to choose whether to really shutdown or not.");
+            println("Usage: shutdown");
         } 
         
         else if (strcmp(argv[1], "clear") == 0) {
-            println("The clear command effectively clears the terminal display. The clear command prints out many new line characters to move past outputs off the screen. The clear command can be used by typing clear.");
+            println("The clear command effectively clears the terminal display. The clear command prints out new line characters to move past outputs off the screen, simulating clearing the screen.");
+            println("Usage: clear");
         }        
 
         else if (strcmp(argv[1], "setdate") == 0) {
-            println("The setdate command allows the user to input and set the system date. The setdate command follows American Month/Day/Year format. For example, today is the first of February so the input would look like: setdate 2/1/18 or setdate 02/01/18.");
+            println("The setdate command allows the user to input and set the system date.");
+            println("Usage: setdate MM/DD/YY");
         } 
         
         else if (strcmp(argv[1], "getdate") == 0) {
-            println("The getdate command will print out the current date. The getdate command can be used by simply typing getdate.");
+            println("The getdate command will print out the current date.");
+            println("Usage: getdate");
         } 
         
         else if (strcmp(argv[1], "settime") == 0) {
-            println("The settime command allows the user to input and set the system time. Settime only works with 24 hour time and the hour, minute, and second must all be entered for the input to be valid. For example: settime 20:24:28 will set the time to the equivalent of 8:24:28 PM.");
+            println("The settime command allows the user to input and set the system time. Settime only works with 24 hour time and the hour, minute, and second must all be entered for the input to be valid.");
+            println("Usage: settime HH:MM:SS");
         } 
         
         else if (strcmp(argv[1], "gettime") == 0) {
-            println("The gettime command will retrieve and print out the current system time in 24 hour format. The gettime command can be used by typing gettime.");
+            println("The gettime command will retrieve and print out the current system time in 24 hour format.");
+            println("Usage: gettime");
         } 
         
         else if (strcmp(argv[1], "version") == 0) {
-            println("The version command displays the current version of MPX and the completion date. The version command can be used by typing version.");
+            println("The version command displays the current version of MPX and the completion date.");
+            println("Usage: version");
         }
 
         else if (strcmp(argv[1], "showPCB") == 0) {
-            println("The showPCB checks to see if the PCB name exists in the in the ready queue, readySuspended queue, blocked queue, or blockedSuspended queue. If the PCB exists then the name, class, ready state, blocked state, and priority of the PCB is displayed. The showPCB command can be used by typing showPCB followed by the name of the PCB. For example 'showPCB testName' will search the queues for a PCB with the name testName.");
+            println("The showPCB checks to see if the PCB name exists in the in the ready queue, readySuspended queue, blocked queue, or blockedSuspended queue. If the PCB exists then the name, class, ready state, blocked state, and priority of the PCB is displayed.");
+            println("Usage: showPCB pcbName");
         }
 
-        else if (strcmp(argv[1], "showReady") == 0) {
-            println("The showReady command displays the name, class, ready state, blocked state, and priority for all PCBs in the ready queue and readySuspended queue. The showReady command can be used by typing showReady.");
+        else if (strcmp(argv[1], "showReadyPCBs") == 0) {
+            println("The showReadyPCBs command displays the name, class, ready state, blocked state, and priority for all PCBs in the ready queue and readySuspended queue.");
+            println("Usage: showReadyPCBs");
         }
 
-        else if (strcmp(argv[1], "showBlocked") == 0) {
-            println("The showBlocked command displays the name, class, ready state, blocked state, and priority for all PCBs in the blocked queue and blockedSuspended queue. The showBlocked command can be used by typing showBlocked.");
+        else if (strcmp(argv[1], "showBlockedPCBs") == 0) {
+            println("The showBlockedPCBs command displays the name, class, ready state, blocked state, and priority for all PCBs in the blocked queue and blockedSuspended queue.");
+            println("Usage: showBlockedPCBs");
         }
 
-        else if (strcmp(argv[1], "showAll") == 0) {
-            println("The showAll command displays the name, class, ready state, blocked state, and priority for all PCBs in the ready queue, readySuspended queue, blocked queue, and blockedSuspended queue. The showAll command can be used by typing showAll.");
+        else if (strcmp(argv[1], "showAllPCBs") == 0) {
+            println("The showAllPCBs command displays the name, class, ready state, blocked state, and priority for all PCBs in the ready queue, readySuspended queue, blocked queue, and blockedSuspended queue.");
+            println("Usage: showAllPCB");
         }
 
-        else if (strcmp(argv[1], "createPCB") == 0) {
-            println("The createPCB function creates a PCB with the user input name, class, and priority. The createPCB command can be used by typing createPCB.");
+        else if (strcmp(argv[1], "blockPCB") == 0){
+            println("blockPCB will change a PCB's state to blocked.");
+            println("Usage: blockPCB pcbName");
         }
 
-        else if (strcmp(argv[1], "deletePCB") == 0) {
-            println("The deletePCB function deletes a PCB with the user input name. The deletePCB command can be used by typing deletePCB.");
+        else if (strcmp(argv[1], "unblockPCB") == 0){
+            println("The unblock command will unblock a blocked PCB.");
+            println("Usage: unblockPCB pcbName");
         }
 
-        else if (strcmp(argv[1], "block") == 0){
-            println("The block command can accept one argument, that being the name of a process. Block will find a process and change its state to blocked.");
+        else if (strcmp(argv[1], "suspendPCB") == 0){
+            println("The suspend command will change a PCB's state to suspended.");
+            println("Usage: suspendPCB pcbName");
         }
 
-        else if (strcmp(argv[1], "unblock") == 0){
-            println("The unblock command can accept one argument, that being the name of a process. Unblock will find a process and change its state to unblocked.");
+        else if (strcmp(argv[1], "resumePCB") == 0){
+            println("The resume command will find a PCB and change its state to resumed.");
+            println("Usage: resumePCB pcbName");
         }
 
-        else if (strcmp(argv[1], "suspend") == 0){
-            println("The suspend command can accept one argument, that being the name of a process. Suspend will find a process and change its state to suspended.");
+        else if (strcmp(argv[1], "setPCBPriority") == 0){
+            println("The setPCBPriority command can accept two arguments. The name of a process, and a priority to set in the process. The priority can be an integer between 0 and 9. SetPriority will find the process and then set the priority.");
+            println("Usage: setPCBPriority pcbName priority");
         }
 
-        else if (strcmp(argv[1], "resume") == 0){
-            println("The resume command can accept one argument, that being the name of a process. Resume will find a process and change its state to resumed.");
-        }
-
-        else if (strcmp(argv[1], "setPriority") == 0){
-            println("The setPriority command can accept two arguments. The name of a process, and a priority to set in the process. The priority can be an integer between 0 and 9. SetPriority will find the process and then set the priority.");
-        }
-
-        else if (strcmp(argv[1], "yield") == 0){
-            println("This a temporary command that was removed as of R4. It would call sys_req(IDLE) to allow comhand to let other processes run if there were any in the queue. Usage 'yield'");
-        }
-
-        else if (strcmp(argv[1], "loadr3") == 0){
-            println("This a temporary command that was removed as of R4. It would create 5 processes and add them to the ready queue. Usage: 'loadr3'");
-        }
-
-        else if (strcmp(argv[1], "isEmpty") == 0){
-            println("The isEmpty command takes in no arguments. It displays true if there is no allocated memory, false otherwise");
+        else if (strcmp(argv[1], "isMemoryEmpty") == 0){
+            println("The isMemoryEmpty command displays true if there is no allocated memory, false otherwise");
+            println("Usage: isMemoryEmpty");
         }
 
         else if (strcmp(argv[1], "showAllocatedMemory") == 0){
-            println("The showAllocatedMemory command takes in no arguments. It displays the starting address and size of all the blocks of allocated memory.");
+            println("The showAllocatedMemory command displays the starting address and size of all the blocks of allocated memory.");
+            println("Usage: showAllocatedMemory");
         }
 
         else if (strcmp(argv[1], "showFreeMemory") == 0){
-            println("The showFreeMemory command takes in no arguments. It displays the starting address and size of all the blocks of free memory");
+            println("The showFreeMemory command displays the starting address and size of all the blocks of free memory");
+            println("Usage: showFreeMemory");
         }
 
         // Error handling

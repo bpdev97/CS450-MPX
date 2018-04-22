@@ -10,8 +10,6 @@ void showReady();
 void showBlocked();
 
 // Temporary
-void CreatePCB(int argc, char *argv[], void* function);
-void DeletePCB(int argc, char *argv[]);
 int blockPCB(int argc, char *argv[]);
 int unblockPCB(int argc, char *argv[]);
 

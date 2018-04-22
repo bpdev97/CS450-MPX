@@ -96,48 +96,36 @@ int comhand() {
       showPCB(argc, argv);
     }
   
-    else if(strcmp(argv[0], "showReady") == 0) {
+    else if(strcmp(argv[0], "showReadyPCBs") == 0) {
       showReady();
     }
 
-    else if(strcmp(argv[0], "showBlocked") == 0) {
+    else if(strcmp(argv[0], "showBlockedPCBs") == 0) {
       showBlocked();
     }
 
-    else if(strcmp(argv[0], "showAll") == 0) {
+    else if(strcmp(argv[0], "showAllPCBs") == 0) {
       showAll();
     }
 
-    else if(strcmp(argv[0], "createPCB") == 0){
-      //CreatePCB(argc, argv);
-    }
-
-    else if(strcmp(argv[0], "deletePCB") == 0){
-      DeletePCB(argc, argv);
-    }
-
-    else if(strcmp(argv[0], "block") == 0) {
+    else if(strcmp(argv[0], "blockPCB") == 0) {
       blockPCB(argc, argv);
     }
 
-    else if(strcmp(argv[0], "unblock") == 0) {
+    else if(strcmp(argv[0], "unblockPCB") == 0) {
       unblockPCB(argc, argv);
     }
 
-    else if(strcmp(argv[0], "suspend") == 0) {
+    else if(strcmp(argv[0], "suspendPCB") == 0) {
       suspendPCB(argc, argv);
     }
 
-    else if(strcmp(argv[0], "resume") == 0) {
+    else if(strcmp(argv[0], "resumePCB") == 0) {
       resumePCB(argc, argv);
     }
 
-    else if(strcmp(argv[0], "setPriority") == 0) {
+    else if(strcmp(argv[0], "setPCBPriority") == 0) {
       setPriority(argc, argv);
-    }
-
-    else if(strcmp(argv[0], "yield") == 0) {
-      sys_req(IDLE, DEFAULT_DEVICE, NULL, NULL);
     }
 
     else if(strcmp(argv[0], "loadr3") == 0) {
@@ -148,7 +136,7 @@ int comhand() {
       InsertPCB(SetupPCB("proc5", 1, 1, &proc5));
     }
 
-    else if(strcmp(argv[0], "isEmpty") == 0) {
+    else if(strcmp(argv[0], "isMemoryEmpty") == 0) {
       isEmpty();
     }
 
@@ -159,36 +147,13 @@ int comhand() {
     else if(strcmp(argv[0], "showFreeMemory") == 0) {
       showFreeMemory();
     }
-
-    else if(strcmp(argv[0], "initializeHeap") == 0) {
-      initializeHeap(2000);
-    }
-
+    
     else if(strcmp(argv[0], "allocateMemory") == 0) {
       allocateMemory(atoi(argv[1]));
     }
 
     else if(strcmp(argv[0], "freeMemory") == 0) {
       freeMemory((int) atoi(argv[1]));
-    }
-
-    else if(strcmp(argv[0], "testR5") == 0) {
-      println("Initializing the Heap...");
-      initializeHeap(30000);
-      showFreeMemory();
-      println("Allocating Memory blocks...");
-      int i = 0;
-      for (; i < 5; i++){
-        allocMem(1024 + 8*i);
-      }
-      showAllocatedMemory();
-      println("Freeing 3 Memory blocks...");
-      i = 0;
-      for (; i < 3; i++){
-        freeMem(AMCB -> beginning);
-      }
-      showFreeMemory();
-      showAllocatedMemory();
     }
 
     // Command not recognized

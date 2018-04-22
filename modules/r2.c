@@ -332,29 +332,3 @@ int setPriority(int argc, char *argv[]){
         return 1;
     }
 }
-
-// Deletes the PCB
-void DeletePCB(int argc, char *argv[]){
-    // Checks if argc is the appropriate value
-    if(argc != 2){
-        println("Error, not in range.");
-        return;
-    }
-    // Sets parameter to argv
-    char* name = argv[1];
-
-    // Error checks name
-    if(strlen(name) < 8){
-        println("Error, name has to be AT LEAST 8 characters.");
-        return;
-    }
-
-    if(FindPCB(name) == NULL){
-        println("Error, name does not exist.");
-        return;
-    }
-    //Removes and then frees the PCB
-    PCB* pcb =  FindPCB(name);
-    RemovePCB(pcb);
-    FreePCB(pcb);
-}
