@@ -11,8 +11,8 @@ DIRECTORY* currentDirectory;
 
 int main (int argc, char *argv[])
 {
-    currentDirectory = malloc(sizeof(DIRECTORY));
-    loadFAT(argv[1]);
+    currentDirectory = malloc(sizeof(DIRECTORY)); 
+    loadFAT(argv[1]); 
     loadInitialDirectory(argv[1]);
     while(1)
     {
@@ -52,7 +52,9 @@ int main (int argc, char *argv[])
                 char fileName[50];
                 char fileExtension[50];
                 //scans for file name and file extension
+		printf("Please enter FILENAME without an extension \n");
                 scanf("%s", fileName);
+                printf("Please enter EXTENSION without a '.' \n");
                 scanf("%s", fileExtension);
                 //determines user input
                 type(argv[1], fileName, fileExtension, 1);
@@ -64,9 +66,13 @@ int main (int argc, char *argv[])
                 char fileName[50];
                 char fileExtension[50];
                 //scans for file name and file extension
-                scanf("%s", originalfileextension);
+                printf("Please enter ORIGINAL FILENAME without an extension \n");
+                scanf("%s", originalfileextension); // you flipped variables for originalfileextension and originalfilename
+                printf("Please enter ORIGINAL EXTENSION without a '.' \n");
                 scanf("%s", originalfilename);
+                printf("Please enter NEW FILENAME without an extension \n");
                 scanf("%s", fileName);
+                printf("Please enter NEW EXTENSION without a '.' \n");
                 scanf("%s", fileExtension);
                 //determines user input
                 renameFile(argv[1], originalfileextension, originalfilename, fileName, fileExtension);
@@ -111,19 +117,20 @@ void loadInitialDirectory(char* disk)//loads root directory to current directory
     int validName = 1;
     int currentDirectoryEntry = 0;
 
-    for(int i = 19; i <33; i++) // clusters
+    for(int i = 19; i <33; i++) // Root clusters is btw 19 and 32
     {
-        for(int j =0; j<16; j++) // 32 bit file entries
+        for(int j =0; j<16; j++) // 32 bit file entries, cluster is 512 bits, 512/32 = 16
         {
             memset(filename, 0, sizeof filename);
             validName = 1;
-            fseek(file,(i*512)+(j*32), SEEK_SET);
-            fread(filename, 8, 1, file);
+            fseek(file,(i*512)+(j*32), SEEK_SET);//seeks to each file entry in root directory
+            fread(filename, 8, 1, file);//scans file name
+
             if(filename[0] == 0x00) //break out of loop if 0 is found, means no more files are left
             {
                 break;
             }
-            for(int x =0; x<8;x++)
+            for(int x =0; x<8;x++)//filename max size is 8
             {
                 if(filename[x] != ' ' && (filename[x] < '0' || filename[x] > 'Z')) // filename must be only capital letters or numbers
                 {
@@ -137,28 +144,29 @@ void loadInitialDirectory(char* disk)//loads root directory to current directory
             if(validName)// if valid file name, reads image and stores root directory file in current directory
             {
                 memset(extension, 0, sizeof extension);
-                fread(extension, 3, 1, file);
+                fread(extension, 3, 1, file); //reads extnesion from image
                 fseek(file, 15, SEEK_CUR);
-                fread(firstCluster, 2, 1, file);
-                fread(filesize, 4, 1, file);
-                filename[8] = '\0';
-                extension[3] = '\0';
+                fread(firstCluster, 2, 1, file); //reads first cluster
+                fread(filesize, 4, 1, file); // reads file size
+                filename[8] = '\0';//adds null terminator
+                extension[3] = '\0';//adds null terminator
+
                 if(BytetoNumber(filesize, 4) != -1  && BytetoNumber(firstCluster, 2) >32)//must be a valid file size and non reserved cluster
                 {
-                    strcpy(currentDirectory->fileNames[currentDirectoryEntry], filename);
+                    strcpy(currentDirectory->fileNames[currentDirectoryEntry], filename);//stores filename in current directory
                     if(extension[0] == ' ')//Sub directories dont have extensions so I made subdirectory extensions 'DIR'
                     {
                         strcpy(currentDirectory->fileExtension[currentDirectoryEntry], "DIR");
                     }
                     else
                     {
-                        strcpy(currentDirectory->fileExtension[currentDirectoryEntry], extension);
+                        strcpy(currentDirectory->fileExtension[currentDirectoryEntry], extension);//stores file extension in current directory
                     }
 
-                    currentDirectory->fileSize[currentDirectoryEntry] = BytetoNumber(filesize, 4);
-                    currentDirectory->firstCluster[currentDirectoryEntry] =  BytetoNumber(firstCluster,2);
+                    currentDirectory->fileSize[currentDirectoryEntry] = BytetoNumber(filesize, 4); // stores file size in current directory
+                    currentDirectory->firstCluster[currentDirectoryEntry] =  BytetoNumber(firstCluster,2);// stores first cluster in current directory
                     currentDirectoryEntry++;
-                    currentDirectory->numberOfEntries = currentDirectoryEntry;
+                    currentDirectory->numberOfEntries = currentDirectoryEntry;//increases number of file entries in current directory
                 }
             }
         }
@@ -181,25 +189,10 @@ void loadFAT(const char* disk){
     fread(array, 2, 1, file);
 
     bytesPerSector = BytetoNumber(array, 2);
-    //printf("Bytes per Sector: %d\n",);
-
-    fread(array, 1, 1, file);
-    // printf("Sectors per Cluster: %d\n",BytetoNumber(array, 1));
-
+    
+    fseek(file, 9, SEEK_CUR);
     fread(array, 2, 1, file);
-    //printf("Number of Reserved Sectors: %d\n",BytetoNumber(array, 2));
 
-    fread(array, 1, 1, file);
-    // printf("Number of FAT Copies: %d\n",BytetoNumber(array, 1));
-
-    fread(array, 2, 1, file);
-    // printf("Max Number of Root Directory Entries: %d\n",BytetoNumber(array, 2));
-
-    fread(array, 2, 1, file);
-    //  printf("Total # of Sectors in the File System: %d\n",BytetoNumber(array, 2));
-
-    fseek(file, 1, SEEK_CUR);
-    fread(array, 2, 1, file);
     sectorsPerFat = BytetoNumber(array, 2);
 
     float numberOfEntriesFloat = sectorsPerFat *bytesPerSector *((float)8/12); // uses sectorsPerFat and bytesPerSector to calculate max number of fat int array entries
@@ -207,15 +200,12 @@ void loadFAT(const char* disk){
 
     FAT = calloc(numberOfEntries, sizeof(int));// allocates memory to FAT int array
     fseek(file, 1*512, SEEK_SET);
-    for(int i = 0; i <numberOfEntries; i= i+2) //converts 3 bytes to 2 12bit ints using little endian style, then stores 12bit ints in FAT int array
+    for(int i = 0; i <numberOfEntries; i= i+2) //converts Fat table to FAT int array, 3 bytes from the Fat table into 2 12bit ints in the FAT array using little endian style,
     {
         fread(fatDisk, 3, 1, file);
         int firstByte = (int) fatDisk[0];
         int middleByte = (int) fatDisk[1];
         int lastByte = (int) fatDisk[2];
-        //printf("\n %d", firstByte);
-        //printf("\n %d", middleByte);
-        // printf("\n %d", lastByte);
         int lsbNibble = (middleByte & 0x000F);
         int msbNibble = (middleByte & 0x00F0);
         lsbNibble = lsbNibble << 8;
@@ -224,8 +214,6 @@ void loadFAT(const char* disk){
 
         FAT[i] = lsbNibble + firstByte;
         FAT[i+1] = msbNibble + lastByte;
-        //printf("\n %d", FAT[i]);
-        // printf("\n %d", FAT[i+1]);
     }
 
     fclose(file);
@@ -306,13 +294,13 @@ void rootDirectory(char* disk)
     unsigned char firstCluster[2];
     int validName = 1;
 
-    for(int i = 19; i <33; i++)//clusters
+    for(int i = 19; i <33; i++)//Root directory clusters 19-32
     {
-        for(int j =0; j<16; j++)//break out of loop if 0 is found, means no more files are left
+        for(int j =0; j<16; j++)//16 file entries
         {
             memset(filename, 0, sizeof filename);
             validName = 1;
-            fseek(file,(i*512)+(j*32), SEEK_SET);
+            fseek(file,(i*512)+(j*32), SEEK_SET);//finds file entry
             fread(filename, 8, 1, file);
             if(filename[0] == 0x00)// if 0 found, means no more files, break out of loop
             {
@@ -417,7 +405,6 @@ void changeDirectory(char* disk)
             {
                 directoryFound =1;
                 nextDirectoryCluster = currentDirectory->firstCluster[i];
-                // printf("SubDirectory Cluster: %d\n",nextDirectoryCluster);
             }
         }
         if(!directoryFound)
@@ -445,7 +432,7 @@ void changeDirectory(char* disk)
         {
             memset(filename, 0, sizeof filename);
             validName = 1;
-            fseek(file,((nextDirectoryCluster+31)*512)+(j*32), SEEK_SET);
+            fseek(file,((nextDirectoryCluster+31)*512)+(j*32), SEEK_SET);//finds subdirectory file entries in data clusters
             fread(filename, 8, 1, file);
 
             if(filename[0] == 0x00)// 0 means no files left in cluster
@@ -614,9 +601,9 @@ void renameFile (char* disk, char* originalfilename, char* originalfileextension
             memset(buffer, ' ', 8);
             strcpy(buffer, filename);
             buffer[strlen(buffer)] = ' ';
-            for(int j = 0; j < 8; j++){
+          /*  for(int j = 0; j < 8; j++){
                 printf("%X ", buffer[j]);
-            }
+            }*/
             printf("\n");
             fwrite(buffer, 1, 8, file);
             memset(buffer, ' ', 8);
@@ -632,26 +619,6 @@ void renameFile (char* disk, char* originalfilename, char* originalfileextension
     }
     fclose(file);
 }
-/*int fileSize(char* disk, char* filename){
-    FILE* file = fopen(disk, "r");
-    fseek(file, 19 * 512, SEEK_SET);
-    char buffer[9];
-    for(int i = 0; i < (14*16) ; i++){
-        fread(buffer, 1,8 , file);
-        buffer[8] = 0;
-        if(strncmp(buffer, filename, strlen(filename)) == 0){
-            fseek(file, 20, SEEK_CUR);
-            fread(buffer, 1, 4, file);
-            int num =  BytetoNumber(buffer, 4);
-            fclose(file);
-            return num;
-        }else{
-            fseek(file, 24, SEEK_CUR);
-        }
-    }
-    fclose(file);
-    return 0;
-}*/
 
 void type(char* disk, char* filename, char* fileExtension, int page){
     int size = 0;
@@ -832,121 +799,4 @@ void argument(char* disk, char* thefilename){
 }
 
 
-
-/*
-void testFileAttributes(char* disk)
-{
-    FILE* file = fopen(disk, "r");
-    unsigned char array[8];
- 
-    fseek(file,(12*512)), SEEK_SET);
-    fread(array, 8, 1, file);
-
-    printf("%d %d \n", i,j);
-    printf("FileName: %s",array);
-
-    memset(array, 0, sizeof array);
-    fread(array, 3, 1, file);
-    printf(". %s \n",array);
-
-    memset(array, 0, sizeof array);
-    fread(array, 1, 1, file);
-    printf("Attributes:");
-    if((BytetoNumber(array, 1) & 0x01) > 0x00)
-    {
-        printf("Read-Only, ");
-    }
-    if((BytetoNumber(array, 1) & 0x02) > 0x00)
-    {
-        printf("Hidden, ");
-    }
-    if((BytetoNumber(array, 1) & 0x04) > 0x00)
-    {
-        printf("System, ");
-    }
-    if((BytetoNumber(array, 1) & 0x10) > 0x00)
-    {
-        printf("Subdirectory ");
-    }
-    printf("\n");
-
-    memset(array, 0, sizeof array);
-    fread(array, 2, 1, file);
-    printf("Reserved: %d\n",BytetoNumber(array, 2));
-
-    memset(array, 0, sizeof array);
-    fread(array, 2, 1, file);
-    printf("CreationTime:");
-    returnTime(BytetoNumber(array, 2));
-
-    memset(array, 0, sizeof array);
-    fread(array, 2, 1, file);
-
-    printf("CreationDate: ");
-    returnDate(BytetoNumber(array, 2));
-
-    memset(array, 0, sizeof array);
-    fread(array, 2, 1, file);
-    printf("Last Access Date: ");
-    returnDate(BytetoNumber(array, 2));
-
-    fseek(file, 2, SEEK_CUR);
-    memset(array, 0, sizeof array);
-    fread(array, 2, 1, file);
-    printf("Last Write Time:");
-    returnTime(BytetoNumber(array, 2));
-
-    memset(array, 0, sizeof array);
-    fread(array, 2, 1, file);
-    printf("Last Write Date: ");
-    returnDate(BytetoNumber(array, 2));
-
-    memset(array, 0, sizeof array);
-    fread(array, 2, 1, file);
-    printf("First Logic Cluster: %d\n",BytetoNumber(array, 2));
-
-    memset(array, 0, sizeof array);
-    fread(array, 4, 1, file);
-    printf("File Size: %d\n",BytetoNumber(array, 4));
-
-    fclose(file);
-}
-
-
-void returnDate(int date)
-{
-    int day = (date & 0x001F);
-    date = date>> 5;
-    int month = (date & 0x00F);
-    date = date>> 4;
-    int year = (date & 0x7F) + 1980;
-    char dayStr[3];
-    char monthStr[3];
-    char yearStr[5];
-    sprintf(dayStr, "%d", day);
-    sprintf(monthStr, "%d", month);
-    sprintf(yearStr, "%d", year);
-    printf("%s%s", monthStr, "/");
-    printf("%s%s", dayStr, "/");
-    printf("%s%s", yearStr, "\n");
-
-}
-void returnTime(int time)
-{
-    int second = (time & 0x001F);
-    time = time>> 5;
-    int minute = (time & 0x03F);
-    time = time>> 6;
-    int hour = (time & 0x1F);
-    char secondStr[2];
-    char minuteStr[2];
-    char hourStr[4];
-    sprintf(secondStr, "%d", second);
-    sprintf(minuteStr, "%d", minute);
-    sprintf(hourStr, "%d", hour);
-    printf("%s%s", hourStr, ":");
-    printf("%s%s", minuteStr, ":");
-    printf("%s%s", secondStr, "\n");
-}
-*/
 
