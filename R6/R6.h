@@ -26,9 +26,9 @@ void loadInitialDirectory(char* disk);
 void testFileAttributes(char* disk);
 //int startingCluster(char* disk, char* filename);
 //int fileSize(char* disk, char* filename);
-void type(char* disk, char* filename, char* fileExtension);
+void type(char* disk, char* filename, char* fileExtension, int page);
 void renameFile (char* disk, char* originalfilename, char* originalfileextension, char* filename, char* fileExtension);
-
+void argument(char* disk, char* thefilename);
 
 
 #endif
