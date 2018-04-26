@@ -10,7 +10,7 @@ void help (int argc, char* argv[]) {
     // Display help message for help itself
     if (argc == 1) {
         println("To use the help command type 'help' followed by the command you would like to use.");
-        println("The commands you can use include: clear, shutdown, setdate, getdate, settime, gettime, version, showPCB, showReadyPCBs, showBlockedPCBs, showAllPCBs, showFreeMemory, showAllocatedMemory, isMemoryEmpty, and loadr3.");
+        println("The commands you can use include: clear, shutdown, setdate, getdate, settime, gettime, version, showPCB, showReadyPCBs, showBlockedPCBs, showAllPCBs, blockPCB, unblockPCB, suspendPCB, resumePCB, showFreeMemory, setPCBPriority, showAllocatedMemory, allocateMemory, freeMemory, isMemoryEmpty, and loadr3.");
     }
 
     // Display the help message for the command they specified
@@ -70,30 +70,30 @@ void help (int argc, char* argv[]) {
             println("Usage: showAllPCB");
         }
 
-        // else if (strcmp(argv[1], "blockPCB") == 0){
-        //     println("blockPCB will change a PCB's state to blocked.");
-        //     println("Usage: blockPCB pcbName");
-        // }
+        else if (strcmp(argv[1], "blockPCB") == 0){
+            println("blockPCB will change a PCB's state to blocked.");
+            println("Usage: blockPCB pcbName");
+        }
 
-        // else if (strcmp(argv[1], "unblockPCB") == 0){
-        //     println("The unblock command will unblock a blocked PCB.");
-        //     println("Usage: unblockPCB pcbName");
-        // }
+        else if (strcmp(argv[1], "unblockPCB") == 0){
+            println("The unblock command will unblock a blocked PCB.");
+            println("Usage: unblockPCB pcbName");
+        }
 
-        // else if (strcmp(argv[1], "suspendPCB") == 0){
-        //     println("The suspend command will change a PCB's state to suspended.");
-        //     println("Usage: suspendPCB pcbName");
-        // }
+        else if (strcmp(argv[1], "suspendPCB") == 0){
+            println("The suspend command will change a PCB's state to suspended.");
+            println("Usage: suspendPCB pcbName");
+        }
 
-        // else if (strcmp(argv[1], "resumePCB") == 0){
-        //     println("The resume command will find a PCB and change its state to resumed.");
-        //     println("Usage: resumePCB pcbName");
-        // }
+        else if (strcmp(argv[1], "resumePCB") == 0){
+            println("The resume command will find a PCB and change its state to resumed.");
+            println("Usage: resumePCB pcbName");
+        }
 
-        // else if (strcmp(argv[1], "setPCBPriority") == 0){
-        //     println("The setPCBPriority command can accept two arguments. The name of a process, and a priority to set in the process. The priority can be an integer between 0 and 9. SetPriority will find the process and then set the priority.");
-        //     println("Usage: setPCBPriority pcbName priority");
-        // }
+        else if (strcmp(argv[1], "setPCBPriority") == 0){
+            println("The setPCBPriority command can accept two arguments. The name of a process, and a priority to set in the process. The priority can be an integer between 0 and 9. SetPriority will find the process and then set the priority.");
+            println("Usage: setPCBPriority pcbName priority");
+        }
 
         else if (strcmp(argv[1], "isMemoryEmpty") == 0){
             println("The isMemoryEmpty command displays true if there is no allocated memory, false otherwise");
@@ -113,8 +113,13 @@ void help (int argc, char* argv[]) {
         else if (strcmp(argv[1], "loadr3") == 0){
             println("The loadr3 command spawns five processes and adds them into the ready queue to be executed.");
             println("Usage: loadr3");
-        }        
-
+        }
+        
+        else if (strcmp(argv[1], "allocateMemory") == 0){
+            println("The allocateMemory command allocates a chunk of memory from the heap.");
+            println("Usage: allocateMemory sizeInBytes");
+        }
+                
         // Error handling
         else{
             println("Invalid input, command not found.");

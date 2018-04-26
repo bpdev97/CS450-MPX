@@ -108,25 +108,25 @@ int comhand() {
       showAll();
     }
 
-    // else if(strcmp(argv[0], "blockPCB") == 0) {
-    //   blockPCB(argc, argv);
-    // }
+    else if(strcmp(argv[0], "blockPCB") == 0) {
+      blockPCB(argc, argv);
+    }
 
-    // else if(strcmp(argv[0], "unblockPCB") == 0) {
-    //   unblockPCB(argc, argv);
-    // }
+    else if(strcmp(argv[0], "unblockPCB") == 0) {
+      unblockPCB(argc, argv);
+    }
 
-    // else if(strcmp(argv[0], "suspendPCB") == 0) {
-    //   suspendPCB(argc, argv);
-    // }
+    else if(strcmp(argv[0], "suspendPCB") == 0) {
+      suspendPCB(argc, argv);
+    }
 
-    // else if(strcmp(argv[0], "resumePCB") == 0) {
-    //   resumePCB(argc, argv);
-    // }
+    else if(strcmp(argv[0], "resumePCB") == 0) {
+      resumePCB(argc, argv);
+    }
 
-    // else if(strcmp(argv[0], "setPCBPriority") == 0) {
-    //   setPriority(argc, argv);
-    // }
+    else if(strcmp(argv[0], "setPCBPriority") == 0) {
+      setPriority(argc, argv);
+    }
 
     else if(strcmp(argv[0], "loadr3") == 0) {
       InsertPCB(SetupPCB("proc1", 1, 1, &proc1));
@@ -148,13 +148,13 @@ int comhand() {
       showFreeMemory();
     }
     
-    // else if(strcmp(argv[0], "allocateMemory") == 0) {
-    //   allocateMemory(atoi(argv[1]));
-    // }
+    else if(strcmp(argv[0], "allocateMemory") == 0) {
+      allocateMemory(atoi(argv[1]));
+    }
 
-    // else if(strcmp(argv[0], "freeMemory") == 0) {
-    //   freeMemory((int) atoi(argv[1]));
-    // }
+    else if(strcmp(argv[0], "freeMemory") == 0) {
+      freeMemory((int) atoi(argv[1]));
+    }
 
     // Command not recognized
     else {
