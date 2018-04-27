@@ -18,16 +18,14 @@ Currently there are twenty commands including the help command that can be execu
 10. showReady
 11. showBlocked
 12. showAll
-13. createPCB
-14. deletePCB
-15. block
-16. unblock
-17. suspend
-18. resume
-19. setPriority
-20. isEmpty
-21. showFreeMemory
-22. showAllocatedMemory
+13. block
+14. unblock
+15. suspend
+16. resume
+17. setPriority
+18. isEmpty
+19. showFreeMemory
+20. showAllocatedMemory
 
 
 ### help
@@ -78,14 +76,6 @@ The showBlocked command displays the name, class, ready state, blocked state, an
 *Usage:*  
 The showAll command displays the name, class, ready state, blocked state, and priority for all PCBs in the ready queue, readySuspended queue, blocked queue, and blockedSuspended queue. The showAll command can be used by typing *showAll*.
 
-### createPCB
-*Usage:* 
-The createPCB function creates a PCB with the user input name, class, and priority. The createPCB command can be used by typing createPCB.
-
-### deletePCB
-*Usage:* 
-The deletePCB function deletes a PCB with the user input name. The deletePCB command can be used by typing deletePCB.
-
 ### block
 *Usage:*
 The block command can accept one argument, that being the name of a process. Block will find a process and change its state to blocked.
@@ -105,10 +95,6 @@ The resume command can accept one argument, that being the name of a process. Re
 ### setPriority
 *Usage:*
 The setPriority command can accept two arguments. The name of a process, and a priority to set in the process. The priority can be an integer between 0 and 9. SetPriority will find the process and then set the priority.
-
-### yield
-*Usage:*
-The yield command takes in no arguments. It will make the command handler IDLE such that other processes can be run.
 
 ### loadr3
 *Usage:*
