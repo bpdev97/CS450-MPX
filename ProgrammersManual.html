@@ -1,245 +1,698 @@
-<h1 id="programmers-manual">Programmer's Manual</h1>
+<h1 id="programmersmanual">Programmer's Manual</h1>
+
 <p>The purpose of this manual is to give information on all of the functions included in this MPX. Each .c file will have its own section for the functions contained in it.</p>
-<h2 id="functions---processcommand.c">Functions - processcommand.c</h2>
+
+<h2 id="functionsprocesscommandc">Functions - processcommand.c</h2>
+
 <p>proccesscommand.c contains the functions for all of the commands that can be executed in MPX.</p>
+
 <h3 id="help">help()</h3>
-<p><em>Description:</em><br />The help function is used to print help messages for commands.</p>
-<p><em>Declaration:</em><br />void help(int numword, char* args[]);</p>
-<p><em>Parameters:</em><br />numword - represents the number of arguments passed from the command line.<br />args - an array of character pointers containing the arguments from the command line. Help can only take one argument and it will check to see if that argument corresponds to a command with a help message. If no argument is given, help will print out a list of possible commands that it can help with.</p>
-<p><em>Return Value:</em><br />help has no return value.</p>
+
+<p><em>Description:</em> <br />
+The help function is used to print help messages for commands.</p>
+
+<p><em>Declaration:</em> <br />
+void help(int numword, char* args[]);</p>
+
+<p><em>Parameters:</em> <br />
+numword - represents the number of arguments passed from the command line. <br />
+args - an array of character pointers containing the arguments from the command line. Help can only take one argument and it will check to see if that argument corresponds to a command with a help message. If no argument is given, help will print out a list of possible commands that it can help with.</p>
+
+<p><em>Return Value:</em> <br />
+help has no return value.</p>
+
 <h3 id="version">version()</h3>
-<p><em>Description:</em><br />The version function prints the current version of MPX.</p>
-<p><em>Declaration:</em><br />void version(int argc, char* argv[]);</p>
-<p><em>Parameters:</em><br />argc - represents the number of arguments passed from the command line.<br />argv - an array of character pointers containing the arguments from the command line. Version consumes no arguments.</p>
-<p><em>Return Value:</em><br />version has no return value.</p>
+
+<p><em>Description:</em> <br />
+The version function prints the current version of MPX.</p>
+
+<p><em>Declaration:</em> <br />
+void version(int argc, char* argv[]);</p>
+
+<p><em>Parameters:</em> <br />
+argc - represents the number of arguments passed from the command line. <br />
+argv - an array of character pointers containing the arguments from the command line. Version consumes no arguments.</p>
+
+<p><em>Return Value:</em> <br />
+version has no return value.</p>
+
 <h3 id="settime">settime()</h3>
-<p><em>Description:</em><br />The settime function sets the system time in 24 hour format. If an improper time string is passed to settime, an error message will be given.</p>
-<p><em>Declaration:</em><br />void settime(int argc, char* argv[]);</p>
-<p><em>Parameters:</em><br />argc - represents the number of arguments passed from the command line.<br />argv - an array of character pointers containing the arguments from the command line. Settime can only take one argument from the command line. That argument is a string in the format <em>hour:minute:second:</em>.</p>
-<p><em>Return Value:</em><br />settime has no return value.</p>
-<p><em>Example:</em><br />settime 15:30:45 sets the time to the equivalent of 3:30:45 PM.</p>
+
+<p><em>Description:</em> <br />
+The settime function sets the system time in 24 hour format. If an improper time string is passed to settime, an error message will be given.</p>
+
+<p><em>Declaration:</em> <br />
+void settime(int argc, char* argv[]);</p>
+
+<p><em>Parameters:</em> <br />
+argc - represents the number of arguments passed from the command line. <br />
+argv - an array of character pointers containing the arguments from the command line. Settime can only take one argument from the command line. That argument is a string in the format <em>hour:minute:second:</em>.</p>
+
+<p><em>Return Value:</em> <br />
+settime has no return value.</p>
+
+<p><em>Example:</em> <br />
+settime 15:30:45 sets the time to the equivalent of 3:30:45 PM.</p>
+
 <h3 id="gettime">gettime()</h3>
-<p><em>Description:</em><br />The gettime function prints the current system time.</p>
-<p><em>Declaration:</em><br />void gettime(int argc, char* argv[]);</p>
-<p><em>Parameters:</em><br />argc - represents the number of arguments passed from the command line.<br />argv - an array of character pointers containing the arguments from the command line. Gettime consumes no arguments.</p>
-<p><em>Return Value:</em><br />gettime has no return value.</p>
+
+<p><em>Description:</em> <br />
+The gettime function prints the current system time.</p>
+
+<p><em>Declaration:</em> <br />
+void gettime(int argc, char* argv[]);</p>
+
+<p><em>Parameters:</em> <br />
+argc - represents the number of arguments passed from the command line. <br />
+argv - an array of character pointers containing the arguments from the command line. Gettime consumes no arguments.</p>
+
+<p><em>Return Value:</em> <br />
+gettime has no return value.</p>
+
 <h3 id="setdate">setdate()</h3>
-<p><em>Description:</em><br />The setdate function sets the system date.</p>
-<p><em>Declaration:</em><br />void setdate(int argc, char* argv[]);</p>
-<p><em>Parameters:</em><br />argc - represents the number of arguments passed from the command line.<br />argv - an array of character pointers containing the arguments from the command line. Setdate can only take one argument from the command line. That is a string in the format <em>Month/Day/Year</em>. <em>Year</em> must be in two digit format.</p>
-<p><em>Return Value:</em><br />setdate has no return value.</p>
+
+<p><em>Description:</em> <br />
+The setdate function sets the system date.</p>
+
+<p><em>Declaration:</em> <br />
+void setdate(int argc, char* argv[]);</p>
+
+<p><em>Parameters:</em> <br />
+argc - represents the number of arguments passed from the command line. <br />
+argv - an array of character pointers containing the arguments from the command line. Setdate can only take one argument from the command line. That is a string in the format <em>Month/Day/Year</em>. <em>Year</em> must be in two digit format.</p>
+
+<p><em>Return Value:</em> <br />
+setdate has no return value.</p>
+
 <h3 id="getdate">getdate()</h3>
-<p><em>Description:</em><br />The getdate function prints the current system date in the format <em>Month/Day/Year</em>.</p>
-<p><em>Declaration:</em><br />void getdate(int argc, char* argv[]);</p>
-<p><em>Parameters:</em><br />argc - represents the number of arguments passed from the command line.<br />argv - an array of character pointers containing the arguments from the command line. The getdate function consumes no arguments.</p>
-<p><em>Return Value:</em><br />getdate has no return value.</p>
+
+<p><em>Description:</em> <br />
+The getdate function prints the current system date in the format <em>Month/Day/Year</em>.</p>
+
+<p><em>Declaration:</em> <br />
+void getdate(int argc, char* argv[]);</p>
+
+<p><em>Parameters:</em> <br />
+argc - represents the number of arguments passed from the command line. <br />
+argv - an array of character pointers containing the arguments from the command line. The getdate function consumes no arguments.</p>
+
+<p><em>Return Value:</em> <br />
+getdate has no return value.</p>
+
 <h3 id="tobcd">tobcd()</h3>
-<p><em>Description:</em><br />The tobcd function take a binary value and converts it to binary coded decimal.</p>
-<p><em>Declaration:</em><br />int tobcd(int binary);</p>
-<p><em>Parameters:</em><br />binary - binary value to be converted</p>
-<p><em>Return Value:</em><br />Returns a BCD value</p>
+
+<p><em>Description:</em> <br />
+The tobcd function take a binary value and converts it to binary coded decimal.</p>
+
+<p><em>Declaration:</em> <br />
+int tobcd(int binary);</p>
+
+<p><em>Parameters:</em> <br />
+binary - binary value to be converted</p>
+
+<p><em>Return Value:</em> <br />
+Returns a BCD value</p>
+
 <h3 id="printbcd">printbcd()</h3>
-<p><em>Description:</em><br />Takes in a BCD value and prints out its ASCII representation</p>
-<p><em>Declaration:</em><br />void printbcd(int bcd);</p>
-<p><em>Parameters:</em><br />bcd - BCD value to be printed</p>
-<p><em>Return Value:</em><br />No return value.</p>
+
+<p><em>Description:</em> <br />
+Takes in a BCD value and prints out its ASCII representation</p>
+
+<p><em>Declaration:</em> <br />
+void printbcd(int bcd);</p>
+
+<p><em>Parameters:</em> <br />
+bcd - BCD value to be printed</p>
+
+<p><em>Return Value:</em> <br />
+No return value.</p>
+
 <h3 id="showpcb">showPCB()</h3>
-<p><em>Description:</em><br />The showPCB function searches the ready and blocked queues for a PCB name and if found, prints the name, class, ready state, blocked state, and priority of the PCB. If the PCB name is not found in the queues then a error message is displayed.</p>
-<p><em>Declaration:</em><br />void showPCB(int argc, char* argv[]);</p>
-<p><em>Parameters:</em><br />argc - represents the number of arguments passed from the command line.<br />argv - an array of character pointers containing the arguments from the command line. The PCB name is found in argv[1]</p>
-<p><em>Return Value:</em><br />showPCB has no return value.</p>
+
+<p><em>Description:</em> <br />
+The showPCB function searches the ready and blocked queues for a PCB name and if found, prints the name, class, ready state, blocked state, and priority of the PCB.  If the PCB name is not found in the queues then a error message is displayed.</p>
+
+<p><em>Declaration:</em> <br />
+void showPCB(int argc, char* argv[]);</p>
+
+<p><em>Parameters:</em> <br />
+argc - represents the number of arguments passed from the command line. <br />
+argv - an array of character pointers containing the arguments from the command line. The PCB name is found in argv[1]</p>
+
+<p><em>Return Value:</em> <br />
+showPCB has no return value.</p>
+
 <h3 id="showready">showReady()</h3>
-<p><em>Description:</em><br />The showReady function prints the name, class, ready state, blocked state, and priority of every PCB in the ready queue and readySuspended queue.</p>
-<p><em>Declaration:</em><br />void showReady();</p>
-<p><em>Parameters:</em><br />No parameters</p>
-<p><em>Return Value:</em><br />showReady has no return value.</p>
+
+<p><em>Description:</em> <br />
+The showReady function prints the name, class, ready state, blocked state, and priority of every PCB in the ready queue and readySuspended queue.</p>
+
+<p><em>Declaration:</em> <br />
+void showReady();</p>
+
+<p><em>Parameters:</em> <br />
+No parameters</p>
+
+<p><em>Return Value:</em> <br />
+showReady has no return value.</p>
+
 <h3 id="showblocked">showBlocked()</h3>
-<p><em>Description:</em><br />The showBlocked function prints the name, class, ready state, blocked state, and priority of every PCB in the blocked queue and blockedSuspended queue.</p>
-<p><em>Declaration:</em><br />void showBlocked();</p>
-<p><em>Parameters:</em><br />No parameters</p>
-<p><em>Return Value:</em><br />showBlocked has no return value.</p>
+
+<p><em>Description:</em> <br />
+The showBlocked function prints the name, class, ready state, blocked state, and priority of every PCB in the blocked queue and blockedSuspended queue.</p>
+
+<p><em>Declaration:</em> <br />
+void showBlocked();</p>
+
+<p><em>Parameters:</em> <br />
+No parameters</p>
+
+<p><em>Return Value:</em> <br />
+showBlocked has no return value.</p>
+
 <h3 id="showall">showAll()</h3>
-<p><em>Description:</em><br />The showBlocked function prints the name, class, ready state, blocked state, and priority of every PCB in the ready, suspendedReady, blocked, and blockedSuspended queues.</p>
-<p><em>Declaration:</em><br />void showAll();</p>
-<p><em>Parameters:</em><br />No parameters</p>
-<p><em>Return Value:</em><br />showAll has no return value.</p>
+
+<p><em>Description:</em> <br />
+The showBlocked function prints the name, class, ready state, blocked state, and priority of every PCB in the ready, suspendedReady, blocked, and blockedSuspended queues.</p>
+
+<p><em>Declaration:</em> <br />
+void showAll();</p>
+
+<p><em>Parameters:</em> <br />
+No parameters</p>
+
+<p><em>Return Value:</em> <br />
+showAll has no return value.</p>
+
 <h3 id="createpcb">CreatePCB()</h3>
-<p><em>Description:</em><br />The CreatePCB function creates a PCB with the user input name, class, and priority.</p>
-<p><em>Declaration:</em><br />void CreatePCB(int argc, char <em>argv[], void</em> function);</p>
-<p><em>Parameters:</em><br />argc - represents the number of arguments passed from the command line.<br />argv - an array of character pointers containing the arguments from the command line. function - initializes instruction pointer</p>
-<p><em>Return Value:</em><br />CreatePCB has no return value.</p>
+
+<p><em>Description:</em> <br />
+The CreatePCB function creates a PCB with the user input name, class, and priority.</p>
+
+<p><em>Declaration:</em> <br />
+void CreatePCB(int argc, char <em>argv[], void</em> function);</p>
+
+<p><em>Parameters:</em> <br />
+argc - represents the number of arguments passed from the command line. <br />
+argv - an array of character pointers containing the arguments from the command line.
+function - initializes instruction pointer</p>
+
+<p><em>Return Value:</em> <br />
+CreatePCB has no return value.</p>
+
 <h3 id="deletepcb">DeletePCB()</h3>
-<p><em>Description:</em><br />The DeletePCB function deletes a PCB with the user input name.</p>
-<p><em>Declaration:</em><br />void DeletePCB(int argc, char *argv[]);</p>
-<p><em>Parameters:</em><br />argc - represents the number of arguments passed from the command line.<br />argv - an array of character pointers containing the arguments from the command line.</p>
-<p><em>Return Value:</em><br />DeletePCB has no return value.</p>
+
+<p><em>Description:</em> <br />
+The DeletePCB function deletes a PCB with the user input name.</p>
+
+<p><em>Declaration:</em> <br />
+void DeletePCB(int argc, char *argv[]);</p>
+
+<p><em>Parameters:</em> <br />
+argc - represents the number of arguments passed from the command line. <br />
+argv - an array of character pointers containing the arguments from the command line.</p>
+
+<p><em>Return Value:</em> <br />
+DeletePCB has no return value.</p>
+
 <h3 id="blockpcb">blockPCB()</h3>
-<p><em>Description:</em> The blockPCB function finds a PCB, changes its ready state to blocked (-1) and then inserts it into the proper queue.</p>
-<p><em>Declaration:</em> int blockPCB(int argc, char *argv[]);</p>
-<p><em>Parameters:</em> argc - represents the number of arguments passed from the command line.<br />argv - an array of character pointers containing the arguments from the command line.</p>
-<p><em>Return Value:</em> Returns an integer representing the success or failure of the function. Returns 1 for success, 0 for failure.</p>
+
+<p><em>Description:</em>
+The blockPCB function finds a PCB, changes its ready state to blocked (-1) and then inserts it into the proper queue.</p>
+
+<p><em>Declaration:</em>
+int blockPCB(int argc, char *argv[]);</p>
+
+<p><em>Parameters:</em>
+argc - represents the number of arguments passed from the command line. <br />
+argv - an array of character pointers containing the arguments from the command line.</p>
+
+<p><em>Return Value:</em>
+Returns an integer representing the success or failure of the function. Returns 1 for success, 0 for failure.</p>
+
 <h3 id="unblockpcb">unblockPCB()</h3>
-<p><em>Description:</em> The unblockPCB function finds a PCB, changes its ready state to ready (1) and then inserts it into the proper queue.</p>
-<p><em>Declaration:</em> int unblockPCB(int argc, char *argv[]);</p>
-<p><em>Parameters:</em> argc - represents the number of arguments passed from the command line.<br />argv - an array of character pointers containing the arguments from the command line.</p>
-<p><em>Return Value:</em> Returns an integer representing the success or failure of the function. Returns 1 for success, 0 for failure.</p>
+
+<p><em>Description:</em>
+The unblockPCB function finds a PCB, changes its ready state to ready (1) and then inserts it into the proper queue.</p>
+
+<p><em>Declaration:</em>
+int unblockPCB(int argc, char *argv[]);</p>
+
+<p><em>Parameters:</em>
+argc - represents the number of arguments passed from the command line. <br />
+argv - an array of character pointers containing the arguments from the command line.</p>
+
+<p><em>Return Value:</em>
+Returns an integer representing the success or failure of the function. Returns 1 for success, 0 for failure.</p>
+
 <h3 id="suspendpcb">suspendPCB()</h3>
-<p><em>Description:</em> The suspendPCB function finds a PCB, changes its suspend state to suspended (1) and then inserts it into the proper queue.</p>
-<p><em>Declaration:</em> int suspendPCB(int argc, char *argv[]);</p>
-<p><em>Parameters:</em> argc - represents the number of arguments passed from the command line.<br />argv - an array of character pointers containing the arguments from the command line.</p>
-<p><em>Return Value:</em> Returns an integer representing the success or failure of the function. Returns 1 for success, 0 for failure.</p>
+
+<p><em>Description:</em>
+The suspendPCB function finds a PCB, changes its suspend state to suspended (1) and then inserts it into the proper queue.</p>
+
+<p><em>Declaration:</em>
+int suspendPCB(int argc, char *argv[]);</p>
+
+<p><em>Parameters:</em>
+argc - represents the number of arguments passed from the command line. <br />
+argv - an array of character pointers containing the arguments from the command line.</p>
+
+<p><em>Return Value:</em>
+Returns an integer representing the success or failure of the function. Returns 1 for success, 0 for failure.</p>
+
 <h3 id="resumepcb">resumePCB()</h3>
-<p><em>Description:</em> The resumePCB function finds a PCB, changes its suspend state to resumed (0) and then inserts it into the proper queue.</p>
-<p><em>Declaration:</em> int resumePCB(int argc, char *argv[]);</p>
-<p><em>Parameters:</em> argc - represents the number of arguments passed from the command line.<br />argv - an array of character pointers containing the arguments from the command line.</p>
-<p><em>Return Value:</em> Returns an integer representing the success or failure of the function. Returns 1 for success, 0 for failure.</p>
+
+<p><em>Description:</em>
+The resumePCB function finds a PCB, changes its suspend state to resumed (0) and then inserts it into the proper queue.</p>
+
+<p><em>Declaration:</em>
+int resumePCB(int argc, char *argv[]);</p>
+
+<p><em>Parameters:</em>
+argc - represents the number of arguments passed from the command line. <br />
+argv - an array of character pointers containing the arguments from the command line.</p>
+
+<p><em>Return Value:</em>
+Returns an integer representing the success or failure of the function. Returns 1 for success, 0 for failure.</p>
+
 <h3 id="setpriority">setPriority()</h3>
+
 <p>The setPriority function finds a PCB, changes its priority to the priority given in argv and then inserts it into the proper queue.</p>
-<p><em>Declaration:</em> int setPriority(int argc, char *argv[]);</p>
-<p><em>Parameters:</em> argc - represents the number of arguments passed from the command line.<br />argv - an array of character pointers containing the arguments from the command line.</p>
-<p><em>Return Value:</em> Returns an integer representing the success or failure of the function. Returns 1 for success, 0 for failure.</p>
+
+<p><em>Declaration:</em>
+int setPriority(int argc, char *argv[]);</p>
+
+<p><em>Parameters:</em>
+argc - represents the number of arguments passed from the command line. <br />
+argv - an array of character pointers containing the arguments from the command line.</p>
+
+<p><em>Return Value:</em>
+Returns an integer representing the success or failure of the function. Returns 1 for success, 0 for failure.</p>
+
 <h3 id="createalarm">createAlarm()</h3>
-<p><em>Description:</em><br />Sets an alarm with a message that is displayed when the alarm time and date has passed or is equal to the current time and date</p>
-<p><em>Declaration:</em><br />void createAlarm(int argc, char *argv[])</p>
-<p><em>Parameters:</em><br />argc - represents the number of arguments passed from the command line argv - an array of character pointers containing the arguments from the command line.</p>
-<p><em>Return Value:</em><br />No return value</p>
+
+<p><em>Description:</em> <br />
+Sets an alarm with a message that is displayed when the alarm time and date has passed or is equal to the current time and date</p>
+
+<p><em>Declaration:</em> <br />
+void createAlarm(int argc, char *argv[])</p>
+
+<p><em>Parameters:</em> <br />
+argc - represents the number of arguments passed from the command line
+argv - an array of character pointers containing the arguments from the command line.</p>
+
+<p><em>Return Value:</em> <br />
+No return value</p>
+
 <h3 id="showallocatedmemory">showAllocatedMemory()</h3>
-<p><em>Description:</em><br />The showAllocatedMemory function prints the begining address and size of a block of allocated memory.</p>
-<p><em>Declaration:</em><br />void showAllocatedMemory();</p>
-<p><em>Parameters:</em><br />No parameters</p>
-<p><em>Return Value:</em><br />no return value.</p>
+
+<p><em>Description:</em> <br />
+The showAllocatedMemory function prints the begining address and size of a block of allocated memory.</p>
+
+<p><em>Declaration:</em> <br />
+void showAllocatedMemory();</p>
+
+<p><em>Parameters:</em> <br />
+No parameters</p>
+
+<p><em>Return Value:</em> <br />
+no return value.</p>
+
 <h3 id="showallocatedmemory-1">showAllocatedMemory()</h3>
-<p><em>Description:</em><br />The showAllocatedMemory function prints the begining address and size of a block of free memory.</p>
-<p><em>Declaration:</em><br />void showFreeMemory();</p>
-<p><em>Parameters:</em><br />No parameters</p>
-<p><em>Return Value:</em><br />no return value.</p>
+
+<p><em>Description:</em> <br />
+The showAllocatedMemory function prints the begining address and size of a block of free memory.</p>
+
+<p><em>Declaration:</em> <br />
+void showFreeMemory();</p>
+
+<p><em>Parameters:</em> <br />
+No parameters</p>
+
+<p><em>Return Value:</em> <br />
+no return value.</p>
+
 <h3 id="isempty">isEmpty()</h3>
-<p><em>Description:</em><br />The isEmpty function prints true if there is no allocated blocks of memory or prints false if there is allocated blocks of memory</p>
-<p><em>Declaration:</em><br />void isEmpty();</p>
-<p><em>Parameters:</em><br />No parameters</p>
-<p><em>Return Value:</em><br />no return value.</p>
-<h2 id="functions---polling.c">Functions - polling.c</h2>
+
+<p><em>Description:</em> <br />
+The isEmpty function prints true if there is no allocated blocks of memory or prints false if there is allocated blocks of memory</p>
+
+<p><em>Declaration:</em> <br />
+void isEmpty();</p>
+
+<p><em>Parameters:</em> <br />
+No parameters</p>
+
+<p><em>Return Value:</em> <br />
+no return value.</p>
+
+<h2 id="functionspollingc">Functions - polling.c</h2>
+
 <p>polling.c contains the functions necessary to poll user input from the com port.</p>
+
 <h3 id="poll">poll()</h3>
-<p><em>Description:</em><br />The poll function takes keyboard input and checks to see if it is a character or a command key.</p>
-<p><em>Declaration:</em><br />int poll(char <em>buffer, int </em>count);</p>
-<p><em>Parameters:</em><br />buffer - pointer to a character buffer<br />count - pointer to the size of the buffer</p>
-<p><em>Return Value:</em><br />poll returns 0.</p>
+
+<p><em>Description:</em> <br />
+The poll function takes keyboard input and checks to see if it is a character or a command key.</p>
+
+<p><em>Declaration:</em> <br />
+int poll(char *buffer, int *count);</p>
+
+<p><em>Parameters:</em> <br />
+buffer - pointer to a character buffer <br />
+count - pointer to the size of the buffer  </p>
+
+<p><em>Return Value:</em> <br />
+poll returns 0.</p>
+
 <h3 id="clearcommandline">clearCommandLine()</h3>
-<p><em>Description:</em><br />Clears the character buffer from the command line.</p>
-<p><em>Declaration:</em><br />void clearCommandLine(int counter, int cursorPosition);</p>
-<p><em>Parameters:</em><br />counter - number of characters on the line cursorPosition - position of the cursor on the line</p>
-<p><em>Return Value:</em><br />No return value.</p>
+
+<p><em>Description:</em> <br />
+Clears the character buffer from the command line.</p>
+
+<p><em>Declaration:</em> <br />
+void clearCommandLine(int counter, int cursorPosition);</p>
+
+<p><em>Parameters:</em> <br />
+counter - number of characters on the line
+cursorPosition - position of the cursor on the line</p>
+
+<p><em>Return Value:</em> <br />
+No return value.</p>
+
 <h3 id="resetcursor">resetCursor()</h3>
-<p><em>Description:</em><br />Moves the cursor to the original position after a new buffer is printed to the terminal</p>
-<p><em>Declaration:</em><br />void resetCursor(int cursorPosition);</p>
-<p><em>Parameters:</em><br />cursorPosition - original position of the cursor</p>
-<p><em>Return Value:</em><br />No return value.</p>
-<h2 id="functions---comhand.c">Functions - comhand.c</h2>
+
+<p><em>Description:</em> <br />
+Moves the cursor to the original position after a new buffer is printed to the terminal</p>
+
+<p><em>Declaration:</em> <br />
+void resetCursor(int cursorPosition);</p>
+
+<p><em>Parameters:</em> <br />
+cursorPosition - original position of the cursor</p>
+
+<p><em>Return Value:</em> <br />
+No return value.</p>
+
+<h2 id="functionscomhandc">Functions - comhand.c</h2>
+
 <p>comhand.c contains the functions necessary to handle commands in MPX</p>
+
 <h3 id="comhand">comhand()</h3>
-<p><em>Description:</em><br />comhand is a control functions that initializes several other systems. It sets up the polling function, handles the command prompt, and handles commands and arguments. It also facilitates the shutdown of the operating system.</p>
-<p><em>Declaration:</em><br />int comhand();</p>
-<p><em>Parameters:</em><br />No parameters.</p>
-<p><em>Return Value:</em><br />Returns 0 when exiting the operating system.</p>
-<h2 id="functions---string.c">Functions - string.c</h2>
+
+<p><em>Description:</em> <br />
+comhand is a control functions that initializes several other systems. It sets up the polling function, handles the command prompt, and handles commands and arguments. It also facilitates the shutdown of the operating system.</p>
+
+<p><em>Declaration:</em> <br />
+int comhand();</p>
+
+<p><em>Parameters:</em> <br />
+No parameters.</p>
+
+<p><em>Return Value:</em> <br />
+Returns 0 when exiting the operating system.</p>
+
+<h2 id="functionsstringc">Functions - string.c</h2>
+
 <p>string.c contains a multitude of functions used to manipulate strings.</p>
+
 <h3 id="swap">swap()</h3>
-<p><em>Description:</em><br />swap swaps two characters.</p>
-<p><em>Declaration:</em><br />void swap(char <em>x, char </em>y);</p>
-<p><em>Parameters:</em><br />x - pointer to first character y - pointer to second character</p>
-<p><em>Return Value:</em><br />No return value.</p>
+
+<p><em>Description:</em> <br />
+swap swaps two characters.</p>
+
+<p><em>Declaration:</em> <br />
+void swap(char *x, char *y);</p>
+
+<p><em>Parameters:</em> <br />
+x - pointer to first character
+y - pointer to second character</p>
+
+<p><em>Return Value:</em> <br />
+No return value.</p>
+
 <h3 id="reverse">reverse()</h3>
-<p><em>Description:</em><br />reverse is given a character pointer and the first and last positons of the string. Reverse then reverses all of the characters in the string.</p>
-<p><em>Declaration:</em><br />char <em>reverse(char </em>buffer, int i, intj);</p>
-<p><em>Parameters:</em><br />buffer - pointer to the string to be reversed i - first position j - second position</p>
-<p><em>Return Value:</em><br />reverse returns the reversed character buffer.</p>
+
+<p><em>Description:</em> <br />
+reverse is given a character pointer and the first and last positons of the string. Reverse then reverses all of the characters in the string.</p>
+
+<p><em>Declaration:</em> <br />
+char *reverse(char *buffer, int i, intj);</p>
+
+<p><em>Parameters:</em> <br />
+buffer - pointer to the string to be reversed
+i - first position
+j - second position</p>
+
+<p><em>Return Value:</em> <br />
+reverse returns the reversed character buffer.</p>
+
 <h3 id="abs">abs()</h3>
-<p><em>Description:</em><br />abs returns the absolute value of a signed int.</p>
-<p><em>Declaration:</em><br />int abs(int x);</p>
-<p><em>Parameters:</em><br />x - signed integer value</p>
-<p><em>Return Value:</em><br />Returns absolute value of input.</p>
+
+<p><em>Description:</em> <br />
+abs returns the absolute value of a signed int.</p>
+
+<p><em>Declaration:</em> <br />
+int abs(int x);</p>
+
+<p><em>Parameters:</em> <br />
+x - signed integer value</p>
+
+<p><em>Return Value:</em> <br />
+Returns absolute value of input.</p>
+
 <h3 id="itoa">itoa()</h3>
-<p><em>Description:</em><br />itoa converts an integer value to a string using a given number base and then stores and returns the result.</p>
-<p><em>Declaration:</em><br />char <em>itoa(int value, char </em>str, int base);</p>
-<p><em>Parameters:</em><br />value - integer value to be converted str - pointer to buffer for string storage base - number base to convert to</p>
-<p><em>Return Value:</em><br />itoa returns the number string</p>
+
+<p><em>Description:</em> <br />
+itoa converts an integer value to a string using a given number base and then stores and returns the result.</p>
+
+<p><em>Declaration:</em> <br />
+char *itoa(int value, char *str, int base);</p>
+
+<p><em>Parameters:</em> <br />
+value - integer value to be converted
+str - pointer to buffer for string storage
+base - number base to convert to</p>
+
+<p><em>Return Value:</em> <br />
+itoa returns the number string</p>
+
 <h3 id="sprintf">sprintf()</h3>
-<p><em>Description:</em><br />sprintf takes in a blank character array, a string with format tags, and then an arbitrary number of arguments. sprintf formats a string given these inputs and saves and returns the result. Arguments are formatted into the string using format tags. Integers are formated using %d or #i, hex uses %x, octal uses %o, single characters use %c, and strings use %s.</p>
-<p><em>Declaration:</em><br />int sprintf(char <em>str, const char </em>format, ...);</p>
-<p><em>Parameters:</em><br />str - character array that ouput is stored in format - string containing format tags ... - list of arguments to be formatted into the string</p>
-<p><em>Return Value:</em><br />Returns a formatted string.</p>
-<h2 id="functions---mpx_supt.c">Functions - mpx_supt.c</h2>
+
+<p><em>Description:</em> <br />
+sprintf takes in a blank character array, a string with format tags, and then an arbitrary number of arguments. sprintf formats a string given these inputs and saves and returns the result. Arguments are formatted into the string using format tags. Integers are formated using %d or #i, hex uses %x, octal uses %o, single characters use %c, and strings use %s.</p>
+
+<p><em>Declaration:</em> <br />
+int sprintf(char *str, const char *format, ...);</p>
+
+<p><em>Parameters:</em> <br />
+str - character array that ouput is stored in
+format - string containing format tags
+... - list of arguments to be formatted into the string</p>
+
+<p><em>Return Value:</em> <br />
+Returns a formatted string.</p>
+
+<h2 id="functionsmpx_suptc">Functions - mpx_supt.c</h2>
+
 <p>mpx_supt.c contains supplemental functions for MPX</p>
+
 <h3 id="print">print()</h3>
-<p><em>Description:</em><br />Prints a character string to the terminal with no new line character.</p>
-<p><em>Declaration:</em><br />void print(char *string);</p>
-<p><em>Parameters:</em><br />string - character pointer to string that will be printed</p>
-<p><em>Return Value:</em><br />No return value.</p>
+
+<p><em>Description:</em> <br />
+Prints a character string to the terminal with no new line character.</p>
+
+<p><em>Declaration:</em> <br />
+void print(char *string);</p>
+
+<p><em>Parameters:</em> <br />
+string - character pointer to string that will be printed</p>
+
+<p><em>Return Value:</em> <br />
+No return value.</p>
+
 <h3 id="println">println()</h3>
-<p><em>Description:</em><br />Prints a character string to the terminal with a new line character.</p>
-<p><em>Declaration:</em><br />void println(char *string);</p>
-<p><em>Parameters:</em><br />string - character pointer to string that will be printed</p>
-<p><em>Return Value:</em><br />No return value.</p>
-<h2 id="functions---pcb.c">Functions - pcb.c</h2>
+
+<p><em>Description:</em> <br />
+Prints a character string to the terminal with a new line character.</p>
+
+<p><em>Declaration:</em> <br />
+void println(char *string);</p>
+
+<p><em>Parameters:</em> <br />
+string - character pointer to string that will be printed</p>
+
+<p><em>Return Value:</em> <br />
+No return value.</p>
+
+<h2 id="functionspcbc">Functions - pcb.c</h2>
+
 <p>pcb.c contains functions for the pcb</p>
+
 <h3 id="allocatepcb">AllocatePCB()</h3>
-<p><em>Description:</em><br />Allocates memory for a new PCB.</p>
-<p><em>Declaration:</em><br />PCB* AllocatePCB();</p>
-<p><em>Parameters:</em><br />No parameters</p>
-<p><em>Return Value:</em><br />Returns a PCB Pointer when successful and NULL when not.</p>
+
+<p><em>Description:</em> <br />
+Allocates memory for a new PCB.</p>
+
+<p><em>Declaration:</em> <br />
+PCB* AllocatePCB();</p>
+
+<p><em>Parameters:</em> <br />
+No parameters</p>
+
+<p><em>Return Value:</em> <br />
+Returns a PCB Pointer when successful and NULL when not. </p>
+
 <h3 id="freepcb">FreePCB()</h3>
-<p><em>Description:</em><br />Frees all memory associated with a given PCB.</p>
-<p><em>Declaration:</em><br />int FreePCB(PCB* freepcb);</p>
-<p><em>Parameters:</em><br />PCB Pointer to the pcb to be freed</p>
-<p><em>Return Value:</em><br />Returns an integer when it is successful and when it is not.</p>
+
+<p><em>Description:</em> <br />
+Frees all memory associated with a given PCB.</p>
+
+<p><em>Declaration:</em> <br />
+int FreePCB(PCB* freepcb);</p>
+
+<p><em>Parameters:</em> <br />
+PCB Pointer to the pcb to be freed</p>
+
+<p><em>Return Value:</em> <br />
+Returns an integer when it is successful and when it is not. </p>
+
 <h3 id="setuppcb">SetupPCB()</h3>
-<p><em>Description:</em><br />Sets the PCB state to ready.</p>
-<p><em>Declaration:</em><br />PCB* SetupPCB(char* name, int classNum, int priority, void* function);</p>
-<p><em>Parameters:</em><br />Process Name, Process Class, Process Priority, and Function</p>
-<p><em>Return Value:</em><br />Returns a PCB Pointer when successful and NULL when not.</p>
+
+<p><em>Description:</em> <br />
+Sets the PCB state to ready.</p>
+
+<p><em>Declaration:</em> <br />
+PCB* SetupPCB(char* name, int classNum, int priority, void* function);</p>
+
+<p><em>Parameters:</em> <br />
+Process Name, Process Class, Process Priority, and Function</p>
+
+<p><em>Return Value:</em> <br />
+Returns a PCB Pointer when successful and NULL when not. </p>
+
 <h3 id="findpcb">FindPCB()</h3>
-<p><em>Description:</em><br />Searches through all queues, finds the requested PCB, and returns a pointer to that pcb.</p>
-<p><em>Declaration:</em><br />PCB* FindPCB(char* name);</p>
-<p><em>Parameters:</em><br />Process Name</p>
-<p><em>Return Value:</em><br />Returns a PCB Pointer when successful and NULL when not.</p>
+
+<p><em>Description:</em> <br />
+Searches through all queues, finds the requested PCB, and returns a pointer to that pcb.</p>
+
+<p><em>Declaration:</em> <br />
+PCB* FindPCB(char* name);</p>
+
+<p><em>Parameters:</em> <br />
+Process Name</p>
+
+<p><em>Return Value:</em> <br />
+Returns a PCB Pointer when successful and NULL when not. </p>
+
 <h3 id="insertpcb">InsertPCB()</h3>
-<p><em>Description:</em><br />Inserts a PCB into the correct queue.</p>
-<p><em>Declaration:</em><br />InsertPCB(PCB *pcb);</p>
-<p><em>Parameters:</em><br />PCB to be inserted pointer</p>
-<p><em>Return Value:</em><br />Void</p>
+
+<p><em>Description:</em> <br />
+Inserts a PCB into the correct queue.</p>
+
+<p><em>Declaration:</em> <br />
+InsertPCB(PCB *pcb);</p>
+
+<p><em>Parameters:</em> <br />
+PCB to be inserted pointer</p>
+
+<p><em>Return Value:</em> <br />
+Void</p>
+
 <h3 id="removepcb">RemovePCB()</h3>
-<p><em>Description:</em><br />Finds and removes a PCB from the queue it is currently in.</p>
-<p><em>Declaration:</em><br />int RemovePCB(PCB *pcb);</p>
-<p><em>Parameters:</em><br />PCB to be removed pointer</p>
-<p><em>Return Value:</em><br />Returns 0 when successful and -1 when it fails to remove the given PCB.</p>
+
+<p><em>Description:</em> <br />
+Finds and removes a PCB from the queue it is currently in.</p>
+
+<p><em>Declaration:</em> <br />
+int RemovePCB(PCB *pcb);</p>
+
+<p><em>Parameters:</em> <br />
+PCB to be removed pointer</p>
+
+<p><em>Return Value:</em> <br />
+Returns 0 when successful and -1 when it fails to remove the given PCB.</p>
+
 <h3 id="sys_call">sys_call()</h3>
-<p><em>Description:</em><br />Responsible for updating old PCB on sys_req IDLE. Old PCB goes back in the ready queue. Responsible for deleting the old PCB on sys_req EXIT.</p>
-<p><em>Declaration:</em><br />u32int* sys_call(CONTEXT* registers)</p>
-<p><em>Parameters:</em><br />The previous CONTEXT*</p>
-<p><em>Return Value:</em><br />Returns a pointer to the next context</p>
+
+<p><em>Description:</em> <br />
+Responsible for updating old PCB on sys<em>req IDLE. Old PCB goes back in the ready queue. Responsible for deleting the old PCB on sys</em>req EXIT.</p>
+
+<p><em>Declaration:</em> <br />
+u32int* sys_call(CONTEXT* registers)</p>
+
+<p><em>Parameters:</em> <br />
+The previous CONTEXT*</p>
+
+<p><em>Return Value:</em> <br />
+Returns a pointer to the next context</p>
+
 <h3 id="initializeheap">initializeHeap()</h3>
-<p><em>Description:</em><br />Allocate all the memory available for the MPX.</p>
-<p><em>Declaration:</em><br />int initializeHeap(int bytes)</p>
-<p><em>Parameters:</em><br />Number of bytes to allocate.</p>
-<p><em>Return Value:</em> Number of bytes allocated.</p>
+
+<p><em>Description:</em> <br />
+Allocate all the memory available for the MPX.</p>
+
+<p><em>Declaration:</em> <br />
+int initializeHeap(int bytes)</p>
+
+<p><em>Parameters:</em> <br />
+Number of bytes to allocate.</p>
+
+<p><em>Return Value:</em> 
+Number of bytes allocated.</p>
+
 <h3 id="allocmem">allocMem()</h3>
-<p><em>Description:</em><br />Allocate memory from the heap.</p>
-<p><em>Declaration:</em><br />void* allocMem(int size);</p>
-<p><em>Parameters:</em><br />Number of bytes to allocate.</p>
-<p><em>Return Value:</em> Void* pointer to the memory allocated.</p>
+
+<p><em>Description:</em> <br />
+Allocate memory from the heap.</p>
+
+<p><em>Declaration:</em> <br />
+void* allocMem(int size);</p>
+
+<p><em>Parameters:</em> <br />
+Number of bytes to allocate.</p>
+
+<p><em>Return Value:</em> 
+Void* pointer to the memory allocated.</p>
+
 <h3 id="freemem">freeMem()</h3>
-<p><em>Description:</em><br />Free a block of memory that was previously allocated.</p>
-<p><em>Declaration:</em><br />int freeMem(void* ptr)</p>
-<p><em>Parameters:</em><br />Pointer to memory block to free.</p>
-<p><em>Return Value:</em> Integer. 0 represents freed. -1 represents did not free.</p>
+
+<p><em>Description:</em> <br />
+Free a block of memory that was previously allocated.</p>
+
+<p><em>Declaration:</em> <br />
+int freeMem(void* ptr)</p>
+
+<p><em>Parameters:</em> <br />
+Pointer to memory block to free.</p>
+
+<p><em>Return Value:</em> 
+Integer. 0 represents freed. -1 represents did not free.</p>
+
 <h3 id="insertmcb">insertMCB()</h3>
-<p><em>Description:</em><br />Inserts MCB into the linked list.</p>
-<p><em>Declaration:</em><br />void insertMCB(CMCB* mcb)</p>
-<p><em>Parameters:</em><br />Pointer to MCB to insert</p>
-<p><em>Return Value:</em> void</p>
+
+<p><em>Description:</em> <br />
+Inserts MCB into the linked list.</p>
+
+<p><em>Declaration:</em> <br />
+void insertMCB(CMCB* mcb)</p>
+
+<p><em>Parameters:</em> <br />
+Pointer to MCB to insert</p>
+
+<p><em>Return Value:</em> 
+void</p>
+
 <h3 id="unlinkmcb">unlinkMCB()</h3>
-<p><em>Description:</em><br />Unlinks MCB from the linked list.</p>
-<p><em>Declaration:</em><br />void unlinkMCB(CMCB* mcb)</p>
-<p><em>Parameters:</em><br />mcb to unlink</p>
-<p><em>Return Value:</em> void</p>
+
+<p><em>Description:</em> <br />
+Unlinks MCB from the linked list.</p>
+
+<p><em>Declaration:</em> <br />
+void unlinkMCB(CMCB* mcb)</p>
+
+<p><em>Parameters:</em> <br />
+mcb to unlink</p>
+
+<p><em>Return Value:</em> 
+void</p>
